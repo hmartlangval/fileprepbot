@@ -1,0 +1,94 @@
+
+>>County: brevard
+>>URL: https://county-taxes.net/brevard/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and extract the page as pdf
+
+>>County: baker
+>>URL:  https://www.bakertaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
+>>INSTRUCTIONS:
+    Proceed with the search and extract the page as pdf
+
+>>County: bradford
+>>URL: https://www.bradfordappraiser.com/gis/
+>>INSTRUCTIONS:
+   Proceed with the search and download the pdf using the given information.
+
+>>County: citrus
+>>URL: https://www.citruspa.org/_web/search/commonsearch.aspx?mode=address
+>>INSTRUCTIONS:
+    Breaking of address is required, carefully fill the given fields by clearly identifying the input fields in the screen.
+
+>>County: columbia
+>>URL: https://columbia.floridapa.com/gis/
+>>INSTRUCTIONS:
+   Proceed with the search.
+
+>>County: desoto
+>>URL: https://www.desotopa.com/gis/
+>>INSTRUCTIONS:
+   Proceed with the search.
+
+>>County: highlands
+>>URL: https://www.hcpao.org/Search#parcel
+>>INSTRUCTIONS:
+   Proceed with search.
+   
+>>County: orange
+>>URL: https://ocpaweb.ocpafl.org/parcelsearch
+>>INSTRUCTIONS:
+   Proceed with search.
+
+>>County: osceola
+>>URL: https://search.property-appraiser.org/Search/MainSearch
+>>INSTRUCTIONS:
+   Proceed with search.
+
+>>County: palm beach
+>>URL: https://pbcpao.gov/index.htm
+>>INSTRUCTIONS:
+   Proceed with search.
+
+>>County: pasco
+>>URL: https://search.pascopa.com/
+>>INSTRUCTIONS:
+   Proceed with search.
+
+>>County: pinellas
+>>URL: https://www.pcpao.gov/quick-search?qu=1&input=120TH%20AVE%20W&search_option=address.
+>>INSTRUCTIONS:
+   Proceed with search.
+
+>>County: polk
+>>URL: Url is provided in instruction choose that.
+>>INSTRUCTIONS:
+   * Use this URL for parcel ID search:
+      https://www.polkpa.org/CamaDisplay.aspx?OutputMode=Input&searchType=RealEstate&page=FindByID
+   * Use this URL for address search:
+      https://www.polkpa.org/CamaDisplay.aspx?OutputMode=Input&searchType=RealEstate&page=FindByAddress&cookie_test=true
+   * These URLs are fixed and must not be changed or templated.
+
+>>County: santa rosa
+>>URL: https://srcpa.gov/search.
+>>INSTRUCTIONS:
+      * proceed with the search.
+
+>>County: sarasota
+>>URL: https://www.sc-pa.com/propertysearch
+>>INSTRUCTIONS:
+      * proceed with the search.
+
+>>County: suwanee
+>>URL: https://www.suwanneepa.com/gis/
+>>INSTRUCTIONS:
+      * proceed with the search.
+
+>>County: volusia
+>>URL: https://vcpa.vcgov.org/search/real-property
+>>INSTRUCTIONS:
+      * proceed with the search.
+
+>>County: wakulla
+>>URL: https://search.mywakullapa.com/
+>>INSTRUCTIONS:
+      * proceed with the search.

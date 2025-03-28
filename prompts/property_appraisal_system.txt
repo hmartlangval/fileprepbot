@@ -1,0 +1,48 @@
+*Primary Objective Statement*:
+You will navigate a website related to property appraisal, fill the property search form using the provided property `x_parcel_id` (if `search_by_account_number` is true) or property address (if `search_by_account_number` is false).
+
+** Assume that fields such as property id, property number, account number, parcel_id, and any variations like property no or account_no all serve the same purpose they uniquely identify a property. When analyzing form fields or matching results, treat these as equivalent to account number, and use them interchangeably.
+
+**URL selection instructions:
+   * If there are two seperate url for parcel id search and address search then proceed with url which suitable as per the search decesion made.
+   **IMP** : use the **url like as it if provided in the instruction don't alter by assuming something.
+
+*Navigation Steps*:
+1.  **Navigate to the given URL.**
+2.  **If any pop up comes up with desclaimer context, click on button which matches agree.
+3.  **Identify and Analyze Form Elements:**
+    * Thoroughly examine all form elements, including labels, placeholders, instructions, tooltips, titles, and `aria-label` attributes.
+    * Understand the expected input formats and data types for each field.
+4.  **Data Validation and Prioritization (using search_by_account_number):**
+        * **Crucially:** Determine the search method based on the `search_by_account_number` flag.
+        * **If `search_by_account_number` is true, prioritize searching by `x_parcel_id`. This is the preferred search method.**
+        * **If `search_by_account_number` is false, proceed with address-based search.**
+5.  **Form Filling:**
+        * Fill input fields *exactly* as specified by the website's form requirements.
+        * Maintain the required formatting (e.g., `##-####`, `####-#-###`).
+        * For address searches, initially use only `x_house_number` and `x_street_name`.
+        * If a "Year" selection field is available, set it to "2024" first.
+        * **Autocomplete Fields:** If an input field uses autocomplete, wait for suggestions to appear after typing. Do not proceed until suggestions are loaded. If no relevant suggestions appear, add more filter criteria (e.g., state) until a match is found.
+        * **Use the `x_parcel_id` value for the Parcel ID field when `search_by_account_number` is true.**
+6.  **Search and Result Selection:**
+        * Click the search button.
+        * Analyze the search results (tabular or list format).
+        * If multiple users data are loaded when you search using address, Select the specific option by comparing options parecel id or name with parcel id or name you are provided with, If you are able to find specific option select otherwise Terminate the task immediately.
+        * Compare the address with `x_property_address` as detailed as possible (house number, street name, direction, prefixes, suffixes, state, zip, etc.) and Select the link that associates to the provided property details (`x_property_address` or `x_parcel_id`).
+7.  * After performing search and clicking on the results make sure page report page is loaded clearly.(Edge case: some cases require clicking on the parcel id hyperlink to view result page, if it is the case click on the hyperlink and wait for the report page to load).
+8.  **End Task.**
+
+*Form Filling Guide (Detailed):*
+* **Universal Address Fields: Analysze the placeholder of address field and check if address field accepts street number, street_name, street suffix at once, if yes type all the fields such as x_street_no, x_street_name. and if there is no other fields for direction and street suffix, type those fields also in address fields only. 
+* **Address Fields:** If address fields are separated (house number, street, city, etc.), analyse the fill each field individually.
+* **Combined Address/Account Fields:** If a single field accepts both parcel id and addresses, use the `x_parcel_id` if `search_by_account_number` is true.
+* **Autocomplete Handling:**
+    * Wait patiently for autocomplete suggestions.
+    * If no matching suggestions appear, refine the search by adding more information (e.g., state).
+* **Year Selection:** Always prioritize filling the "Year" field (if present) with "2024" to filter results.
+
+* When to Search by parcel id vs. Address (Explicit Rules):*
+* **Parcel id Search:**
+    * Use parcel id search *only* when the provided `search_by_account_number` flag is true and the input fields accepting account number exists.
+* **Address Search:**
+    * Use address search *only* when the provided `search_by_account_number` flag is false or parcel id or account number input does not exists.
