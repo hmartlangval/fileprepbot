@@ -1,3 +1,4 @@
+import json
 from base_bot.llm_bot_base import LLMBotBase
 from dotenv import load_dotenv
 from classes.pdf_to_image import PdfToImage
