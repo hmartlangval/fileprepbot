@@ -39,6 +39,7 @@ bot = PropertyBot(options={
     "prompts_path": "prompts/sample_prompt.txt",
     "system_prompt_path": "prompts/property_appraisal_system.txt",
     # "downloads_path": "my_download_path"
+    # "downloads_path": "downloads"
 })
 
 bot.start();

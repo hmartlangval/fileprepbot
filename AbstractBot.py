@@ -53,11 +53,10 @@ class FilePreparationParentBot(BrowserClientBaseBot):
 
         self.prompt_json = prompt_data
         print('prompt json file is loaded and is ready to use')
-        
+    
     def extract_sensitive_data(self, json_data):
         if json_data:
-            json_key = list(json_data.keys())[0]
-            s_data = json_data[json_key].get('s_data', {})
+            s_data = json_data.get('s_data', {})
         else:
             s_data = {}
         return s_data
