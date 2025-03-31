@@ -3,6 +3,76 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+countyMap = {
+    "alachua": "Alachua",
+    "baker": "Baker",
+    "bay": "Bay",
+    "bradford": "Bradford",
+    "brevard": "Brevard",
+    "broward": "Broward",
+    "calhoun": "Calhoun",
+    "charlotte": "Charlotte",
+    "citrus": "Citrus",
+    "clay": "Clay",
+    "collier": "Collier",
+    "columbia": "Columbia",
+    "desoto": "DeSoto",
+    "dixie": "Dixie",
+    "duval": "Duval",
+    "escambia": "Escambia",
+    "flagler": "Flagler",
+    "franklin": "Franklin",
+    "gadsden": "Gadsden",
+    "gilchrist": "Gilchrist",
+    "glades": "Glades",
+    "gulf": "Gulf",
+    "hamilton": "Hamilton",
+    "hardee": "Hardee",
+    "hendry": "Hendry",
+    "hernando": "Hernando",
+    "highlands": "Highlands",
+    "hillsborough": "Hillsborough",
+    "holmes": "Holmes",
+    "indian_river": "Indian River",
+    "jackson": "Jackson",
+    "jefferson": "Jefferson",
+    "lafayette": "Lafayette",
+    "lake": "Lake",
+    "lee": "Lee",
+    "leon": "Leon",
+    "levy": "Levy",
+    "liberty": "Liberty",
+    "madison": "Madison",
+    "manatee": "Manatee",
+    "marion": "Marion",
+    "martin": "Martin",
+    "miami-dade": "Miami-Dade",
+    "monroe": "Monroe",
+    "nassau": "Nassau",
+    "okaloosa": "Okaloosa",
+    "okeechobee": "Okeechobee",
+    "orange": "Orange",
+    "osceola": "Osceola",
+    "palm_beach": "Palm Beach",
+    "pasco": "Pasco",
+    "pinellas": "Pinellas",
+    "polk": "Polk",
+    "putnam": "Putnam",
+    "santa_rosa": "Santa Rosa",
+    "sarasota": "Sarasota",
+    "seminole": "Seminole",
+    "st_johns": "St Johns",
+    "st_lucie": "St Lucie",
+    "sumter": "Sumter",
+    "suwannee": "Suwannee",
+    "taylor": "Taylor",
+    "union": "Union",
+    "volusia": "Volusia",
+    "wakulla": "Wakulla",
+    "walton": "Walton",
+    "washington": "Washington"
+}
+
 class FilePreparationParentBot(BrowserClientBaseBot):
     def __init__(self, options=None, *args, **kwargs):
         super().__init__(options, *args, **kwargs)
@@ -64,6 +134,12 @@ class FilePreparationParentBot(BrowserClientBaseBot):
     def get_instructions(self, json_data, sensitive_data):
         county = sensitive_data.get('x_county')
         if county:
+            county = county.lower()
+            county_code = next((key for key, value in countyMap.items() if value == county), None)
+            if county_code:
+                sensitive_data['x_county'] = county_code
+            else:
+                sensitive_data['x_county'] = county.lower()
             prompt_data = self.prompt_json.get(county, {})
             navigate_url = prompt_data.get('url', '')
             instructions = prompt_data.get('instructions', '')
