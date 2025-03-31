@@ -1,1 +1,272 @@
-Say Hello! to anyone calling your name
+>>County: alachua
+>>URL:https://county-taxes.net/alachua/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: brevard
+>>URL: https://county-taxes.net/brevard/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: baker
+>>URL:  https://www.bakertaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
+>>INSTRUCTIONS:
+    Proceed with the search and extract the page as pdf using filename MYFILENAME-PA.pdf
+
+>>County: bay
+>>URL:https://county-taxes.net/fl-bay/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+
+>>County: bradford
+>>URL:https://www.bradfordtaxcollector.com/Property/SearchSelect?ClearData=True
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: broward
+>>URL:https://www.bradfordtaxcollector.com/Property/SearchSelect?ClearData=True
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: calhoun
+>>URL:https://www.calhouncountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+    
+>>County: Charlotte
+>>URL:https://county-taxes.net/charlotte/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+
+
+>>County: Citrus
+>>URL:https://county-taxes.net/citrus/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+
+>>County:Clay
+>>URL:https://county-taxes.net/fl-clay/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+
+>>County: colliers
+>>URL: https://county-taxes.net/fl-collier/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: columbia
+>>URL: https://columbia.floridatax.us/AccountSearch?s=pt
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: desoto
+>>URL: https://www.desotocountytaxcollector.com/Property/SearchSelect?ClearData=True
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: dixie
+>>URL: https://dixie.floridatax.us/AccountSearch?s=pt
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: duval
+>>URL: https://county-taxes.net/fl-duval/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: escambia
+>>URL: https://county-taxes.net/fl-escambia/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: flagler
+>>URL: https://county-taxes.net/fl-flagler/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: franklin
+>>URL: https://www.franklincountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: glades
+>>URL: https://www.mygladescountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: gulf
+>>URL: https://www.gulfcountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: hamilton
+>>URL: https://www.hamiltoncountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: hardee
+>>URL: https://www.hardeecountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: hendry
+>>URL: https://property.hendry.tax/ptaxweb/editPropertySearch2.action;jsessionid=08DB76CCC936695833DF3513E8B3839A
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: hernando
+>>URL: https://county-taxes.net/fl-hernando/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: highlands
+>>URL: https://property.highlands.tax/ptaxweb/editPropertySearch2.action;jsessionid=BB170B16ED16F4BE643D362A18CD1861
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: hillsborough
+>>URL: https://county-taxes.net/hillsborough/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: holmes
+>>URL: https://www.holmescountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: indian river
+>>URL: https://county-taxes.net/indianriver/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: jackson
+>>URL: https://www.jacksoncountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: jefferson
+>>URL: https://www.jeffersoncountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: lafayette
+>>URL: https://lafayette.floridatax.us/AccountSearch?s=pt
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: lake
+>>URL: https://county-taxes.net/lake/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: lee
+>>URL: https://county-taxes.net/fl-lee/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: levy
+>>URL: https://levyitm.wfbsusa.com/PropertySearchAccount.aspx
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: liberty
+>>URL: https://www.libertycountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: madison
+>>URL: https://www.madisoncountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: manatee
+>>URL: https://secure.taxcollector.com/ptaxweb/editPropertySearch2.action;jsessionid=84E91E2C2D1EF4418B68D9CDFC1A43CF
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: marion
+>>URL: https://www.mariontax.com/itm/PropertySearchAccount.aspx?AspxAutoDetectCookieSupport=1
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: martin
+>>URL: https://county-taxes.net/fl-martin/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: miami-dade
+>>URL: https://county-taxes.net/fl-miamidade/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: monroe
+>>URL: https://county-taxes.net/fl-monroe/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: nassau
+>>URL: https://county-taxes.net/fl-nassau/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: okaloosa
+>>URL: https://county-taxes.net/okaloosa/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: okeechobee
+>>URL: https://okeechobeecountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: orange
+>>URL: https://county-taxes.net/fl-orange/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: osceola
+>>URL: https://county-taxes.net/osceola/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: pinellas
+>>URL: https://county-taxes.net/fl-pinellas/property-tax
+>>>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: pasco
+>>URL:  https://county-taxes.net/fl-pasco/property-tax
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+
+>>County: wakulla
+>>URL: https://www.wakullacountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+>>County: palm beach
+>>URL: https://pbctax.publicaccessnow.com/PropertyTax.aspx
+>>INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information.
+    **if 'x_account_account' is true then search in  Property Control Number**
+
+
+County: taylor
+URL: https://taylor.floridatax.us/AccountSearch?s=pt
+INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+County: union
+URL: https://www.unioncountytc.com/Property/SearchSelect?Accept=true&ClearData=True
+INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
+
+County: volusia
+URL: https://county-taxes.net/vctaxcollector/property-tax
+INSTRUCTIONS:
+    Proceed with the search and download the pdf using the given information
