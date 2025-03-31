@@ -114,8 +114,8 @@ class MainBot(LLMBotBase):
                         #     userInput_json = json.loads(clean_parsed)
                         #     userInput = "PDF has been analyzed from local path {}. Result: [json]{}[/json]".format(pdf_path, clean_parsed)
                     
-                        # if userInput_json:
-                        #     await self.process_tasks(message, userInput_json)
+                        if userInput_json:
+                            await self.process_tasks(message, userInput_json)
                         
                         self.socket.emit('message', {
                             "channelId": message.get("channelId", "general"),

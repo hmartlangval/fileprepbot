@@ -1,3 +1,7 @@
 PyMuPDF
 pillow
 pytesseract
+python-socketio
+python-dotenv
+aiohttp
+asyncio
