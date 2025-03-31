@@ -241,7 +241,7 @@
 >>County: pasco
 >>URL:  https://county-taxes.net/fl-pasco/property-tax
 >>INSTRUCTIONS:
-    Proceed with the search and download the pdf using the given information
+    Proceed with the search and save the page as PDF using filename "[order_number]-ppA.pdf"
 
 
 >>County: wakulla
