@@ -135,7 +135,7 @@ class FilePreparationParentBot(BrowserClientBaseBot):
         county = sensitive_data.get('x_county')
         if county:
             county = county.lower()
-            county_code = next((key for key, value in countyMap.items() if value == county), None)
+            county_code = next((key for key, value in countyMap.items() if value.lower() == county), None)
             if county_code:
                 sensitive_data['x_county'] = county_code
             else:
