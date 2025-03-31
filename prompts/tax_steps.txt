@@ -235,7 +235,7 @@
 
 >>County: pinellas
 >>URL: https://county-taxes.net/fl-pinellas/property-tax
->>>>INSTRUCTIONS:
+>>INSTRUCTIONS:
     Proceed with the search and download the pdf using the given information
 
 >>County: pasco
