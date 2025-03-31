@@ -48,43 +48,43 @@ bot = TaxBot(options={
 bot.start();
 
 
-import requests
-import json
-def call_rest_api():
-    json_data = {
-        "order_number": "73-832-8383",
-        "s_data": {
-            'x_account_number': '322S22004900800010', 
-            'x_county': 'baker', 
-            'x_property_address': '362 MINNESOTA AVE E MACCLENNY'
-        }
-    }
+# import requests
+# import json
+# def call_rest_api():
+#     json_data = {
+#         "order_number": "73-832-8383",
+#         "s_data": {
+#             'x_account_number': '322S22004900800010', 
+#             'x_county': 'baker', 
+#             'x_property_address': '362 MINNESOTA AVE E MACCLENNY'
+#         }
+#     }
     
-    # json_data = {
-    #     "order_number": "73-832-8383",
-    #     "s_data": {
-    #         'x_parcel_id': '01-4S-02W-000-01807-002', 
-    #         'x_county': 'wakulla', 
-    #         'x_property_address': '239 HARVEY MILL RD CRAWFORDVILLE 32327'
-    #     }
-    # }
-    #Brevard
-        # sensitive_data = {
-        #     'x_county': 'brevard','x_account_number': '010089000', 'x_property_address': 'STONEWOOD TOWNHOMES LLC, 325 E UNIVERSITY BLVD #81'
-        # }
+#     # json_data = {
+#     #     "order_number": "73-832-8383",
+#     #     "s_data": {
+#     #         'x_parcel_id': '01-4S-02W-000-01807-002', 
+#     #         'x_county': 'wakulla', 
+#     #         'x_property_address': '239 HARVEY MILL RD CRAWFORDVILLE 32327'
+#     #     }
+#     # }
+#     #Brevard
+#         # sensitive_data = {
+#         #     'x_county': 'brevard','x_account_number': '010089000', 'x_property_address': 'STONEWOOD TOWNHOMES LLC, 325 E UNIVERSITY BLVD #81'
+#         # }
     
-    data = {
-        "content": f"@taxbot Welcome!! [json]{json.dumps(json_data)}[/json]",
-        "sender": "Admin"
-    }
-    try:
-        response = requests.post('http://localhost:3000/api/channels/general/sendMessage', json=data)
-        response.raise_for_status()  # Raise an error for bad status codes
-        return response.json()  # Return the response as JSON
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")
-        return None
-call_rest_api()
+#     data = {
+#         "content": f"@taxbot Welcome!! [json]{json.dumps(json_data)}[/json]",
+#         "sender": "Admin"
+#     }
+#     try:
+#         response = requests.post('http://localhost:3000/api/channels/general/sendMessage', json=data)
+#         response.raise_for_status()  # Raise an error for bad status codes
+#         return response.json()  # Return the response as JSON
+#     except requests.exceptions.RequestException as e:
+#         print(f"An error occurred: {e}")
+#         return None
+# call_rest_api()
 
 
 

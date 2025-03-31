@@ -36,10 +36,10 @@ class PdfToImage:
             img.save(img_byte_arr, format="JPEG", quality=quality)
             
             # Debug: Save image to current directory
-            print("Current working directory:", os.getcwd())
-            print("Attempting to save debug image...")
-            img.save("debug_image.jpg", format="JPEG", quality=quality)
-            print("Debug image saved!")
+            # print("Current working directory:", os.getcwd())
+            # print("Attempting to save debug image...")
+            # img.save("debug_image.jpg", format="JPEG", quality=quality)
+            # print("Debug image saved!")
             
             return base64.b64encode(img_byte_arr.getvalue()).decode('utf-8')
         except Exception as e:
