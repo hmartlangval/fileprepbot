@@ -17,7 +17,7 @@ class PropertyBot(AbstractBot.FilePreparationParentBot):
                 
         json_data = super().extract_json_data(message)
 
-        print("json_data....................", json_data)
+    
         sensitive_data = self.extract_sensitive_data(json_data)
         
         ## do validation if it should proceed or not based on json data ONLY IF REQUIRED
