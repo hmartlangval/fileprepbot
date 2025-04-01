@@ -62,7 +62,7 @@ class FilePreparationParentBot(BrowserClientBaseBot):
         return s_data
     
     def get_instructions(self, json_data, sensitive_data):
-        county = sensitive_data.get('x_county')
+        county = sensitive_data.get('x_county').lower()
         if county:
             prompt_data = self.prompt_json.get(county, {})
             navigate_url = prompt_data.get('url', '')

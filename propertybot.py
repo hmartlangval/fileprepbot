@@ -14,9 +14,10 @@ class PropertyBot(AbstractBot.FilePreparationParentBot):
             "channelId": message.get("channelId"),
             "content": 'Message is received, processing... >>>'
         })
-        
-        ## only customization here
-        json_data = message.get("jsonData", None)
+                
+        json_data = super().extract_json_data(message)
+
+        print("json_data....................", json_data)
         sensitive_data = self.extract_sensitive_data(json_data)
         
         ## do validation if it should proceed or not based on json data ONLY IF REQUIRED
@@ -25,6 +26,7 @@ class PropertyBot(AbstractBot.FilePreparationParentBot):
         
         [instructions, sensitive_data, extend_system_prompt] = await super().prepare_LLM_data(json_data, message)
         
+        print(instructions)
         result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data)
         
         return "I am Property Bot. Taks has been completed."
@@ -35,27 +37,25 @@ bot = PropertyBot(options={
     "bot_name": "PropertyBot",
     "autojoin_channel": "general",
     "model": "gpt-4o-mini",
-    # "prompts_path": "prompts/property_appraisal_steps.txt",
-    "prompts_path": "prompts/sample_prompt.txt",
-    "system_prompt_path": "prompts/property_appraisal_system.txt",
-    # "downloads_path": "my_download_path"
-    # "downloads_path": "downloads"
+    "prompts_path": "./prompts/property_appraisal_steps.txt",
+    "system_prompt_path": "./prompts/property_appraisal_system.txt",
+    "downloads_path": r"D:\ThoughtfocusRD\Phase_2_navigators_deo\Base_bot\fileprepbot\downloads"
 })
 
-bot.start();
 
+bot.start()
 
-import requests
-import json
-def call_rest_api():
-    json_data = {
-        "order_number": "73-832-8383",
-        "s_data": {
-            'x_county': 'brevard',
-            'x_parcel_id': '010089000', 
-            'x_property_address': 'STONEWOOD TOWNHOMES LLC, 325 E UNIVERSITY BLVD #81',
-        }
-    }
+# import requests
+# import json
+# def call_rest_api():
+#     json_data = {
+#         "order_number": "73-832-8383",
+#         "s_data": {
+#             'x_county': 'brevard',
+#             'x_parcel_id': '010089000', 
+#             'x_property_address': 'STONEWOOD TOWNHOMES LLC, 325 E UNIVERSITY BLVD #81',
+#         }
+#     }
     
     # json_data = {
     #     "order_number": "73-832-8383",
@@ -66,23 +66,20 @@ def call_rest_api():
     #     }
     # }
     
-    data = {
-        "content": f"@propertybot Welcome!! [json]{json.dumps(json_data)}[/json]",
-        "sender": "Admin"
-    }
-    try:
-        response = requests.post('http://localhost:3000/api/channels/general/sendMessage', json=data)
-        response.raise_for_status()  # Raise an error for bad status codes
-        return response.json()  # Return the response as JSON
-    except requests.exceptions.RequestException as e:
-        print(f"An error occurred: {e}")
-        return None
-call_rest_api()
+#     data = {
+#         "content": f"@propertybot Welcome!! [json]{json.dumps(json_data)}[/json]",
+#         "sender": "Admin"
+#     }
+#     try:
+#         response = requests.post('http://localhost:3000/api/channels/general/sendMessage', json=data)
+#         response.raise_for_status()  # Raise an error for bad status codes
+#         return response.json()  # Return the response as JSON
+#     except requests.exceptions.RequestException as e:
+#         print(f"An error occurred: {e}")
+#         return None
+# call_rest_api()
 
+bot.join()
 
-
-
-bot.join();
-
-bot.cleanup();
+bot.cleanup()
 

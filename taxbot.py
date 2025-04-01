@@ -33,7 +33,6 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
         
         return "I am Property Bot. Taks has been completed."
     
-    
 bot = TaxBot(options={
     "bot_id": "taxbot",
     "bot_name": "TaxBot",
@@ -42,11 +41,10 @@ bot = TaxBot(options={
     "prompts_path": "prompts/tax_steps.txt",
     "system_prompt_path": "prompts/tax_system.txt",
     # "downloads_path": "my_download_path"
-    "downloads_path": "E:/testingdownload"
+    "downloads_path": r"D:\ThoughtfocusRD\Phase_2_navigators_deo\Base_bot\fileprepbot\downloads"
 })
 
-bot.start();
-
+bot.start()
 
 # import requests
 # import json
@@ -86,10 +84,6 @@ bot.start();
 #         return None
 # call_rest_api()
 
-
-
-
-bot.join();
-
-bot.cleanup();
+bot.join()
+bot.cleanup()
 

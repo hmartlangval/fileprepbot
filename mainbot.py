@@ -1,6 +1,7 @@
 from base_bot.llm_bot_base import LLMBotBase
 from dotenv import load_dotenv
 from classes.pdf_to_image import PdfToImage
+import json
 
 load_dotenv()
 
@@ -144,7 +145,7 @@ bot = MainBot(options={
     "prompts_path": "prompts/datacollection.txt"
 })
 
-bot.start();
+bot.start()
 
 
 # import requests
@@ -207,7 +208,7 @@ bot.start();
 #         return None
 # call_rest_api()
 
-bot.join();
+bot.join()
 
-bot.cleanup();
+bot.cleanup()
 
