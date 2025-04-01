@@ -28,7 +28,6 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
         print(f"sensitive_data: {sensitive_data}")
         print(f"extend_system_prompt: {extend_system_prompt}")
         
-        
         result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data)
         
         return "I am Property Bot. Taks has been completed."

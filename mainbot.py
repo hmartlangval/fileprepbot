@@ -1,7 +1,8 @@
+import json
 from base_bot.llm_bot_base import LLMBotBase
 from dotenv import load_dotenv
 from classes.pdf_to_image import PdfToImage
-import json
+from classes.utils import clean_json_string
 
 load_dotenv()
 
@@ -85,24 +86,42 @@ class MainBot(LLMBotBase):
                     userInput_json = None
                     pdf_path = item.get("pdf_path", None)
                     if pdf_path:
-                        instructions = await self.quick_load_prompts("prompts/pdf_extraction.txt")
+                        instructions = await self.quick_load_prompts("prompts/pdf_text_extraction.txt")
                         instructions = instructions.replace("[order_number]", PdfToImage.get_file_name_from_path(item.get("original_filename", "ai-do-not-fill")))
                         
-                        if pdf_path.startswith("http"):
-                            extracted_data = PdfToImage.pdf_page_to_base64_from_url(pdf_path)
-                            result = await self.analyze_image(instructions, encoded_image_base64=extracted_data)
-                            clean_parsed = result.replace("```json", "").replace("```", "")
-                            userInput_json = json.loads(clean_parsed)
-                            userInput = "PDF has been analyzed from URL {}. Result: [json]{}[/json]".format(pdf_path, clean_parsed)
-                        else:
-                            extracted_data = PdfToImage.pdf_page_to_base64_from_path(pdf_path)
-                            result = await self.analyze_image(instructions, encoded_image_base64=extracted_data)
-                            clean_parsed = result.replace("```json", "").replace("```", "")
-                            userInput_json = json.loads(clean_parsed)
-                            userInput = "PDF has been analyzed from local path {}. Result: [json]{}[/json]".format(pdf_path, clean_parsed)
+                        text = PdfToImage.extract_text_from_pdf(pdf_path=pdf_path)
+                        instructions = f"{instructions}. \n\n Text extracted from PDF: {text}"
+                        # instructions = instructions.replace("[order_number]", PdfToImage.get_file_name_from_path(item.get("original_filename", "ai-do-not-fill")))
+                        result = await self.call(instructions)
+                        clean_parsed = clean_json_string(result)
+                        userInput_json = json.loads(clean_parsed)
+                        userInput = "PDF has been analyzed from URL {}. Result: [json]{}[/json]".format(pdf_path, clean_parsed)
+                        
+                        # if pdf_path.startswith("http"):
+                        #     # extracted_data = PdfToImage.pdf_page_to_base64_from_url(pdf_path)
+                        #     # result = await self.analyze_image(instructions, encoded_image_base64=extracted_data)
+                        #     text = PdfToImage.extract_text_from_pdf(pdf_path=pdf_path)
+                        #     instructions = f"{instructions}. \n\n Text extracted from PDF: {text}"
+                        #     # instructions = instructions.replace("[order_number]", PdfToImage.get_file_name_from_path(item.get("original_filename", "ai-do-not-fill")))
+                        #     result = await self.call(instructions)
+                        #     clean_parsed = result.replace("```json", "").replace("```", "")
+                        #     userInput_json = json.loads(clean_parsed)
+                        #     userInput = "PDF has been analyzed from URL {}. Result: [json]{}[/json]".format(pdf_path, clean_parsed)
+                        # else:
+                        #     extracted_data = PdfToImage.pdf_page_to_base64_from_path(pdf_path)
+                        #     result = await self.analyze_image(instructions, encoded_image_base64=extracted_data)
+                        #     clean_parsed = result.replace("```json", "").replace("```", "")
+                        #     userInput_json = json.loads(clean_parsed)
+                        #     userInput = "PDF has been analyzed from local path {}. Result: [json]{}[/json]".format(pdf_path, clean_parsed)
                     
                         if userInput_json:
                             await self.process_tasks(message, userInput_json)
+                        
+                        self.socket.emit('message', {
+                            "channelId": message.get("channelId", "general"),
+                            "content": f"extracted JSON is for [json]{json.dumps(userInput_json)}[/json]"
+                        })
+                        
                     else:
                         return "You seem to have not provided a valid pdf path"
                 
@@ -142,7 +161,7 @@ bot = MainBot(options={
     "bot_name": "Fileprep Service",
     "autojoin_channel": "general",
     "model": "gpt-4o-mini",
-    "prompts_path": "prompts/datacollection.txt"
+    # "prompts_path": "prompts/datacollection.txt",
 })
 
 bot.start()
