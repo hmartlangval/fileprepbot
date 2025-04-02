@@ -1,5 +1,6 @@
 from base_bot.browser_client_base_bot import BrowserClientBaseBot
 from dotenv import load_dotenv
+from classes.api_service import ApiService
 
 load_dotenv()
 
@@ -79,6 +80,17 @@ class FilePreparationParentBot(BrowserClientBaseBot):
         self.variables = [
             "order_number"
         ]
+        self.active_tasks = False
+        self.task_id = None
+        self.api_service = ApiService(self.config)
+        
+    def set_active_tasks(self, context):
+        if context:
+            self.active_tasks = True
+            self.task_id = context.get('id', None)
+        else:
+            self.active_tasks = False
+            self.task_id = None
         
     def create_download_folder(self, json_data):
         if json_data:
