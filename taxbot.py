@@ -4,6 +4,13 @@ import AbstractBot
 
 load_dotenv()
 
+import ctypes
+
+def get_window_handle():
+    user32 = ctypes.windll.user32
+    handle = user32.GetForegroundWindow()
+    return handle
+
 class TaxBot(AbstractBot.FilePreparationParentBot):
     def __init__(self, options, *args, **kwargs):
         super().__init__(options, *args, **kwargs)
@@ -30,9 +37,12 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
         
         result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data)
         
-        return "I am Property Bot. Taks has been completed."
+        return "Tasks has been completed."
     
 bot = TaxBot(options={
+    "window_handle": get_window_handle(),
+    "bot_type": "task_bot",
+    "restart_command": "^c^cpython taxbot.py",
     "bot_id": "taxbot",
     "bot_name": "TaxBot",
     "autojoin_channel": "general",
@@ -44,6 +54,9 @@ bot = TaxBot(options={
 })
 
 bot.start()
+
+
+
 
 # import requests
 # import json
