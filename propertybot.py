@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 
 import AbstractBot
+from langchain_openai import ChatOpenAI
 
 load_dotenv()
 
@@ -17,8 +18,6 @@ class PropertyBot(AbstractBot.FilePreparationParentBot):
                 
         json_data = super().extract_json_data(message)
 
-    
-        
         ## do validation if it should proceed or not based on json data ONLY IF REQUIRED
         if json_data.get('x_county') == 'nelvin':
             return "I reject because i cannot serve nelvin county"
@@ -27,9 +26,20 @@ class PropertyBot(AbstractBot.FilePreparationParentBot):
         
         print(instructions)
         result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data)
-        
-        return "I am Property Bot. Taks has been completed."
+        summary = self.analyse_summary(result)
+        return f"I am Property Bot. Taks has been completed, and the summary is {summary}"
     
+
+    def analyse_summary(self, summary):
+
+        prompt = f""" You are provided with summary of task that has been completed.
+        Please analyse the summary :
+        {summary}
+ 
+        and provide the result in short format using max 20 words."""
+        llm = ChatOpenAI(model="gpt-4-turbo")
+        result = llm.invoke(prompt)
+        return result.content
     
 bot = PropertyBot(options={
     "bot_id": "propertybot",
