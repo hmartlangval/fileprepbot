@@ -30,17 +30,18 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
         
         result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data)
         
-        return "I am Property Bot. Taks has been completed."
+        return "I am Tax Bot. Task has been completed."
     
 bot = TaxBot(options={
     "bot_id": "taxbot",
     "bot_name": "TaxBot",
+    "bot_type":"task_bot",
     "autojoin_channel": "general",
     "model": "gpt-4o-mini",
     "prompts_path": "prompts/tax_steps.txt",
     "system_prompt_path": "prompts/tax_system.txt",
     # "downloads_path": "my_download_path"
-    "downloads_path": r"D:\ThoughtfocusRD\Phase_2_navigators_deo\Base_bot\fileprepbot\downloads"
+    "downloads_path": r"D:/browser_use_bot/fileprepbot/downloads"
 })
 
 bot.start()
