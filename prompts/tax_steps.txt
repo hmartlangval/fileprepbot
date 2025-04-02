@@ -2,56 +2,56 @@
 >>URL:https://county-taxes.net/alachua/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 
 >>County: brevard
 >>URL: https://county-taxes.net/brevard/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 >>County: baker
 >>URL:  https://www.bakertaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: bay
 >>URL:https://county-taxes.net/fl-bay/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 
 >>County: bradford
 >>URL:https://www.bradfordtaxcollector.com/Property/SearchSelect?ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
     
 
 >>County: broward
 >>URL:https://www.bradfordtaxcollector.com/Property/SearchSelect?ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: calhoun
 >>URL:https://www.calhouncountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf Proceed with the search
+    Proceed with the search and extract the page as pdf Proceed with the search
     
 >>County: Charlotte
 >>URL:https://county-taxes.net/charlotte/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 
 
@@ -59,144 +59,144 @@
 >>URL:https://county-taxes.net/citrus/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 
 >>County:Clay
 >>URL:https://county-taxes.net/fl-clay/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 
 >>County: colliers
 >>URL: https://county-taxes.net/fl-collier/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 >>County: columbia
 >>URL: https://columbia.floridatax.us/AccountSearch?s=pt
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: desoto
 >>URL: https://www.desotocountytaxcollector.com/Property/SearchSelect?ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: dixie
 >>URL: https://dixie.floridatax.us/AccountSearch?s=pt
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: duval
 >>URL: https://county-taxes.net/fl-duval/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 >>County: escambia
 >>URL: https://county-taxes.net/fl-escambia/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 >>County: flagler
 >>URL: https://county-taxes.net/fl-flagler/property-tax
 >>INSTRUCTIONS:
    Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 >>County: franklin
 >>URL: https://www.franklincountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: glades
 >>URL: https://www.mygladescountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: gulf
 >>URL: https://www.gulfcountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: hamilton
 >>URL: https://www.hamiltoncountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: hardee
 >>URL: https://www.hardeecountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: hendry
 >>URL: https://property.hendry.tax/ptaxweb/editPropertySearch2.action;jsessionid=08DB76CCC936695833DF3513E8B3839A
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: hernando
 >>URL: https://county-taxes.net/fl-hernando/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 >>County: highlands
 >>URL: https://property.highlands.tax/ptaxweb/editPropertySearch2.action;jsessionid=BB170B16ED16F4BE643D362A18CD1861
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: hillsborough
 >>URL: https://county-taxes.net/hillsborough/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 >>County: holmes
 >>URL: https://www.holmescountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: indian river
 >>URL: https://county-taxes.net/indianriver/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 >>County: jackson
 >>URL: https://www.jacksoncountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: jefferson
 >>URL: https://www.jeffersoncountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: lafayette
 >>URL: https://lafayette.floridatax.us/AccountSearch?s=pt
@@ -209,127 +209,127 @@
 >>URL: https://county-taxes.net/lake/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 >>County: lee
 >>URL: https://county-taxes.net/fl-lee/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 >>County: levy
 >>URL: https://levyitm.wfbsusa.com/PropertySearchAccount.aspx
 >>INSTRUCTIONS: 
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: liberty
 >>URL: https://www.libertycountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: madison
 >>URL: https://www.madisoncountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: manatee
 >>URL: https://secure.taxcollector.com/ptaxweb/editPropertySearch2.action;jsessionid=84E91E2C2D1EF4418B68D9CDFC1A43CF
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: marion
 >>URL: https://www.mariontax.com/itm/PropertySearchAccount.aspx?AspxAutoDetectCookieSupport=1
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: martin
 >>URL: https://county-taxes.net/fl-martin/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 >>County: miami-dade
 >>URL: https://county-taxes.net/fl-miamidade/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 >>County: monroe
 >>URL: https://county-taxes.net/fl-monroe/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 >>County: nassau
 >>URL: https://county-taxes.net/fl-nassau/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 >>County: okaloosa
 >>URL: https://county-taxes.net/okaloosa/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 >>County: okeechobee
 >>URL: https://okeechobeecountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: orange
 >>URL: https://county-taxes.net/fl-orange/property-tax
 >>INSTRUCTIONS: 
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 >>County: osceola
 >>URL: https://county-taxes.net/osceola/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 >>County: pinellas
 >>URL: https://county-taxes.net/fl-pinellas/property-tax
 >>>>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 >>County: pasco
 >>URL:  https://county-taxes.net/fl-pasco/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and save the page as PDF [order_number]-history.pdf or [x_county]_history.pdf
-    If Page contains **2024 Annual Bill** click on print pdf after downloading the file save it as pdf extension using filename [order_number]-PA.pdf
+   Proceed with search and download the PDF as per instructions
+    
 
 
 >>County: wakulla
 >>URL: https://www.wakullacountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: palm beach
 >>URL: https://pbctax.publicaccessnow.com/PropertyTax.aspx
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
     **if 'x_account_account' is true then search in  Property Control Number**
 
 
@@ -338,7 +338,7 @@
 >>INSTRUCTIONS:
 <<<<<<< HEAD
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 =======
     Proceed with the search and download the pdf using the given information
 >>>>>>> 5832678656c207ba63ab646fc5d6cdb5f0c224ed
@@ -348,7 +348,7 @@
 >>INSTRUCTIONS:
 <<<<<<< HEAD
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 =======
     Proceed with the search and download the pdf using the given information
 >>>>>>> 5832678656c207ba63ab646fc5d6cdb5f0c224ed
@@ -366,79 +366,79 @@
 >>URL: https://fl-gadsden.publicaccessnow.com/TaxCollector/PropertyTaxSearch.aspx
  >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: Gilchrist
 >>URL: 
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: Polk
 >>URL:https://polk.payfltaxes.com/lookup/property-tax   
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: Putnam
 >>URL:https://www.putnamtax.com/
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: Santa Rosa
 >>URL:https://county-taxes.net/fl-santarosa/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: Sarasota
 >>URL: https://www.sarasotataxcollector.gov/
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: Seminole
 >>URL:https://county-taxes.net/fl-seminole/fl-seminole/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: St. Johns
 >>URL: https://www.stjohnstax.us/AccountSearch?s=pt
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: St. Lucie
 >>URL: https://county-taxes.net/stlucie/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: Sumter
 >>URL: https://county-taxes.net/sumter/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: Suwannee
 >>URL:https://suwannee.floridatax.us/AccountSearch?s=pt
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: Walton
 >>URL:https://county-taxes.net/fl-walton/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 
 >>County: Washington
 >>URL:https://www.washingtoncountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf
 =======
     Proceed with the search and download the pdf using the given information
 >>>>>>> 5832678656c207ba63ab646fc5d6cdb5f0c224ed

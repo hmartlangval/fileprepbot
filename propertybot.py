@@ -16,7 +16,6 @@ class PropertyBot(AbstractBot.FilePreparationParentBot):
         super().__init__(options, *args, **kwargs)
     
     async def generate_response(self, message):
-        
         self.socket.emit('message', {
             "channelId": message.get("channelId"),
             "content": 'Message is received, processing... >>>'
@@ -24,16 +23,23 @@ class PropertyBot(AbstractBot.FilePreparationParentBot):
                 
         json_data = super().extract_json_data(message)
 
-        ## do validation if it should proceed or not based on json data ONLY IF REQUIRED
         if json_data.get('x_county') == 'nelvin':
-            return "I reject because i cannot serve nelvin county"
+            return "I reject because I cannot serve nelvin county"
         
         [instructions, sensitive_data, extend_system_prompt] = await super().prepare_LLM_data(json_data, message)
         
         print(instructions)
-        result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data)
+        result = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data)
         summary = self.analyse_summary(result)
-        return f"I am Property Bot. Taks has been completed, and the summary is {summary}"
+
+        # ✅ Send completion signal to fileprep
+        self.socket.emit('message', {
+            "channelId": message.get("channelId"),
+            "content": "@fileprep task_complete from propertybot"
+        })
+
+        return f"I am Property Bot. Task has been completed, and the summary is {summary}"
+
     
 
     def analyse_summary(self, summary):

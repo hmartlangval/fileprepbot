@@ -2,19 +2,19 @@
 >>URL: https://www.bakerpa.com/search.html
 >>INSTRUCTIONS:
    Your order number is: [order_number]
-   Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
    
 >>County: brevard
 >>URL: https://county-taxes.net/brevard/property-tax
 >>INSTRUCTIONS:
     Your order number is: [order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
 
 >>County: bradford
 >>URL: https://www.bradfordappraiser.com/gis/
 >>INSTRUCTIONS:
    Your order number is: [order_number]
-   Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
    follow the map screen saving steps mentioned and save the map page screen shot.
 
 >>County: citrus
@@ -22,7 +22,7 @@
 >>INSTRUCTIONS:
    Breaking of address is required, carefully fill the given fields by clearly identifying the input fields in the screen.
    Your order number is: [order_number].
-   Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
    follow the map screen saving steps mentioned and save the map page screen shot.
 
 >>County: hernando
@@ -30,41 +30,41 @@
 >>INSTRUCTIONS:
    Breaking of address is required, carefully fill the given fields by clearly identifying the input fields in the screen.
    Your order number is: [order_number].
-   Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
 
 >>County: columbia
 >>URL: https://columbia.floridapa.com/gis/
 >>INSTRUCTIONS:
    Your order number is: [order_number]
-   Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
    follow the map screen saving steps mentioned and save the map page screen shot.
 
 >>County: desoto
 >>URL: https://www.desotopa.com/gis/
 >>INSTRUCTIONS:
    Your order number is: [order_number]
-   Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
    follow the map screen saving steps mentioned and save the map page screen shot.
 
 >>County: highlands
 >>URL: https://www.hcpao.org/Search#parcel
 >>INSTRUCTIONS:
    Your order number is: [order_number]
-   Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
    follow the map screen saving steps mentioned and save the map page screen shot.
 
 >>County: orange
 >>URL: https://ocpaweb.ocpafl.org/parcelsearch
 >>INSTRUCTIONS:
    Your order number is: [order_number]
-   Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
    follow the map screen saving steps mentioned and save the map page screen shot.
 
 >>County: osceola
 >>URL: https://search.property-appraiser.org/Search/MainSearch
 >>INSTRUCTIONS:
    Your order number is: [order_number]
-   Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf.
+   Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf.
    Click on the Map View link/button with id="mapView_link"
       Wait for the Page to load 
       Take webpage screenshot
@@ -73,19 +73,19 @@
 >>URL: https://pbcpao.gov/index.htm
 >>INSTRUCTIONS:
    Your order number is: [order_number]
-   Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
 
 >>County: pasco
 >>URL: https://search.pascopa.com/
 >>INSTRUCTIONS:
    Your order number is: [order_number]
-   Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
 
 >>County: pinellas
 >>URL: https://www.pcpao.gov/quick-search?qu=1&input=120TH%20AVE%20W&search_option=address.
 >>INSTRUCTIONS:
    Your order number is: [order_number]
-   Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
    follow the map screen saving steps mentioned and save the map page screen shot.
 
 >>County: polk
@@ -96,51 +96,51 @@
    * Use this URL for address search:
       https://www.polkpa.org/CamaDisplay.aspx?OutputMode=Input&searchType=RealEstate&page=FindByAddress&cookie_test=true
    * These URLs are fixed and must not be changed or templated.
-   * Your order number is: [order_number] ,Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   * Your order number is: [order_number] ,Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
    * Follow the map screen saving steps mentioned and save the map page screen shot.
 
 >>County: santa rosa
 >>URL: https://srcpa.gov/search.
 >>INSTRUCTIONS:
    * Your order number is: [order_number]
-   * Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   * Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
    * follow the map screen saving steps mentioned and save the map page screen shot, when selecting map page use button with text 'View in Map Tool'.
    
 >>County: sarasota
 >>URL: https://www.sc-pa.com/propertysearch
 >>INSTRUCTIONS:
     * Your order number is: [order_number]
-    * Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    * Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
     * follow the map screen saving steps mentioned and save the map page screen shot.
 
 >>County: suwannee
 >>URL: https://www.suwanneepa.com/gis/
 >>INSTRUCTIONS:
    Your order number is: [order_number]
-   Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
    Click on the GIS map link wait for the map to load take a webpage screenshot.
 
 >>County: volusia
 >>URL: https://vcpa.vcgov.org/search/real-property
 >>INSTRUCTIONS:
     Your order number is: [order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
 
 >>County: suwannee
 >>URL: https://www.suwanneepa.com/gis/
 >>INSTRUCTIONS:
    Your order number is: [order_number]
-   Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
 
 >>County: union
 >>URL: https://union.floridapa.com/gis/
 >>INSTRUCTIONS:
    Your order number is: [order_number]
-   Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
    Click on the GIS map link wait for the map to load take a webpage screenshot.
 
 >>County: wakulla
 >>URL: https://search.mywakullapa.com/
 >>INSTRUCTIONS:
     Your order number is: [order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search and extract the page as pdf using filename [order_number]-Property.pdf
