@@ -4,6 +4,12 @@ import AbstractBot
 from langchain_openai import ChatOpenAI
 
 load_dotenv()
+import ctypes
+
+def get_window_handle():
+    user32 = ctypes.windll.user32
+    handle = user32.GetForegroundWindow()
+    return handle
 
 class PropertyBot(AbstractBot.FilePreparationParentBot):
     def __init__(self, options, *args, **kwargs):
@@ -57,14 +63,19 @@ class PropertyBot(AbstractBot.FilePreparationParentBot):
         return result.content
     
 bot = PropertyBot(options={
+<<<<<<< HEAD
+=======
+    "window_handle": get_window_handle(),
+>>>>>>> bc8fd34a2ba1dc52fe21c27d0e68652da4e70e24
     "bot_type": "task_bot",
     "bot_id": "propertybot",
     "bot_name": "PropertyBot",
+    "bot_type":"task_bot",
     "autojoin_channel": "general",
     "model": "gpt-4o-mini",
     "prompts_path": "./prompts/property_appraisal_steps.txt",
     "system_prompt_path": "./prompts/property_appraisal_system.txt",
-    # "downloads_path": r"D:\ThoughtfocusRD\Phase_2_navigators_deo\Base_bot\fileprepbot\downloads"
+    # "downloads_path": r"D:/browser_use_bot/fileprepbot/downloads"
 })
 
 

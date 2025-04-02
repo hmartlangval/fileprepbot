@@ -1,9 +1,15 @@
 from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
 import AbstractBot
  
 load_dotenv()
- 
+
+import ctypes
+
+def get_window_handle():
+    user32 = ctypes.windll.user32
+    handle = user32.GetForegroundWindow()
+    return handle
+
 class TaxBot(AbstractBot.FilePreparationParentBot):
     def __init__(self, options, *args, **kwargs):
         super().__init__(options, *args, **kwargs)
@@ -36,15 +42,16 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
         # print(f"extend_system_prompt: {extend_system_prompt}")
        
         result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data)
-        summary = self.analyse_summary(result)
-        return f"I am Tax Bot. Taks has been completed. {summary}"
+        summary = await self.analyse_summary(result)
+        return f"I am Tax Bot. Tasks has been completed. {summary}"
     
-    def analyse_summary(self, summary):
+    async def analyse_summary(self, summary):
         prompt = f""" You are provided with summary of task that has been completed.
         Please analyse the summary :
         {summary}
         ** Analyze the summary for if automation was successful or not, if pdf was downloaded or not, if any errors occurred or not.
         and provide the result in short format using max 20 words."""
+<<<<<<< HEAD
         llm = ChatOpenAI(model="gpt-4-turbo")
         result = llm.invoke(prompt)
         return result.content
@@ -61,8 +68,18 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
 
 bot = TaxBot(options={
     "bot_type": "task_bot",
+=======
+        result = await self.call(prompt)
+        return result
+
+bot = TaxBot(options={
+    "window_handle": get_window_handle(),
+    "bot_type": "task_bot",
+    "restart_command": "^c^cpython taxbot.py",
+>>>>>>> bc8fd34a2ba1dc52fe21c27d0e68652da4e70e24
     "bot_id": "taxbot",
     "bot_name": "TaxBot",
+    "bot_type":"task_bot",
     "autojoin_channel": "general",
     "model": "gpt-4o-mini",
     "prompts_path": "./prompts/tax_steps.txt",
@@ -71,5 +88,6 @@ bot = TaxBot(options={
 })
  
 bot.start()
+
 bot.join()
 bot.cleanup()

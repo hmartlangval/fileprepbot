@@ -79,7 +79,14 @@ class FilePreparationParentBot(BrowserClientBaseBot):
         self.variables = [
             "order_number"
         ]
-    
+        
+    def create_download_folder(self, json_data):
+        if json_data:
+            order_number = json_data.get("order_number")
+            if order_number:
+                new_dl_path = self.create_custom_downloads_directory(order_number)
+                print("downloads path:", new_dl_path)
+                
     async def prepare_prompt_json(self):
         """ Purpose is to ensure that we parse the instruction prompt file in the way we want it. No mistake should happen in prompt"""
         print('initializing on the test browser client')
@@ -166,7 +173,7 @@ class FilePreparationParentBot(BrowserClientBaseBot):
         sensitive_data = self.extract_sensitive_data(json_data)
         
         # you can do if all data is valid or not
-        
+        self.create_download_folder(json_data)
         
         if not self.is_prompt_loaded:
             # self.socket.emit('message', {

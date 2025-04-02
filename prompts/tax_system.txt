@@ -13,17 +13,24 @@ You will access a county property tax website and search for property details us
             * **If `search_by_account_number` is false, proceed with address-based search.**
         4.  **Form Filling:**
             * Fill input fields *exactly* as specified by the website's form requirements Fill it just once as it is .
+            * Ensure all input fields are filled correctly, including any required Fields
             * Maintain the required formatting (e.g., `##-####`, `####-#-###`).
             * For address searches, initially use only `x_house_number` and `x_street_name`.
             * If a "Year" selection field is available, set it to "2024" first.
-            * **Autocomplete Fields:** If an input field uses autocomplete, wait for suggestions to appear after typing. Do not proceed until suggestions are loaded. If no relevant suggestions appear, add more filter criteria (e.g., state and zip code) until a match is found.
+            * **Autocomplete Fields:** If an input field uses autocomplete, wait for suggestions to appear after typing. Do not proceed until suggestions are loaded.Type in the address completely , If no relevant suggestions appear, add more filter criteria (e.g., state and zip code) until a match is found.
+            **Strictly: Clear the input field refresh the search box  each time  before you start typing account number or address , if you dont find the results in the dropdown  clear refresh and  type it again** 
+            **If no result found  by using `search_by_account_number` then clear and refresh input search box field and start trying with address**          
             * **Use the `x_account_number` value for the account number field when `search_by_account_number` is true.**
         5.  **Search and Result Selection:** (Dropdown or Tabular Based):
                     After *filling out the form* and clicking the search button (for form-based UIs), *OR* while *typing* (for autocomplete dropdown UIs), proceed with address validation.
                     Search results may appear as:
                         -A table, list, or search result entries
+<<<<<<< HEAD
                         -A dropdown suggestion box while typing address
                         - select search result from any one of the visible results either the table, list or drop down suggestions.
+=======
+                        -A dropdown suggestion box while typing address or account number select the correct address/account number else select enter
+>>>>>>> bc8fd34a2ba1dc52fe21c27d0e68652da4e70e24
                     **Pre-Click Validation (before selecting any result , Address must be exactly equal to 'x_property_address'):**
                         For each result entry (row or dropdown suggestion), compare the following components exactly with the provided fields:
                         Address components that must match exactly:
@@ -32,8 +39,8 @@ You will access a county property tax website and search for property details us
                             -direction = x_direction (eg:E,NW,SW,S,NE...)
                             -City = x_city
                             -State = x_state
-                            -ZIP code (if shown) = x_zip_code
-                    **Only proceed to click/select if all the above fields match exactly(Address must be exactly equal to 'x_property_address'). 
+                            -ZIP code  = x_zip_code
+                    **Only proceed to click/select if all the above fields match exactly(Address must be exactly equal to 'x_property_address').Or try to click Enter**
                         -Clear the input field completely or refresh the page.
                         -Re-enter the search criteria (account number or address) exactly as before.
                         -Retry the search one final time.
@@ -48,16 +55,18 @@ You will access a county property tax website and search for property details us
                             -State = x_state
                             -ZIP code (if shown) = x_zip_code
                         *If the on-page address matches **exactly** and completely, proceed to export the page to PDF.*
-                        *If the address does not match exactly, do not export:*
+                        *If the on-page address does not match exactly*
                             Return to the search results.
                             Attempt a second (and final) valid selection (if the first one was incorrect).
                         After two total attempts, if no correct address is found or selected:
                             *Terminate the task immediately.*
                             Do *not* export any PDF.
                             Do *not* continue further.
+                        **After post click if property details and 'x_property_address' doesnot match retry once last time going back to search result**
+                        
         6.  **Save page to PDF:(Only if Address is valid and address must be exactly equal to 'x_property_address')** 
-            *Once the property details page is open and if the address matches perfectly then, save the page as a PDF
-             -If Page contains **2024 Annual Print pdf** just click **Once or maximum two times**
+                *Once the property details page is open and if the address matches perfectly then, 8save the page as a PDF
+                If Page contains **2024 Annual Print pdf** just click **Once or maximum two times**
             **Note:** If the *address doesn't match, Terminate the task immediately*
         7.  **End Task.**
         8.  **Error Handling and Retry Mechanism:**
@@ -73,10 +82,13 @@ You will access a county property tax website and search for property details us
 * **Address Fields:** If address fields are separated (house number, street, city, etc.), fill each field individually.
 * **Combined Address/Account Fields:** If a single field accepts both account number and addresses, use the `x_account_number` if `search_by_account_number` is true.
 * **Autocomplete Handling:**
-    * Wait patiently for autocomplete suggestions.
-    * If no matching suggestions appear, refine the search by adding more information (e.g., state).
-* **Fill input field with account number and addresses just once ,wait if no match found **clear the input field or refresh the input field remove the previous search data** and retry(only two attempts)**
+    * Wait patiently for autocomplete suggestions type in the address (eg:house number and street name).
+    * If no matching suggestions appear, refine the search by adding more information (e.g., state , zip code).
+* **If no results found while `search_by_account_number`then after two attempts try with address**
+* **If no results are found after five attempts, terminate the task immediately.**
 * **Year Selection:** Always prioritize filling the "Year" field (if present) with "2024" to filter results.
+* **Other Fields:** Fill other fields (e.g., property type, owner name) as accurately
+* **If state , zipcode is not provided skip it, if it is provided then consider it**
 
 *When to Search by account number vs. Address (Explicit Rules):*
 * **Account Number Search:**
@@ -84,8 +96,8 @@ You will access a county property tax website and search for property details us
 * **Address Search:**
     * Use address search *only* when the provided `search_by_account_number` flag is false or account number input fields does not exists.
 ***Strict Termination Rules:***
-    * Maximum of 2 total attempts (whether dropdown or tabular).
-    * Always clear input field between attempts.
-    * Do not proceed to export PDF unless the full property address is a confirmed exact match that is Address must be exactly equal to 'x_property_address'.
+    * Maximum of 3 total attempts (whether dropdown or tabular).
+    * Always clear input field between attempts refresh .
+    * Do not proceed to export PDF or save pdf  unless the full property address is a confirmed exact match that is Address must be exactly equal to 'x_property_address'.
     * Do not loop or retry beyond 2 times — if no match, terminate the task immediately.
 
