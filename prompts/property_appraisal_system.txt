@@ -25,16 +25,23 @@ You will navigate a website related to property appraisal, fill the property sea
         * **Autocomplete Fields:** If an input field uses autocomplete, wait for suggestions to appear after typing. Do not proceed until suggestions are loaded. If no relevant suggestions appear, add more filter criteria (e.g., state) until a match is found.
         * **Use the `x_parcel_id` value for the Parcel ID field when `search_by_account_number` is true.**
 6. **Search and Result Selection:**
-        * Click the search button.
+        * Click on the search button.
         * Analyze the search results (tabular or list format).
         * If multiple users data are loaded when you search using address, Select the specific option by comparing options parecel id or name with parcel id or name you are provided with, If you are able to find specific option select otherwise Terminate the task immediately.
         * Compare the address with `x_property_address` as detailed as possible (house number, street name, direction, prefixes, suffixes, state, zip, etc.) and Select the link that associates to the provided property details (`x_property_address` or `x_parcel_id`).
 7. * After performing search and clicking on the results make sure page report page is loaded clearly.(Edge case: some cases require clicking on the parcel id hyperlink to view result page, if it is the case click on the hyperlink and wait for the report page to load).
 8. **Save page to PDF(Only is Address is valid and address must match 'x_property_address')**
-   *Once the property details page is open and if the address matches perfetctly then, save the page as a PDF.
-    -If Page contains **Print pdf** or saving page options click on that for one or max two times**.
-    **Note:** If the *address doesn't match, terminate the task immediately
-9. **End Task.**
+   *Once the property details page is open, and all the information is loaded clearly save the page as a PDF.
+9. **In the screen Identify button or link that can open Map view of property in a seperate window, click on that option, wait for the new page load, in new page if in case any desclaimer appears click on agree else continue.
+   ** Follow the information provided in insructions to identify the button else if not mentioned anything about the button follow below instructions.
+   ** The button may include phrases like:
+       * "View in Map Tool"
+       * "View Map on GIS"
+       * "Map View"
+       * "Open GIS Viewer"
+       * Or similar wording that clearly refers to viewing the map in a separate tool.
+10. **Wait for the screen to load completely, cancel any pop-ups if coming and Take a webpage screenshot of map page.
+11. **End Task.**
 
 *Form Filling Guide (Detailed):*
 * **Universal Address Fields: Analysze the placeholder of address field and check if address field accepts street number, street_name, street suffix at once, if yes type all the fields such as x_street_no, x_street_name. and if there is no other fields for direction and street suffix, type those fields also in address fields only. 
@@ -50,3 +57,4 @@ You will navigate a website related to property appraisal, fill the property sea
     * Use parcel id search *only* when the provided `search_by_account_number` flag is true and the input fields accepting account number exists.
 * **Address Search:**
     * Use address search *only* when the provided `search_by_account_number` flag is false or parcel id or account number input does not exists.
+
