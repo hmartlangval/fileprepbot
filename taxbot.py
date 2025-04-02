@@ -35,61 +35,33 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
         print(f"extend_system_prompt: {extend_system_prompt}")
        
         result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data)
-        
-        return "I am Property Bot. Taks has been completed."
+        summary = await self.analyse_summary(result)
+        return f"I am Tax Bot. Tasks has been completed. {summary}"
     
+    async def analyse_summary(self, summary):
+        prompt = f""" You are provided with summary of task that has been completed.
+        Please analyse the summary :
+        {summary}
+ 
+        and provide the result in short format using max 20 words."""
+        result = await self.call(prompt)
+        return result.content
+
 bot = TaxBot(options={
     "window_handle": get_window_handle(),
     "bot_type": "task_bot",
     "restart_command": "^c^cpython taxbot.py",
     "bot_id": "taxbot",
     "bot_name": "TaxBot",
+    "bot_type":"task_bot",
     "autojoin_channel": "general",
     "model": "gpt-4o-mini",
-    "prompts_path": "prompts/tax_steps.txt",
-    "system_prompt_path": "prompts/tax_system.txt",
+    "prompts_path": "./prompts/tax_steps.txt",
+    "system_prompt_path": "./prompts/tax_system.txt",
     # "downloads_path": r"D:\ThoughtfocusRD\Phase_2_navigators_deo\Base_bot\fileprepbot\downloads"
 })
  
 bot.start()
-
-# import requests
-# import json
-# def call_rest_api():
-#     json_data = {
-#         "order_number": "73-832-8383",
-#         "s_data": {
-#             'x_account_number': '322S22004900800010', 
-#             'x_county': 'baker', 
-#             'x_property_address': '362 MINNESOTA AVE E MACCLENNY'
-#         }
-#     }
-    
-#     # json_data = {
-#     #     "order_number": "73-832-8383",
-#     #     "s_data": {
-#     #         'x_parcel_id': '01-4S-02W-000-01807-002', 
-#     #         'x_county': 'wakulla', 
-#     #         'x_property_address': '239 HARVEY MILL RD CRAWFORDVILLE 32327'
-#     #     }
-#     # }
-#     #Brevard
-#         # sensitive_data = {
-#         #     'x_county': 'brevard','x_account_number': '010089000', 'x_property_address': 'STONEWOOD TOWNHOMES LLC, 325 E UNIVERSITY BLVD #81'
-#         # }
-    
-#     data = {
-#         "content": f"@taxbot Welcome!! [json]{json.dumps(json_data)}[/json]",
-#         "sender": "Admin"
-#     }
-#     try:
-#         response = requests.post('http://localhost:3000/api/channels/general/sendMessage', json=data)
-#         response.raise_for_status()  # Raise an error for bad status codes
-#         return response.json()  # Return the response as JSON
-#     except requests.exceptions.RequestException as e:
-#         print(f"An error occurred: {e}")
-#         return None
-# call_rest_api()
 
 bot.join()
 bot.cleanup()
