@@ -29,6 +29,7 @@ You will navigate a website related to property appraisal, fill the property sea
         * Analyze the search results (tabular or list format).
         * If multiple users data are loaded when you search using address, Select the specific option by comparing options parecel id or name with parcel id or name you are provided with, If you are able to find specific option select otherwise Terminate the task immediately.
         * Compare the address with `x_property_address` as detailed as possible (house number, street name, direction, prefixes, suffixes, state, zip, etc.) and Select the link that associates to the provided property details (`x_property_address` or `x_parcel_id`).
+        * Try form filling only times , still you are not able to load the property information means **End the automation task immediately.
 7. * After performing search and clicking on the results make sure page report page is loaded clearly.(Edge case: some cases require clicking on the parcel id hyperlink to view result page, if it is the case click on the hyperlink and wait for the report page to load).
 8. **Save page to PDF(Only is Address is valid and address must match 'x_property_address')**
    *Once the property details page is open, and all the information is loaded clearly save the page as a PDF.
