@@ -20,10 +20,6 @@ class MainBot(LLMBotBase):
             "channelId": message.get("channelId", "general"),
             "content": f"@propertybot start processing for [json]{json.dumps(tasks)}[/json]"
         })
-        self.socket.emit('message', {
-            "channelId": message.get("channelId", "general"),
-            "content": f"@mapbot start processing for [json]{json.dumps(tasks)}[/json]"
-        })
         print('All tasks initiated for ', tasks)
         self.socket.emit('message', {
             "channelId": message.get("channelId", "general"),
@@ -165,67 +161,6 @@ bot = MainBot(options={
 })
 
 bot.start()
-
-
-# import requests
-# import json
-# def call_rest_api():
-#     json_data = {
-#         "action": "start_local_pdf",
-#         "data": [
-#             {
-#                 "pdf_path": "D:/cursor/fileprep_prod/fileprepbot/23-930-2323.pdf",
-#                 "original_filename": "23-930-2323.pdf",
-#                 "file_type": "application/pdf"
-#             }
-#         ]
-#     }
-#     # json_data = {
-#     #     "action": "start_task",
-#     #     "data": [
-#     #         {
-#     #             "pdf_path": "/api/data/1743192045452-Doc1.pdf",
-#     #             "original_filename": "Doc1.pdf",
-#     #             "file_type": "application/pdf",
-#     #             "data_id": "1743192045452-Doc1.pdf",
-#     #             "folder_path": "aido_order_files",
-#     #             "createdAt": "2025-03-28T20:00:48.455Z",
-#     #             "updatedAt": "2025-03-28T20:00:48.455Z",
-#     #             "isActive": True,
-#     #             "_id": "67e6fff0777548eec1631ebe"
-#     #         }
-#     #     ]
-#     # }
-#     # json_data = {
-#     #     "action": "start_task",
-#     #     "data": [
-#     #         {
-#     #             "order_number": "Doc1",
-#     #             "s_data": {
-#     #                 "x_county": "Pasco",
-#     #                 "x_property_address": "3501 Zoyla Dr, New Port Richey, FL 34653",
-#     #                 "x_account_number": "",
-#     #                 "x_house_number": "3501",
-#     #                 "x_street_name": "Zoyla Dr",
-#     #                 "x_city": "New Port Richey",
-#     #                 "x_zip_code": "34653"
-#     #             }
-                
-#     #         }
-#     #     ]
-#     # }
-#     data = {
-#         "content": f"@fileprep start processing for [json]{json.dumps(json_data)}[/json]",
-#         "sender": "Admin"
-#     }
-#     try:
-#         response = requests.post('http://localhost:3000/api/channels/general/sendMessage', json=data)
-#         response.raise_for_status()  # Raise an error for bad status codes
-#         return response.json()  # Return the response as JSON
-#     except requests.exceptions.RequestException as e:
-#         print(f"An error occurred: {e}")
-#         return None
-# call_rest_api()
 
 bot.join()
 
