@@ -45,7 +45,7 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
  
         and provide the result in short format using max 20 words."""
         result = await self.call(prompt)
-        return result.content
+        return result
 
 bot = TaxBot(options={
     "window_handle": get_window_handle(),
