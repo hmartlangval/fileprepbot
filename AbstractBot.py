@@ -81,6 +81,7 @@ class FilePreparationParentBot(BrowserClientBaseBot):
         ]
         
     def create_download_folder(self, json_data):
+        print("json_data:", json_data)
         if json_data:
             order_number = json_data.get("order_number")
             if order_number:

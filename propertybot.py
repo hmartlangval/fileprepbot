@@ -54,19 +54,17 @@ class PropertyBot(AbstractBot.FilePreparationParentBot):
     def analyze_instructions(self, instructions):
         prompt = f""" You are provided with instructions for a task.
         Please check the instructions :
-        {instructions}
-        if the instruction is none then return "No instructions provided"
-        if the instruction is not none then return "Able to load Instructions, proceeding with task"""
+        {instructions} .
+        **If the instruction is none then return "No instructions provided",
+        **If the instruction is present then return "Able to load Instructions, proceeding with task.
+        Strictly return only one of the above two options, don't any analysis or explanation"""
 
         llm = ChatOpenAI(model="gpt-4-turbo")
         result = llm.invoke(prompt)
         return result.content
     
 bot = PropertyBot(options={
-<<<<<<< HEAD
-=======
     "window_handle": get_window_handle(),
->>>>>>> bc8fd34a2ba1dc52fe21c27d0e68652da4e70e24
     "bot_type": "task_bot",
     "bot_id": "propertybot",
     "bot_name": "PropertyBot",

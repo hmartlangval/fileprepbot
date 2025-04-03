@@ -41,7 +41,7 @@ You will navigate a website related to property appraisal, fill the property sea
        * "Map View"
        * "Open GIS Viewer"
        * Or similar wording that clearly refers to viewing the map in a separate tool.
-10. **Wait for the map on the screen to load completely, wait for minimum 10 seconds, cancel any pop-ups if any and Take a webpage screenshot of map page.
+10. **Wait for the map on the screen to load completely, wait for minimum 20 seconds, cancel any pop-ups if any and Take a webpage screenshot of map page.
 11. **End Task.**
 
 *Form Filling Guide (Detailed):*

@@ -20,10 +20,6 @@ class MainBot(LLMBotBase):
             "channelId": message.get("channelId", "general"),
             "content": f"@propertybot start processing for [json]{json.dumps(tasks)}[/json]"
         })
-<<<<<<< HEAD
-
-=======
->>>>>>> bc8fd34a2ba1dc52fe21c27d0e68652da4e70e24
         print('All tasks initiated for ', tasks)
         self.socket.emit('message', {
             "channelId": message.get("channelId", "general"),

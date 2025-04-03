@@ -336,109 +336,15 @@
 >>County: taylor
 >>URL: https://taylor.floridatax.us/AccountSearch?s=pt
 >>INSTRUCTIONS:
-<<<<<<< HEAD
-    Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
-=======
     Proceed with the search and download the pdf using the given information
->>>>>>> 5832678656c207ba63ab646fc5d6cdb5f0c224ed
 
 >>County: union
 >>URL: https://www.unioncountytc.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
-<<<<<<< HEAD
-    Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
-=======
     Proceed with the search and download the pdf using the given information
->>>>>>> 5832678656c207ba63ab646fc5d6cdb5f0c224ed
 
 >>County: volusia
 >>URL: https://county-taxes.net/vctaxcollector/property-tax
 >>INSTRUCTIONS:
-<<<<<<< HEAD
-    Your Order number is :[order_number]
-    Proceed with the search
-    If Page contains **2024 Annual Print pdf** just click **Once or maximum two times**
-
-
->>County: Gadsden
->>URL: https://fl-gadsden.publicaccessnow.com/TaxCollector/PropertyTaxSearch.aspx
- >>INSTRUCTIONS:
-    Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
-
->>County: Gilchrist
->>URL: 
->>INSTRUCTIONS:
-    Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
-
->>County: Polk
->>URL:https://polk.payfltaxes.com/lookup/property-tax   
->>INSTRUCTIONS:
-    Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
-
->>County: Putnam
->>URL:https://www.putnamtax.com/
->>INSTRUCTIONS:
-    Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
-
->>County: Santa Rosa
->>URL:https://county-taxes.net/fl-santarosa/property-tax
->>INSTRUCTIONS:
-    Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
-
->>County: Sarasota
->>URL: https://www.sarasotataxcollector.gov/
->>INSTRUCTIONS:
-    Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
-
->>County: Seminole
->>URL:https://county-taxes.net/fl-seminole/fl-seminole/property-tax
->>INSTRUCTIONS:
-    Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
-
->>County: St. Johns
->>URL: https://www.stjohnstax.us/AccountSearch?s=pt
->>INSTRUCTIONS:
-    Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
-
->>County: St. Lucie
->>URL: https://county-taxes.net/stlucie/property-tax
->>INSTRUCTIONS:
-    Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
-
->>County: Sumter
->>URL: https://county-taxes.net/sumter/property-tax
->>INSTRUCTIONS:
-    Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
-
->>County: Suwannee
->>URL:https://suwannee.floridatax.us/AccountSearch?s=pt
->>INSTRUCTIONS:
-    Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
-
->>County: Walton
->>URL:https://county-taxes.net/fl-walton/property-tax
->>INSTRUCTIONS:
-    Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
-
->>County: Washington
->>URL:https://www.washingtoncountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
->>INSTRUCTIONS:
-    Your Order number is :[order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
-=======
     Proceed with the search and download the pdf using the given information
 >>>>>>> 5832678656c207ba63ab646fc5d6cdb5f0c224ed

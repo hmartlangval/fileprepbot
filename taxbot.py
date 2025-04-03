@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 import AbstractBot
- 
+from langchain_openai import ChatOpenAI
 load_dotenv()
 
 import ctypes
@@ -30,7 +30,7 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
        
         [instructions, sensitive_data, extend_system_prompt] = await super().prepare_LLM_data(json_data, message)
         
-        instructions_result = self.analyze_instructions(instructions)
+        instructions_result = await self.analyze_instructions(instructions)
 
         self.socket.emit('message', {
             "channelId": message.get("channelId"),
@@ -46,37 +46,35 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
         return f"I am Tax Bot. Tasks has been completed. {summary}"
     
     async def analyse_summary(self, summary):
+
         prompt = f""" You are provided with summary of task that has been completed.
         Please analyse the summary :
         {summary}
         ** Analyze the summary for if automation was successful or not, if pdf was downloaded or not, if any errors occurred or not.
-        and provide the result in short format using max 20 words."""
-<<<<<<< HEAD
+        and provide the result in short format using max 20 words.
+        **If the summary is not provided then return "No summary provided"
+        """
+
         llm = ChatOpenAI(model="gpt-4-turbo")
         result = llm.invoke(prompt)
         return result.content
     
-    def analyze_instructions(self, instructions):
+    async def analyze_instructions(self, instructions):
         prompt = f""" You are provided with instructions for a task.
         Please check the instructions :
-        {instructions}
-        if the instruction is none then return "No instructions provided"
-        if the instruction is not none then return "Able to load Instructions, proceeding with task"""
+        {instructions} .
+        **If the instruction is none then return "No instructions provided",
+        **If the instruction is present then return "Able to load Instructions, proceeding with task.
+        Strictly return only one of the above two options, don't any analysis or explanation"""
+
         llm = ChatOpenAI(model="gpt-4-turbo")
         result = llm.invoke(prompt)
         return result.content
-
-bot = TaxBot(options={
-    "bot_type": "task_bot",
-=======
-        result = await self.call(prompt)
-        return result
 
 bot = TaxBot(options={
     "window_handle": get_window_handle(),
     "bot_type": "task_bot",
     "restart_command": "^c^cpython taxbot.py",
->>>>>>> bc8fd34a2ba1dc52fe21c27d0e68652da4e70e24
     "bot_id": "taxbot",
     "bot_name": "TaxBot",
     "bot_type":"task_bot",
