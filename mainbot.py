@@ -14,17 +14,47 @@ class MainBot(LLMBotBase):
     async def process_tasks(self, message, tasks):
         self.socket.emit('message', {
             "channelId": message.get("channelId", "general"),
-            "content": f"@taxbot start processing for [json]{json.dumps(tasks)}[/json]"
-        })
-        self.socket.emit('message', {
-            "channelId": message.get("channelId", "general"),
-            "content": f"@propertybot start processing for [json]{json.dumps(tasks)}[/json]"
+            "content": f"@taxbot @propertybot New task assigned for order: {tasks.get('order_number', 'n/a')} [json]{json.dumps(tasks)}[/json]"
         })
         print('All tasks initiated for ', tasks)
-        self.socket.emit('message', {
-            "channelId": message.get("channelId", "general"),
-            "content": f"All Tasks initiated for order: {tasks.get('order_number', 'n/a')}"
-        })
+        # self.socket.emit('message', {
+        #     "channelId": message.get("channelId", "general"),
+        #     "content": f"All Tasks initiated for order: {tasks.get('order_number', 'n/a')}"
+        # })
+        # for task in tasks:
+        #     url = task.get("url", None)
+        #     print('url exists', url)
+        #     if url:
+        #         url = f"http://localhost:3000{url}"
+        #         print('url exists', url)
+        #         pdf = requests.get(url)
+        #         # print('pdf exists', pdf)
+        #         if pdf:
+        #             # Save the PDF content to a temporary file
+        #             from io import BytesIO
+        #             # print('pdf content exists', pdf.content)
+        #             pdf_buffer = BytesIO(pdf.content)
+        #             print('pdf content is now in buffer')
+                    
+        #             # # Prepare instructions for LLM
+        #             instructions = "Extract content and return formatted data from the provided PDF."
+                    
+        #             # # Call the LLM agent to process the PDF
+        #             result = await self.call_agent(instructions, pdf_buffer)
+                    
+        #             print('extraction result', result)
+        #             # # Handle the result as needed
+        #             self.socket.emit('message', {
+        #                 "channelId": message.get("channelId"),
+        #                 "content": f"Task completed. Extracted data: ..."
+        #             })
+                    
+        #             # Clean up the temporary file
+        #             # os.remove(temp_pdf_path)
+    
+    def add_more_params_for_task_bots(self, final_json_data, json_data):
+        final_json_data['x_county'] = final_json_data.get("s_data", {}).get('x_county', None)
+        return final_json_data
     
     async def generate_response(self, message):
         if(self.isBusy):
@@ -61,7 +91,10 @@ class MainBot(LLMBotBase):
                         result = await self.call(instructions)
                         clean_parsed = clean_json_string(result)
                         userInput_json = json.loads(clean_parsed)
-                        userInput = "PDF has been analyzed from URL {}. Result: [json]{}[/json]".format(pdf_path, clean_parsed)
+                        
+                        userInput_json = self.add_more_params_for_task_bots(userInput_json, json_data=json_data)
+                        
+                        # userInput = "PDF has been analyzed from URL {}. Result: [json]{}[/json]".format(pdf_path, clean_parsed)
                         
                         # if pdf_path.startswith("http"):
                         #     # extracted_data = PdfToImage.pdf_page_to_base64_from_url(pdf_path)
@@ -83,10 +116,6 @@ class MainBot(LLMBotBase):
                         if userInput_json:
                             await self.process_tasks(message, userInput_json)
                         
-                        self.socket.emit('message', {
-                            "channelId": message.get("channelId", "general"),
-                            "content": f"extracted JSON is for [json]{json.dumps(userInput_json)}[/json]"
-                        })
                         
                     else:
                         return "You seem to have not provided a valid pdf path"
