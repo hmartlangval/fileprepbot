@@ -35,8 +35,16 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
         print(f"extend_system_prompt: {extend_system_prompt}")
        
         result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data)
-        summary = await self.analyse_summary(result)
-        return f"I am Tax Bot. Tasks has been completed. {summary}"
+        
+        [is_success, final_summary] = self.check_success_or_failure(result)
+        
+        if is_success:
+            return f"I am Tax Bot. Tasks has been completed. {final_summary}"
+        else:
+            return f"I am Tax Bot. Tasks has failed. Message: {final_summary}"
+        
+        # summary = await self.analyse_summary(result)
+        # return f"I am Tax Bot. Tasks has been completed. {summary}"
     
     async def analyse_summary(self, summary):
         prompt = f""" You are provided with summary of task that has been completed.
