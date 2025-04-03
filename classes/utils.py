@@ -9,6 +9,9 @@ def replace_server_url_with_localhost(url):
         """Replaces any HTTP URL with http://localhost:3000/."""
         url = url.replace("https://", "http://")
         return re.sub(r"http://[^/]+/", "http://localhost:3000/", url)
+    elif os.getenv("ALWAYS_USE_NO_SSL"):
+        """Replaces any HTTPS with HTTP"""
+        url = url.replace("https://", "http://")
 
     return url
 
