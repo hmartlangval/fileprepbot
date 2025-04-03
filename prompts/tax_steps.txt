@@ -347,4 +347,3 @@
 >>URL: https://county-taxes.net/vctaxcollector/property-tax
 >>INSTRUCTIONS:
     Proceed with the search and download the pdf using the given information
->>>>>>> 5832678656c207ba63ab646fc5d6cdb5f0c224ed
