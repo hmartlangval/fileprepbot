@@ -41,7 +41,6 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
         print(f"sensitive_data:          {sensitive_data}")
         print(f"extend_system_prompt:  {extend_system_prompt}")
        
-        return "returned"
         result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data)
         
         [is_success, final_summary] = self.check_success_or_failure(result)
@@ -54,19 +53,19 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
         # summary = await self.analyse_summary(result)
         # return f"I am Tax Bot. Tasks has been completed. {summary}"
     
-    async def analyse_summary(self, summary):
+    # async def analyse_summary(self, summary):
 
-        prompt = f""" You are provided with summary of task that has been completed.
-        Please analyse the summary :
-        {summary}
-        ** Analyze the summary for if automation was successful or not, if pdf was downloaded or not, if any errors occurred or not.
-        and provide the result in short format using max 20 words.
-        **If the summary is not provided then return "No summary provided"
-        """
+    #     prompt = f""" You are provided with summary of task that has been completed.
+    #     Please analyse the summary :
+    #     {summary}
+    #     ** Analyze the summary for if automation was successful or not, if pdf was downloaded or not, if any errors occurred or not.
+    #     and provide the result in short format using max 20 words.
+    #     **If the summary is not provided then return "No summary provided"
+    #     """
 
-        llm = ChatOpenAI(model="gpt-4-turbo")
-        result = llm.invoke(prompt)
-        return result.content
+    #     llm = ChatOpenAI(model="gpt-4-turbo")
+    #     result = llm.invoke(prompt)
+    #     return result.content
     
     async def analyze_instructions(self, instructions):
         prompt = f""" You are provided with instructions for a task.

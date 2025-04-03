@@ -1,98 +1,61 @@
 *Primary Objective Statement*:
-You will access a county property tax website and search for property details using either an account number or an address (based on search_by_account_number). After identifying the correct property, export the details only if the address is a perfect match. If no match is found after 2 total attempts, terminate immediately.
+You will access a county property tax website and search for property details using either an account number or an address (based on search_by_account_number). After identifying the correct property, export the details page as a PDF — only if the address is a perfect match. If no match is found after 2 total attempts, terminate immediately.
  
-**Navigation Steps:
-        1.  **Navigate to correct given URL.**
+ 
+**Navigation Steps**:
+        1.  **Navigate to the given URL.**
         2.  **Identify and Analyze Form Elements:**
             * Thoroughly examine all form elements, including labels, placeholders, instructions, tooltips, titles, and `aria-label` attributes.
             * Understand the expected input formats and data types for each field.
         3.  **Data Validation and Prioritization (using search_by_account_number):**
             * **Crucially:** Determine the search method based on the `search_by_account_number` flag.
-            * **If `search_by_account_number` is true, prioritize searching by `x_account_number`.**
+            * **If `search_by_account_number` is true, prioritize searching by `x_account_number`. This is the preferred search method.**
             * **If `search_by_account_number` is false, proceed with address-based search.**
         4.  **Form Filling:**
-            * Fill input fields *exactly* as specified by the website's form requirements.
-            * Ensure all input fields are filled correctly, including required fields.
+            * Fill input fields *exactly* as specified by the website's form requirements Fill it just once as it is .
             * Maintain the required formatting (e.g., `##-####`, `####-#-###`).
             * For address searches, initially use only `x_house_number` and `x_street_name`.
-            * If a **Year** field is present, set it to **2024**.
-            * **Autocomplete Fields (Dropdown Handling):**
-                * Type the input (account number or address) completely.
-                * Wait for dropdown suggestions (max 5–8 seconds).
-                * IF suggestions appear:
-                    - Loop through each suggestion.
-                    - If a suggestion **exactly matches `x_property_address`**, **click/select** it.
-                    - If no exact match, **do not select** anything.
-                    - Optionally, press Enter if no match is clickable.
-                * IF no suggestions appear:
-                    - Clear the input field completely.
-                    - Refresh the search box or page.
-                    - Retry the same input.
-                * **IF no dropdown appears or input is invalid:**
-                    - **Clear the entire input field completely** (use backspace or `.fill('')`, or refresh the whole page  if available).
-                    - **Wait briefly** and **retry the same input** exactly as before.
-                * If no exact match found after 3 tries: **terminate the task.**
-        5.  **Search and Result Selection:** (Dropdown or Tabular Based):
-            Search results may appear as:
-                - A table or list (tabular)
-                - A dropdown while typing (autocomplete)
-                **Click on search button or press enter** 
-            * Validate results against the following before selecting:
-                - House number = x_house_number
-                - Street name (including suffixes) = x_street_name
-                - Direction = x_direction
-                - City = x_city
-                - State = x_state
-                - ZIP code = x_zip_code
-            * If no perfect match: clear field, refresh, and retry once.
-            * After 2 failed attempts: **terminate.**
-            * **Post-Click Validation:**
-                * Once on the detail page, re-check the property address.
-                * If it doesn’t match `x_property_address`, go back and retry.
-                * After 2 invalid selections: **terminate** without saving.
- 
-        6.  **Save Page (Export) Based on UI Type:**
-            * After address is confirmed as a perfect match, proceed based on UI type:
- 
-            **Case 1: Dropdown-Based UI (Shows Multiple Annual Bills):**
-                - Once on the property detail page:
-                    - Take a **screenshot or PDF** of the entire page showing **all annual bills**.
-                    - Save it as: `[order_number]_history.pdf`
-                    - Next, look for the **2024 Annual Bill**.
-                    - Click on **"Print PDF"** under the 2024 section.
-                    - Click the Print Pdf once or maximum twice 
-                    - Wait 5 seconds to allow the file  to download.
-                    - Save the downloaded file as: `[order_number]_Tax.pdf`
-            **Case 2: Tabular Search-Based UI:**
-                - After selecting the exact matching result from the table:
-                    - If the address matches exactly:
-                        - Save the full property detail page as a PDF.
-                        - Save the file as: `[order_number]_Tax.pdf`
-                - If address doesn’t match after page loads: retry once.
-                - Still no match? Terminate.
- 
+            * If a "Year" selection field is available, set it to "2024" first.
+            * **Autocomplete Fields:** If an input field uses autocomplete, wait for suggestions to appear after typing. Do not proceed until suggestions are loaded. If no relevant suggestions appear, add more filter criteria (e.g., state) until a match is found.
+            * **Use the `x_account_number` value for the account number field when `search_by_account_number` is true.**
+        5.  **Search and Result Selection:**
+                * Click the search button (if its to fill out the form).
+                * Analyze the search results (which may be in table, list, or dropdown format).
+                * If multiple users data are loaded when you search using address, Select the specific option by comparing options `x_account_number`  or `x_property_address`, If you are able to find specific option select/click/enter otherwise Terminate the task immediately.
+                * Compare the address with `x_property_address` as detailed as possible (house number, street name, direction, prefixes, suffixes, state, zip, etc.) and Select the link that associates to the provided property details (`x_property_address` or `x_account_number` ).
+                * Try form filling (if its to fill out the form) or searching `x_account_number`  or `x_property_address` through dropdown search just 2 attempts, but before you try the 2nd attempt, Clear the search input field completely else refresh.
+                * *If two attempts fail then End the automation task immediately*
+        6.  **Save Page as PDF:(Only if Address is valid and exact match the proceed to this step)** 
+                First Step : *Once the property tax details page is open and if the address matches perfectly then, **save  the page as a PDF that consists of list of all Annual bills**. 
+                Second Step :**If Page contains 2024 Annual Print pdf just click on link **Once or maximum two times** Wait for the File to download  completely.
+                        - If no button or PDF response is available after click, retry once.
+                        - If retry fails or address is incorrect, **terminate** the task.
+            **Note:** If the *address doesn't match, Terminate the task immediately*
         7.  **End Task.**
- 
         8.  **Error Handling and Retry Mechanism:**
-            * Retry only once after the initial failure (total of 2 attempts).
-            * Clear the input field and refresh between each attempt.
-            * Do not retry more than 2 times.
-            * If search field fails to load or cannot be interacted with, terminate after 2–3 tries.
+                *If no results are found in the initial search and if incorrect result is been choosen :*
+                    *Retry Search Attempt 2 times* :Clear the input field refresh the page first and then Retry the original search method .
+                **If both attempts fail:**
+                        -Terminate the task immediately
+                **If you are not able to find search box don't keep on looping try 2-3 times the terminate forcefully**
  
 *Form Filling Guide (Detailed):*
-* **Address Fields:** Fill fields individually if split (e.g., house number, street).
-* **Combined Fields:** If a single input exists, prefer `x_account_number` when `search_by_account_number` is true.
-* **Autocomplete:** Wait for suggestions; retry with more details if no match.
-* **If no results found while using account number, fallback to address.**
-* **If no results after 2 total retries, terminate.**
-* **Year Selection:** Always set to 2024 if available.
-* **Skip optional fields like ZIP/State if not required, but fill them if provided.**
+* **Address Fields:** If address fields are separated (house number, street, city, etc.), fill each field individually.
+* **Combined Address/Account Fields:** If a single field accepts both account number and addresses, use the `x_account_number` if `search_by_account_number` is true.
+* **Autocomplete Handling:**
+    * Wait patiently for autocomplete suggestions.
+    * If no matching suggestions appear, refine the search by adding more information (e.g., state).
+* **Fill input field with account number and addresses just once ,wait if no match found **clear the input field or refresh the input field remove the previous search data** and retry(only two attempts)**
+* **Year Selection:** Always prioritize filling the "Year" field (if present) with "2024" to filter results.
  
-*Search Mode Decision Rules:*
-* **Account Number Search:** Use when `search_by_account_number == true` and input exists.
-* **Address Search:** Use when `search_by_account_number == false` or if account input is not supported.
- 
+*When to Search by account number vs. Address (Explicit Rules):*
+* **Account Number Search:**
+    * Use Account Number search *only* when the provided `search_by_account_number` flag is true and the input fields accepting account number exists.
+* **Address Search:**
+    * Use address search *only* when the provided `search_by_account_number` flag is false or account number input fields does not exists.
 ***Strict Termination Rules:***
-* Do not retry more than 2 times.
-* Never proceed to PDF export unless address is a **perfect match**.
-* Do not proceed or download if there is **no exact match after two attempts**.
+    * Maximum of 2 total attempts (whether dropdown or tabular).
+    * Always clear input field between attempts.
+    * Do not proceed to export PDF unless the full property address is a confirmed exact match.
+    * Do not loop or retry beyond 2 times — if no match, terminate the task immediately.
+ 
