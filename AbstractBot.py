@@ -77,7 +77,8 @@ class FilePreparationParentBot(BrowserClientBaseBot):
     def __init__(self, options=None, *args, **kwargs):
         super().__init__(options, *args, **kwargs)
         self.variables = [
-            "order_number"
+            "order_number", # non sensitive data, ok to be sent to LLM
+            "x_county", # count is also OK to be sent to LLM
         ]
         
     def create_download_folder(self, json_data):
@@ -193,6 +194,8 @@ class FilePreparationParentBot(BrowserClientBaseBot):
             if spp:
                 with open(spp, 'r') as file:
                     extend_system_prompt = file.read()
+                    for variable in self.variables:
+                        extend_system_prompt = extend_system_prompt.replace(f'[{variable}]', json_data.get(variable, ''))
             else:
                 extend_system_prompt = ""
         except FileNotFoundError:
