@@ -37,10 +37,11 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
             "content": instructions_result
         })
         
-        # print(f"instructions: {instructions}")
-        # print(f"sensitive_data: {sensitive_data}")
-        # print(f"extend_system_prompt: {extend_system_prompt}")
+        print(f"instructions:       {instructions}")
+        print(f"sensitive_data:          {sensitive_data}")
+        print(f"extend_system_prompt:  {extend_system_prompt}")
        
+        return "returned"
         result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data)
         summary = await self.analyse_summary(result)
         return f"I am Tax Bot. Tasks has been completed. {summary}"
