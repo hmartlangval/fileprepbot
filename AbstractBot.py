@@ -1,5 +1,6 @@
 from base_bot.browser_client_base_bot import BrowserClientBaseBot
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
@@ -75,6 +76,16 @@ countyMap = {
 
 class FilePreparationParentBot(BrowserClientBaseBot):
     def __init__(self, options=None, *args, **kwargs):
+        
+        if options is None:
+            options = {}
+        
+        downloads_path = options.get("downloads_path", None)
+        if not downloads_path:
+            downloads_path = os.getenv("DOWNLOADS_PATH", None)
+            if downloads_path:
+                options.setdefault("downloads_path", downloads_path)
+        
         super().__init__(options, *args, **kwargs)
         self.variables = [
             "order_number", # non sensitive data, ok to be sent to LLM
