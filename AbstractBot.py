@@ -77,10 +77,14 @@ countyMap = {
 class FilePreparationParentBot(BrowserClientBaseBot):
     def __init__(self, options=None, *args, **kwargs):
         
-        downloads_path = options.get("downloads_path") if options else os.getenv("DOWNLOADS_PATH", "downloads")
         if options is None:
             options = {}
-        options.setdefault("downloads_path", downloads_path)
+        
+        downloads_path = options.get("downloads_path", None)
+        if not downloads_path:
+            downloads_path = os.getenv("DOWNLOADS_PATH", None)
+            if downloads_path:
+                options.setdefault("downloads_path", downloads_path)
         
         super().__init__(options, *args, **kwargs)
         self.variables = [
