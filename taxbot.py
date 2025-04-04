@@ -42,7 +42,15 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
         print(f"extend_system_prompt:  {extend_system_prompt}")
        
         result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data)
+        summary = await self.analyse_summary(result)
         
+        summary = f"I am tax bot. summary of downloading task: {summary}"
+        
+        self.socket.emit('message', {
+            "channelId": message.get("channelId"),
+            "content": summary
+        })
+
         [is_success, final_summary] = self.check_success_or_failure(result)
         
         if is_success:
@@ -53,19 +61,20 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
         # summary = await self.analyse_summary(result)
         # return f"I am Tax Bot. Tasks has been completed. {summary}"
     
-    # async def analyse_summary(self, summary):
+    async def analyse_summary(self, summary):
 
-    #     prompt = f""" You are provided with summary of task that has been completed.
-    #     Please analyse the summary :
-    #     {summary}
-    #     ** Analyze the summary for if automation was successful or not, if pdf was downloaded or not, if any errors occurred or not.
-    #     and provide the result in short format using max 20 words.
-    #     **If the summary is not provided then return "No summary provided"
-    #     """
+        prompt = f""" You are provided with summary of task that has been completed.
+        Please analyse the summary :
+        {summary}       
+        **If pdf was downloaded or not, if any errors occurred or not.
+        **Also give the download path where the files were downloaded.
+        ** provide the result in short format using max 20 words.
+        ** If the summary is not provided then return "No summary provided"
+        """
 
-    #     llm = ChatOpenAI(model="gpt-4-turbo")
-    #     result = llm.invoke(prompt)
-    #     return result.content
+        llm = ChatOpenAI(model="gpt-4-turbo")
+        result = llm.invoke(prompt)
+        return result.content
     
     async def analyze_instructions(self, instructions):
         prompt = f""" You are provided with instructions for a task.
@@ -74,7 +83,7 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
         **If the instruction is none then return "No instructions provided",
         **If the instruction is present then return "Able to load Instructions, proceeding with task.
         Strictly return only one of the above two options, don't any analysis or explanation"""
-
+       
         llm = ChatOpenAI(model="gpt-4-turbo")
         result = llm.invoke(prompt)
         return result.content

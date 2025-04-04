@@ -39,14 +39,29 @@ class PropertyBot(AbstractBot.FilePreparationParentBot):
         
         result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data)
         summary = self.analyse_summary(result)
-        return f"I am Property Bot. Taks has been completed, and the summary is {summary}"
+
+        summary = f"I am property bot. summary of downloading task: {summary}"
+
+        self.socket.emit('message', {
+            "channelId": message.get("channelId"),
+            "content": summary
+        })
+       
+        [is_success, final_summary] = self.check_success_or_failure(result)
+        if is_success:
+            return f"I am Property Bot. Tasks has been completed. {final_summary}"
+        else:
+            return f"I am Property Bot. Tasks has failed. Message: {final_summary}"
     
     def analyse_summary(self, summary):
         prompt = f""" You are provided with summary of task that has been completed.
         Please analyse the summary :
         {summary}
-        **Analyze the summary for if automation was successful or not, if pdf was downloaded or not, if any errors occurred or not, and if image screeshot was downloaded or not.
-        and provide the result in short format using max 20 words."""
+        ** if pdf was downloaded or not and if image screeshot was downloaded or not.
+        ** Also give the download path where the files were downloaded.
+        ** provide the result in short format using max 20 words.
+        ** If the summary is not provided then return "No summary provided"
+        """
         llm = ChatOpenAI(model="gpt-4-turbo")
         result = llm.invoke(prompt)
         return result.content

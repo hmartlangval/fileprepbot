@@ -346,85 +346,84 @@
 >>County: volusia
 >>URL: https://county-taxes.net/vctaxcollector/property-tax
 >>INSTRUCTIONS:
-<<<<<<< HEAD
     Your Order number is :[order_number]
     Proceed with the search
     If Page contains **2024 Annual Print pdf** just click **Once or maximum two times**
 
 
->>County: Gadsden
+>>County: gadsden
 >>URL: https://fl-gadsden.publicaccessnow.com/TaxCollector/PropertyTaxSearch.aspx
  >>INSTRUCTIONS:
     Your Order number is :[order_number]
     Proceed with the search and save the  extracted  page as pdf using filename [order_number]_Tax.pdf
 
->>County: Gilchrist
+>>County: gilchrist
 >>URL: 
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
     Proceed with the search and save the  extracted  page as pdf using filename [order_number]_Tax.pdf
 
->>County: Polk
+>>County: polk
 >>URL:https://polk.payfltaxes.com/lookup/property-tax   
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
     Proceed with the search and save the  extracted  page as pdf using filename [order_number]_Tax.pdf
 
->>County: Putnam
+>>County: putnam
 >>URL:https://www.putnamtax.com/
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
     Proceed with the search and save the  extracted  page as pdf using filename [order_number]_Tax.pdf
 
->>County: Santa Rosa
+>>County: santa rosa
 >>URL:https://county-taxes.net/fl-santarosa/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
     Proceed with the search and save the  extracted  page as pdf using filename [order_number]_Tax.pdf
 
->>County: Sarasota
+>>County: sarasota
 >>URL: https://www.sarasotataxcollector.gov/
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
     Proceed with the search and save the  extracted  page as pdf using filename [order_number]_Tax.pdf
 
->>County: Seminole
+>>County: seminole
 >>URL:https://county-taxes.net/fl-seminole/fl-seminole/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
     Proceed with the search and save the  extracted  page as pdf using filename [order_number]_Tax.pdf
 
->>County: St. Johns
+>>County: st. Johns
 >>URL: https://www.stjohnstax.us/AccountSearch?s=pt
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
     Proceed with the search and save the  extracted  page as pdf using filename [order_number]_Tax.pdf
 
->>County: St. Lucie
+>>County: st. Lucie
 >>URL: https://county-taxes.net/stlucie/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
     Proceed with the search and save the  extracted  page as pdf using filename [order_number]_Tax.pdf
 
->>County: Sumter
+>>County: sumter
 >>URL: https://county-taxes.net/sumter/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
     Proceed with the search and save the  extracted  page as pdf using filename [order_number]_Tax.pdf
 
->>County: Suwannee
+>>County: suwannee
 >>URL:https://suwannee.floridatax.us/AccountSearch?s=pt
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
     Proceed with the search and save the  extracted  page as pdf using filename [order_number]_Tax.pdf
 
->>County: Walton
+>>County: walton
 >>URL:https://county-taxes.net/fl-walton/property-tax
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
     Proceed with the search and save the  extracted  page as pdf using filename [order_number]_Tax.pdf
 
->>County: Washington
+>>County: washington
 >>URL:https://www.washingtoncountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
     Your Order number is :[order_number]
