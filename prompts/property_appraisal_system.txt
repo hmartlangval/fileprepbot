@@ -20,17 +20,20 @@ You will navigate a website related to property appraisal, fill the property sea
 5. **Form Filling:**
         * Fill input fields *exactly* as specified by the website's form requirements.
         * Maintain the required formatting (e.g., `##-####`, `####-#-###`).
-        * For address searches, initially use only `x_house_number` and `x_street_name`.
+        * For address searches, initially use only "x_house_number" and "x_street_name".
         * If a "Year" selection field is available, set it to "2024" first.
         * **Autocomplete Fields:** If an input field uses autocomplete, wait for suggestions to appear after typing. Do not proceed until suggestions are loaded. If no relevant suggestions appear, add more filter criteria (e.g., state) until a match is found.
-        * **Use the `x_parcel_id` value for the Parcel ID field when `search_by_account_number` is true.**
+        * **Use the "x_parcel_id" value for the Parcel ID field when `search_by_account_number` is true.**
+        * **Here "x_house_number", "x_street_name" and "x_parcel_id" are place holders you should use their value provided to you not the exact string.
 6. **Search and Result Selection:**
         * Click on the search button.
         * Analyze the search results (tabular or list format).
         * If multiple users data are loaded when you search using address, Select the specific option by comparing options parecel id or name with parcel id or name you are provided with, If you are able to find specific option select otherwise Terminate the task immediately.
         * Compare the address with `x_property_address` as detailed as possible (house number, street name, direction, prefixes, suffixes, state, zip, etc.) and Select the link that associates to the provided property details (`x_property_address` or `x_parcel_id`).
         * Try form filling only times , still you are not able to load the property information means **End the automation task immediately.
-7. **After performing search and clicking on the results make sure page report page is loaded clearly.(*Edge case: After peforming search some cases require further clicking on the parcel id hyperlink to view result page, if it is the case click on the hyperlink and wait for the report page to load).
+7. **After performing search and clicking on the results make sure page report page is loaded clearly.
+   **Edge case: After peforming search some cases require further clicking on the parcel id hyperlink to view result page, if it is the case click on the hyperlink and wait for the report page to load.
+   **Wait for the Parcel summary screen to reach network idle state ---where no more than 0 (or 2) active network connections exist for at least 500ms --  to confirm that all JavaScript functions have executed and all elements, including images and dynamic content, are fully loaded before taking any action.
 8. **Save page to PDF(Only is Address is valid and address must match 'x_property_address')**
     *Make sure you are in correct tab before saving respective page asked for saving, other wise switch to property summary tab before saving page.
     *Once the property details page is open, and all the information is loaded clearly save the page as a PDF.
@@ -42,7 +45,7 @@ You will navigate a website related to property appraisal, fill the property sea
        * "Map View"
        * "Open GIS Viewer"
        * Or similar wording that clearly refers to viewing the map in a separate tool.
-10. **Wait for the map on the screen to load completely and all the operations are performed, wait for minimum 20 seconds, cancel any pop-ups if any and Take a webpage screenshot of map page.
+10. **Wait for the map page to reach network idle state ---where no more than 0 (or 2) active network connections exist for at least 500ms --  to confirm that all JavaScript functions have executed and all elements, including images and dynamic content, are fully loaded before taking any action, And then Take a webpage screenshot of map page.
 11. **End Task.**
 
 *Form Filling Guide (Detailed):*
