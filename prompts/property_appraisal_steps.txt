@@ -143,4 +143,8 @@
 >>URL: https://search.mywakullapa.com/
 >>INSTRUCTIONS:
     Your order number is: [order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Proceed with the search of  parcel id in parcel records *OR* address in property all search.
+    Click enter or click on search button 
+    Export as pdf
+    Click on print and save  using filename [order_number]-PA.pdf
+    Click on the GIS map link wait for the map to load take a webpage screenshot.

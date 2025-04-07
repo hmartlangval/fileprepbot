@@ -1,5 +1,4 @@
 import json
-import asyncio
 from base_bot.llm_bot_base import LLMBotBase
 from dotenv import load_dotenv
 from classes.pdf_to_image import PdfToImage
@@ -11,126 +10,157 @@ class MainBot(LLMBotBase):
     def __init__(self, options, *args, **kwargs):
         super().__init__(options, *args, **kwargs)
         self.isBusy = False
-        self.propertybot_done_event = asyncio.Event()
-
-        # Register event handler
-        self.socket.on('message', lambda msg: asyncio.create_task(self.on_socket_message(msg)))
-
-    async def on_socket_message(self, msg):
-        content = msg.get("content", "")
-        if "@fileprep task_complete from propertybot" in content.lower():
-            print("✅ Received completion signal from propertybot.")
-            self.propertybot_done_event.set()
-
-    async def wait_for_propertybot(self, tasks, message):
-        self.propertybot_done_event.clear()
-
-        # Start propertybot
-        self.socket.emit('message', {
-            "channelId": message.get("channelId", "general"),
-            "content": f"@propertybot start processing for [json]{json.dumps(tasks)}[/json]"
-        })
-        print("📤 propertybot started... waiting for completion signal or timeout")
-
-        try:
-            await asyncio.wait_for(self.propertybot_done_event.wait(), timeout=120)  # Wait max 2 min
-            print("✅ propertybot completed (signal received).")
-        except asyncio.TimeoutError:
-            print("⚠️ Timeout waiting for propertybot. Proceeding to taxbot anyway.")
-
+        
     async def process_tasks(self, message, tasks):
         self.socket.emit('message', {
             "channelId": message.get("channelId", "general"),
-            "content": f"🔁 Starting sequential bot tasks for order: {tasks.get('order_number', 'n/a')}"
+            "content": f"@taxbot @propertybot New task assigned for order: {tasks.get('order_number', 'n/a')} [json]{json.dumps(tasks)}[/json]"
         })
-
-        # 1️⃣ Wait for propertybot to finish (or timeout)
-        await self.wait_for_propertybot(tasks, message)
-
-        # 2️⃣ Always start taxbot afterward
-        self.socket.emit('message', {
-            "channelId": message.get("channelId", "general"),
-            "content": f"@taxbot start processing for [json]{json.dumps(tasks)}[/json]"
-        })
-        print("📤 taxbot started")
-
-
+        print('All tasks initiated for ', tasks)
+        # self.socket.emit('message', {
+        #     "channelId": message.get("channelId", "general"),
+        #     "content": f"All Tasks initiated for order: {tasks.get('order_number', 'n/a')}"
+        # })
+        # for task in tasks:
+        #     url = task.get("url", None)
+        #     print('url exists', url)
+        #     if url:
+        #         url = f"http://localhost:3000{url}"
+        #         print('url exists', url)
+        #         pdf = requests.get(url)
+        #         # print('pdf exists', pdf)
+        #         if pdf:
+        #             # Save the PDF content to a temporary file
+        #             from io import BytesIO
+        #             # print('pdf content exists', pdf.content)
+        #             pdf_buffer = BytesIO(pdf.content)
+        #             print('pdf content is now in buffer')
+                    
+        #             # # Prepare instructions for LLM
+        #             instructions = "Extract content and return formatted data from the provided PDF."
+                    
+        #             # # Call the LLM agent to process the PDF
+        #             result = await self.call_agent(instructions, pdf_buffer)
+                    
+        #             print('extraction result', result)
+        #             # # Handle the result as needed
+        #             self.socket.emit('message', {
+        #                 "channelId": message.get("channelId"),
+        #                 "content": f"Task completed. Extracted data: ..."
+        #             })
+                    
+        #             # Clean up the temporary file
+        #             # os.remove(temp_pdf_path)
     
     def add_more_params_for_task_bots(self, final_json_data, json_data):
         final_json_data['x_county'] = final_json_data.get("s_data", {}).get('x_county', None)
         return final_json_data
     
     async def generate_response(self, message):
-        if self.isBusy:
-            return "⚠️ I am currently busy. Please wait for me to finish the task."
-
-        def emit_start_message(msg):
+        if(self.isBusy):
+            return "I am currently busy. Please wait for me to finish the task."
+        
+        def emit_start_message(message):
             self.socket.emit('message', {
-                "channelId": msg.get("channelId"),
-                "content": "✅ Message received. Starting task..."
+                "channelId": message.get("channelId"),
+                "content": 'Message is received, processing... Allow me to finish the task first >>>'
             })
-
+          
         json_data = super().extract_json_data(message)
-        action = json_data.get("action") if json_data else None
-
+        
+        action = None
+        if json_data:
+            action = json_data.get("action", None)
+          
         if action == "start_local_pdf":
             emit_start_message(message)
             self.isBusy = True
             try:
                 data = json_data.get("data", [])
+                
                 for item in data:
-                    pdf_path = item.get("pdf_path")
-                    if not pdf_path:
-                        return "❌ No valid PDF path provided."
-
-                    instructions = await self.quick_load_prompts("prompts/pdf_text_extraction.txt")
-                    instructions = instructions.replace("[order_number]", PdfToImage.get_file_name_from_path(item.get("original_filename", "ai-do-not-fill")))
-                    text = PdfToImage.extract_text_from_pdf(pdf_path=pdf_path)
-                    instructions += f"\n\n Text extracted from PDF: {text}"
-
-                    result = await self.call(instructions)
-                    clean_parsed = clean_json_string(result)
-
-                    userInput_json = json.loads(clean_parsed)
+                    userInput_json = None
+                    pdf_path = item.get("pdf_path", None)
+                    if pdf_path:
+                        instructions = await self.quick_load_prompts("prompts/pdf_text_extraction.txt")
+                        instructions = instructions.replace("[order_number]", PdfToImage.get_file_name_from_path(item.get("original_filename", "ai-do-not-fill")))
                         
-                    userInput_json = self.add_more_params_for_task_bots(userInput_json, json_data=json_data)
-                    parsed_json = json.loads(clean_parsed)
-
-                    if parsed_json:
-                        await self.process_tasks(message, parsed_json)
-
-                    self.socket.emit('message', {
-                        "channelId": message.get("channelId", "general"),
-                        "content": f"✅ Extracted JSON: [json]{json.dumps(parsed_json)}[/json]"
-                    })
-
-                return "✅ PDF Task Processed"
+                        text = PdfToImage.extract_text_from_pdf(pdf_path=pdf_path)
+                        instructions = f"{instructions}. \n\n Text extracted from PDF: {text}"
+                        # instructions = instructions.replace("[order_number]", PdfToImage.get_file_name_from_path(item.get("original_filename", "ai-do-not-fill")))
+                        result = await self.call(instructions)
+                        clean_parsed = clean_json_string(result)
+                        userInput_json = json.loads(clean_parsed)
+                        
+                        userInput_json = self.add_more_params_for_task_bots(userInput_json, json_data=json_data)
+                        
+                        # userInput = "PDF has been analyzed from URL {}. Result: [json]{}[/json]".format(pdf_path, clean_parsed)
+                        
+                        # if pdf_path.startswith("http"):
+                        #     # extracted_data = PdfToImage.pdf_page_to_base64_from_url(pdf_path)
+                        #     # result = await self.analyze_image(instructions, encoded_image_base64=extracted_data)
+                        #     text = PdfToImage.extract_text_from_pdf(pdf_path=pdf_path)
+                        #     instructions = f"{instructions}. \n\n Text extracted from PDF: {text}"
+                        #     # instructions = instructions.replace("[order_number]", PdfToImage.get_file_name_from_path(item.get("original_filename", "ai-do-not-fill")))
+                        #     result = await self.call(instructions)
+                        #     clean_parsed = result.replace("```json", "").replace("```", "")
+                        #     userInput_json = json.loads(clean_parsed)
+                        #     userInput = "PDF has been analyzed from URL {}. Result: [json]{}[/json]".format(pdf_path, clean_parsed)
+                        # else:
+                        #     extracted_data = PdfToImage.pdf_page_to_base64_from_path(pdf_path)
+                        #     result = await self.analyze_image(instructions, encoded_image_base64=extracted_data)
+                        #     clean_parsed = result.replace("```json", "").replace("```", "")
+                        #     userInput_json = json.loads(clean_parsed)
+                        #     userInput = "PDF has been analyzed from local path {}. Result: [json]{}[/json]".format(pdf_path, clean_parsed)
+                    
+                        if userInput_json:
+                            await self.process_tasks(message, userInput_json)
+                        
+                        
+                    else:
+                        return "You seem to have not provided a valid pdf path"
+                
+                return "Request Processed"
             finally:
                 self.isBusy = False
-                print("✅ Finished, busy flag cleared.")
-
+                print("Processing complete, busy status reset to False")
+        
         elif action == "start_task":
             data = json_data.get("data", {})
+            
             self.socket.emit('message', {
                 "channelId": message.get("channelId"),
-                "content": f"📝 Request Accepted. Starting tasks for: [json]{json.dumps(data)}[/json]"
+                "content": f"Request Accepted. Starting Tasks for the following [json] {json.dumps(data)} [/json]"
             })
-
+            
             await self.process_tasks(message, data)
-
-            return "✅ Task processing started!"
-
+            
+            return f"Tasks started!!"
+     
+        
+        print(message)
+        
         self.isBusy = False
-        return 
+        return f"""Hello {message.get("senderName", "Guest")}, I am currently trained to help you automate a task. I cannot offer any other services.
+            To start a task, click on the "Start Task" button on the top right of the screen.
+        """
 
-# Launch the bot
+        # elif action is not None:
+        #     return "I am instructed to perform task i am not trained on. Task: " + json_data.get("action", "unknown")
+        
+        # return "I am a simple FilePrep Service Bot"
+    
+    
 bot = MainBot(options={
     "bot_id": "fileprep",
     "bot_name": "Fileprep Service",
     "autojoin_channel": "general",
     "model": "gpt-4o-mini",
+    # "prompts_path": "prompts/datacollection.txt",
 })
 
 bot.start()
+
 bot.join()
+
 bot.cleanup()
