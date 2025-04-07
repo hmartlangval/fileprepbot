@@ -96,8 +96,31 @@ class FilePreparationParentBot(BrowserClientBaseBot):
         if json_data:
             order_number = json_data.get("order_number")
             if order_number:
-                new_dl_path = self.create_custom_downloads_directory(order_number)
-                print("downloads path:", new_dl_path)
+                # we are overwriting the default folder creating as we don't want to keep it as a base feature:
+                cfg_downloads_path = self.config["downloads_path"]
+        
+                downloads_path = cfg_downloads_path if os.path.isabs(cfg_downloads_path) else os.path.join(os.getcwd(), cfg_downloads_path)
+                
+                new_downloads_path = os.path.join(downloads_path, order_number)
+                if not os.path.exists(new_downloads_path):  
+                    os.makedirs(new_downloads_path, exist_ok=True)
+                    self.config["custom_downloads_path"] = new_downloads_path
+                    return new_downloads_path
+                else:
+                    from datetime import datetime
+                    
+                    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+                    new_downloads_path_with_timestamp = f"{new_downloads_path}_{timestamp}"
+                    
+                    os.makedirs(new_downloads_path_with_timestamp, exist_ok=True)
+                    print(f"Folder {new_downloads_path_with_timestamp} created")
+                    
+                    self.config["custom_downloads_path"] = new_downloads_path_with_timestamp
+                    return new_downloads_path_with_timestamp
+                
+                # base implementation: do not remove this code
+                # new_dl_path = self.create_custom_downloads_directory(order_number)
+                # print("downloads path:", new_dl_path)
                 
     async def prepare_prompt_json(self):
         """ Purpose is to ensure that we parse the instruction prompt file in the way we want it. No mistake should happen in prompt"""
