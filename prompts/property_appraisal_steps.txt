@@ -53,6 +53,13 @@
    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
    follow the map screen saving steps mentioned and save the map page screen shot.
 
+>>County: hillsborough
+>>URL: https://gis.hcpafl.org/PropertySearch/#/nav/Basic%20Search
+>>INSTRUCTIONS:
+   Your order number is: [order_number]
+   Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   follow the map screen saving steps mentioned and save the map page screen shot.
+
 >>County: orange
 >>URL: https://ocpaweb.ocpafl.org/parcelsearch
 >>INSTRUCTIONS:
