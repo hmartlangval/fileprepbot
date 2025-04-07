@@ -291,8 +291,7 @@
 >>County: wakulla
 >>URL: https://www.wakullacountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
-    
-    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
+ Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
 >>County: palm beach
 >>URL: https://pbctax.publicaccessnow.com/PropertyTax.aspx
