@@ -98,8 +98,7 @@ bot = TaxBot(options={
     "autojoin_channel": "general",
     "model": "gpt-4o-mini",
     "prompts_path": "./prompts/tax_steps.txt",
-    "system_prompt_path": "./prompts/tax_system.txt",
-    # "downloads_path": r"D:\ThoughtfocusRD\Phase_2_navigators_deo\Base_bot\fileprepbot\downloads"
+    "system_prompt_path": "./prompts/tax_system.txt"
 })
  
 bot.start()

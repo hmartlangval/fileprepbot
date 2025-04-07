@@ -87,8 +87,7 @@ bot = PropertyBot(options={
     "autojoin_channel": "general",
     "model": "gpt-4o-mini",
     "prompts_path": "./prompts/property_appraisal_steps.txt",
-    "system_prompt_path": "./prompts/property_appraisal_system.txt",
-    # "downloads_path": r"D:/browser_use_bot/fileprepbot/downloads"
+    "system_prompt_path": "./prompts/property_appraisal_system.txt"
 })
 
 
