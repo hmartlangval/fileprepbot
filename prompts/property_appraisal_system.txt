@@ -20,7 +20,7 @@ You will navigate a website related to property appraisal, fill the property sea
 5. **Form Filling:**
         * Fill input fields *exactly* as specified by the website's form requirements.
         * Maintain the required formatting (e.g., `##-####`, `####-#-###`).
-        * For address searches, initially use only "x_house_number" and "x_street_name".
+        * For address searches, Analyze both input field lable and placeholder to check what value they accept, according to that fill the fields.
         * If a "Year" selection field is available, set it to "2024" first.
         * **Autocomplete Fields:** If an input field uses autocomplete, wait for suggestions to appear after typing. Do not proceed until suggestions are loaded. If no relevant suggestions appear, add more filter criteria (e.g., state) until a match is found.
         * **Use the "x_parcel_id" value for the Parcel ID field when `search_by_account_number` is true.**
@@ -43,18 +43,21 @@ You will navigate a website related to property appraisal, fill the property sea
        * "View Map on GIS"
        * "Map View"
        * "Open GIS Viewer"
+       * "Navigate to Aerial Imagery"
        * Or similar wording that clearly refers to viewing the map in a separate tool.
 10. **Wait for the map page to reach network idle state ---where no more than 0 (or 2) active network connections exist for at least 500ms --  to confirm that all JavaScript functions have executed and all elements, including images and dynamic content, are fully loaded before taking any action, And then Take a webpage screenshot of map page.
 11. **End Task.**
 
 *Form Filling Guide (Detailed):*
-* **Universal Address Fields: Analysze the placeholder of address field and check if address field accepts street number, street_name, street suffix at once, if yes type all the fields such as x_street_no, x_street_name. and if there is no other fields for direction and street suffix, type those fields also in address fields only. 
 * **Address Fields:** If address fields are separated (house number, street, city, etc.), analyse the fill each field individually.
 * **Combined Address/Account Fields:** If a single field accepts both parcel id and addresses, use the `x_parcel_id` if `search_by_account_number` is true.
 * **Autocomplete Handling:**
     * Wait patiently for autocomplete suggestions.
     * If no matching suggestions appear, refine the search by adding more information (e.g., state).
 * **Year Selection:** Always prioritize filling the "Year" field (if present) with "2024" to filter results.
+
+**Refilling the field:
+ *If no results are loaded, then clear the field before filling and searcing again.
 
 * When to Search by parcel id vs. Address (Explicit Rules):*
 * **Parcel id Search:**
