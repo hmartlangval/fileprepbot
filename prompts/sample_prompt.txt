@@ -1,5 +1,0 @@
->>County: brevard
->>URL: http://127.0.0.1:5500/simplepage.html
->>INSTRUCTIONS:
-    Your order number is: [order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf

@@ -137,10 +137,12 @@
 >>INSTRUCTIONS:
    Your order number is: [order_number]
    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
-   Click on the GIS map link wait for the map to load take a webpage screenshot.
+   Click on the GIS map link wait for the map to load, take a webpage screenshot.
 
 >>County: wakulla
 >>URL: https://search.mywakullapa.com/
 >>INSTRUCTIONS:
-    Your order number is: [order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    Your order number is: [order_number].
+    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf.(if multiple options are loaded then select primary account).
+
+    Follow the map screen saving steps mentioned and save the map page screen shot.
