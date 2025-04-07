@@ -319,79 +319,79 @@
     Proceed with the search and save the page as PDF [order_number]_history.pdf   for list of all Annual Bill .
     Next Step :Page contains **2024 Annual Bill** click on print pdf link after downloading the file save the annual_pdf_filename='Tax_bot_test.pdf'
 
->>County: Gadsden
+>>County: gadsden
 >>URL: https://fl-gadsden.publicaccessnow.com/TaxCollector/PropertyTaxSearch.aspx
  >>INSTRUCTIONS:
     
     Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
->>County: Gilchrist
+>>County: gilchrist
 >>URL: 
 >>INSTRUCTIONS:
     
     Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
->>County: Polk
+>>County: polk
 >>URL:https://polk.payfltaxes.com/lookup/property-tax   
 >>INSTRUCTIONS:
     
     Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
->>County: Putnam
+>>County: putnam
 >>URL:https://www.putnamtax.com/
 >>INSTRUCTIONS:
     
     Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
->>County: Santa Rosa
+>>County: santa rosa
 >>URL:https://county-taxes.net/fl-santarosa/property-tax
 >>INSTRUCTIONS:
     
     Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
->>County: Sarasota
+>>County: sarasota
 >>URL: https://www.sarasotataxcollector.gov/
 >>INSTRUCTIONS:
     
     Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
->>County: Seminole
+>>County: seminole
 >>URL:https://county-taxes.net/fl-seminole/fl-seminole/property-tax
 >>INSTRUCTIONS:
     
     Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
->>County: St. Johns
+>>County: st. Johns
 >>URL: https://www.stjohnstax.us/AccountSearch?s=pt
 >>INSTRUCTIONS:
     
     Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
->>County: St. Lucie
+>>County: st. Lucie
 >>URL: https://county-taxes.net/stlucie/property-tax
 >>INSTRUCTIONS:
     
     Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
->>County: Sumter
+>>County: sumter
 >>URL: https://county-taxes.net/sumter/property-tax
 >>INSTRUCTIONS:
     
     Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
->>County: Suwannee
+>>County: suwannee
 >>URL:https://suwannee.floridatax.us/AccountSearch?s=pt
 >>INSTRUCTIONS:
     
     Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
->>County: Walton
+>>County: walton
 >>URL:https://county-taxes.net/fl-walton/property-tax
 >>INSTRUCTIONS:
     
     Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
->>County: Washington
+>>County: washington
 >>URL:https://www.washingtoncountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
     

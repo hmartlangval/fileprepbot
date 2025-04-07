@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 import AbstractBot
- 
+from langchain_openai import ChatOpenAI
 load_dotenv()
 
 import ctypes
@@ -29,13 +29,28 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
             return "I reject because i cannot serve nelvin county"
        
         [instructions, sensitive_data, extend_system_prompt] = await super().prepare_LLM_data(json_data, message)
-       
-        print(f"instructions: {instructions}")
-        print(f"sensitive_data: {sensitive_data}")
-        print(f"extend_system_prompt: {extend_system_prompt}")
+        
+        instructions_result = await self.analyze_instructions(instructions)
+
+        self.socket.emit('message', {
+            "channelId": message.get("channelId"),
+            "content": instructions_result
+        })
+        
+        print(f"instructions:       {instructions}")
+        print(f"sensitive_data:          {sensitive_data}")
+        print(f"extend_system_prompt:  {extend_system_prompt}")
        
         result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data,annual_pdf_filename=json_data['order_number']+'_Tax.pdf')
+        summary = await self.analyse_summary(result)
         
+        summary = f"I am tax bot. summary of downloading task: {summary}"
+        
+        self.socket.emit('message', {
+            "channelId": message.get("channelId"),
+            "content": summary
+        })
+
         [is_success, final_summary] = self.check_success_or_failure(result)
         
         if is_success:
@@ -47,13 +62,31 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
         # return f"I am Tax Bot. Tasks has been completed. {summary}"
     
     async def analyse_summary(self, summary):
+
         prompt = f""" You are provided with summary of task that has been completed.
         Please analyse the summary :
-        {summary}
- 
-        and provide the result in short format using max 20 words."""
-        result = await self.call(prompt)
-        return result
+        {summary}       
+        **If pdf was downloaded or not, if any errors occurred or not.
+        **Also give the download path where the files were downloaded.
+        ** provide the result in short format using max 20 words.
+        ** If the summary is not provided then return "No summary provided"
+        """
+
+        llm = ChatOpenAI(model="gpt-4-turbo")
+        result = llm.invoke(prompt)
+        return result.content
+    
+    async def analyze_instructions(self, instructions):
+        prompt = f""" You are provided with instructions for a task.
+        Please check the instructions :
+        {instructions} .
+        **If the instruction is none then return "No instructions provided",
+        **If the instruction is present then return "Able to load Instructions, proceeding with task.
+        Strictly return only one of the above two options, don't any analysis or explanation"""
+       
+        llm = ChatOpenAI(model="gpt-4-turbo")
+        result = llm.invoke(prompt)
+        return result.content
 
 bot = TaxBot(options={
     "window_handle": get_window_handle(),
@@ -65,8 +98,7 @@ bot = TaxBot(options={
     "autojoin_channel": "general",
     "model": "gpt-4o-mini",
     "prompts_path": "./prompts/tax_steps.txt",
-    "system_prompt_path": "./prompts/tax_system.txt",
-    # "downloads_path": r"D:\ThoughtfocusRD\Phase_2_navigators_deo\Base_bot\fileprepbot\downloads"
+    "system_prompt_path": "./prompts/tax_system.txt"
 })
  
 bot.start()

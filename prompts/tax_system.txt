@@ -86,4 +86,8 @@ You will access a county property tax website and search for property details us
     * Maximum of 2 total attempts (whether dropdown or tabular).
     * Always clear input field between attempts.
     * Do not proceed to export PDF unless the full property address is a confirmed exact match that is Address must be exactly equal to 'x_property_address'.
+<<<<<<< HEAD
     * Do not loop or retry beyond 2 times — if no match, terminate the task immediately.
+=======
+    * Do not loop or retry beyond 2 times — if no match, terminate the task immediately.
+>>>>>>> cd8bf2f30ebefd3cdedd7b7ee749c6e71e068827
