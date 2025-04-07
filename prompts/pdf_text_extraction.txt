@@ -16,7 +16,8 @@ Output format should be in JSON exactly like below. Fill all using Property Addr
     "s_data": {
         'x_county':,
         'x_property_address':,
-        "x_account_number": the parce id or account id,
+        'x_account_number': 'account number',
+        'x_parcel_id': 'parcel id',
         'x_house_number': '12459',
         'x_street_name': '51ST TER',
         'x_city': 'LAKE BUTLER',

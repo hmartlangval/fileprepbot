@@ -1,5 +1,6 @@
 from base_bot.browser_client_base_bot import BrowserClientBaseBot
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
@@ -75,11 +76,53 @@ countyMap = {
 
 class FilePreparationParentBot(BrowserClientBaseBot):
     def __init__(self, options=None, *args, **kwargs):
+        
+        if options is None:
+            options = {}
+        
+        downloads_path = options.get("downloads_path", None)
+        if not downloads_path:
+            downloads_path = os.getenv("DOWNLOADS_PATH", None)
+            if downloads_path:
+                options.setdefault("downloads_path", downloads_path)
+        
         super().__init__(options, *args, **kwargs)
         self.variables = [
-            "order_number"
+            "order_number", # non sensitive data, ok to be sent to LLM
+            "x_county", # count is also OK to be sent to LLM
         ]
-    
+        
+    def create_download_folder(self, json_data):
+        print("json_data:", json_data)
+        if json_data:
+            order_number = json_data.get("order_number")
+            if order_number:
+                # we are overwriting the default folder creating as we don't want to keep it as a base feature:
+                cfg_downloads_path = self.config["downloads_path"]
+        
+                downloads_path = cfg_downloads_path if os.path.isabs(cfg_downloads_path) else os.path.join(os.getcwd(), cfg_downloads_path)
+                
+                new_downloads_path = os.path.join(downloads_path, order_number)
+                if not os.path.exists(new_downloads_path):  
+                    os.makedirs(new_downloads_path, exist_ok=True)
+                    self.config["custom_downloads_path"] = new_downloads_path
+                    return new_downloads_path
+                else:
+                    from datetime import datetime
+                    
+                    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+                    new_downloads_path_with_timestamp = f"{new_downloads_path}_{timestamp}"
+                    
+                    os.makedirs(new_downloads_path_with_timestamp, exist_ok=True)
+                    print(f"Folder {new_downloads_path_with_timestamp} created")
+                    
+                    self.config["custom_downloads_path"] = new_downloads_path_with_timestamp
+                    return new_downloads_path_with_timestamp
+                
+                # base implementation: do not remove this code
+                # new_dl_path = self.create_custom_downloads_directory(order_number)
+                # print("downloads path:", new_dl_path)
+                
     async def prepare_prompt_json(self):
         """ Purpose is to ensure that we parse the instruction prompt file in the way we want it. No mistake should happen in prompt"""
         print('initializing on the test browser client')
@@ -132,7 +175,7 @@ class FilePreparationParentBot(BrowserClientBaseBot):
         return s_data
     
     def get_instructions(self, json_data, sensitive_data):
-        county = sensitive_data.get('x_county')
+        county = sensitive_data.get('x_county').lower()
         if county:
             county = county.lower()
             county_code = next((key for key, value in countyMap.items() if value.lower() == county), None)
@@ -166,7 +209,7 @@ class FilePreparationParentBot(BrowserClientBaseBot):
         sensitive_data = self.extract_sensitive_data(json_data)
         
         # you can do if all data is valid or not
-        
+        self.create_download_folder(json_data)
         
         if not self.is_prompt_loaded:
             # self.socket.emit('message', {
@@ -186,6 +229,8 @@ class FilePreparationParentBot(BrowserClientBaseBot):
             if spp:
                 with open(spp, 'r') as file:
                     extend_system_prompt = file.read()
+                    for variable in self.variables:
+                        extend_system_prompt = extend_system_prompt.replace(f'[{variable}]', json_data.get(variable, ''))
             else:
                 extend_system_prompt = ""
         except FileNotFoundError:

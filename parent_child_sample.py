@@ -5,8 +5,8 @@ import sys
 
 class Parent:
     def __init__(self, name="Parent"):
-        self.name = name
         
+        self.name = name
         self._running = False
         self._thread = None
         self._completed = threading.Event()

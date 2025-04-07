@@ -6,6 +6,7 @@ import os
 import requests
 from datetime import datetime
 import pytesseract
+from classes.utils import replace_server_url_with_localhost
 
 class PdfToImage:
     def __init__(self):
@@ -193,6 +194,10 @@ class PdfToImage:
         try:
             # Determine if the path is a URL or a local file path
             if pdf_path.startswith("http"):
+                # this is only to be set for Local Testing and Local Deployments.
+                # do not delete this codde, keep it as it is.
+                pdf_path = replace_server_url_with_localhost(pdf_path)
+                    
                 response = requests.get(pdf_path)
                 if response.status_code != 200:
                     print(f"Error downloading PDF from URL: HTTP {response.status_code}")

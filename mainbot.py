@@ -14,21 +14,13 @@ class MainBot(LLMBotBase):
     async def process_tasks(self, message, tasks):
         self.socket.emit('message', {
             "channelId": message.get("channelId", "general"),
-            "content": f"@taxbot start processing for [json]{json.dumps(tasks)}[/json]"
-        })
-        self.socket.emit('message', {
-            "channelId": message.get("channelId", "general"),
-            "content": f"@propertybot start processing for [json]{json.dumps(tasks)}[/json]"
-        })
-        self.socket.emit('message', {
-            "channelId": message.get("channelId", "general"),
-            "content": f"@mapbot start processing for [json]{json.dumps(tasks)}[/json]"
+            "content": f"@taxbot @propertybot New task assigned for order: {tasks.get('order_number', 'n/a')} [json]{json.dumps(tasks)}[/json]"
         })
         print('All tasks initiated for ', tasks)
-        self.socket.emit('message', {
-            "channelId": message.get("channelId", "general"),
-            "content": f"All Tasks initiated for order: {tasks.get('order_number', 'n/a')}"
-        })
+        # self.socket.emit('message', {
+        #     "channelId": message.get("channelId", "general"),
+        #     "content": f"All Tasks initiated for order: {tasks.get('order_number', 'n/a')}"
+        # })
         # for task in tasks:
         #     url = task.get("url", None)
         #     print('url exists', url)
@@ -59,6 +51,10 @@ class MainBot(LLMBotBase):
                     
         #             # Clean up the temporary file
         #             # os.remove(temp_pdf_path)
+    
+    def add_more_params_for_task_bots(self, final_json_data, json_data):
+        final_json_data['x_county'] = final_json_data.get("s_data", {}).get('x_county', None)
+        return final_json_data
     
     async def generate_response(self, message):
         if(self.isBusy):
@@ -95,7 +91,10 @@ class MainBot(LLMBotBase):
                         result = await self.call(instructions)
                         clean_parsed = clean_json_string(result)
                         userInput_json = json.loads(clean_parsed)
-                        userInput = "PDF has been analyzed from URL {}. Result: [json]{}[/json]".format(pdf_path, clean_parsed)
+                        
+                        userInput_json = self.add_more_params_for_task_bots(userInput_json, json_data=json_data)
+                        
+                        # userInput = "PDF has been analyzed from URL {}. Result: [json]{}[/json]".format(pdf_path, clean_parsed)
                         
                         # if pdf_path.startswith("http"):
                         #     # extracted_data = PdfToImage.pdf_page_to_base64_from_url(pdf_path)
@@ -117,10 +116,6 @@ class MainBot(LLMBotBase):
                         if userInput_json:
                             await self.process_tasks(message, userInput_json)
                         
-                        self.socket.emit('message', {
-                            "channelId": message.get("channelId", "general"),
-                            "content": f"extracted JSON is for [json]{json.dumps(userInput_json)}[/json]"
-                        })
                         
                     else:
                         return "You seem to have not provided a valid pdf path"
@@ -164,70 +159,8 @@ bot = MainBot(options={
     # "prompts_path": "prompts/datacollection.txt",
 })
 
-bot.start();
+bot.start()
 
+bot.join()
 
-# import requests
-# import json
-# def call_rest_api():
-#     json_data = {
-#         "action": "start_local_pdf",
-#         "data": [
-#             {
-#                 "pdf_path": "D:/cursor/fileprep_prod/fileprepbot/23-930-2323.pdf",
-#                 "original_filename": "23-930-2323.pdf",
-#                 "file_type": "application/pdf"
-#             }
-#         ]
-#     }
-#     # json_data = {
-#     #     "action": "start_task",
-#     #     "data": [
-#     #         {
-#     #             "pdf_path": "/api/data/1743192045452-Doc1.pdf",
-#     #             "original_filename": "Doc1.pdf",
-#     #             "file_type": "application/pdf",
-#     #             "data_id": "1743192045452-Doc1.pdf",
-#     #             "folder_path": "aido_order_files",
-#     #             "createdAt": "2025-03-28T20:00:48.455Z",
-#     #             "updatedAt": "2025-03-28T20:00:48.455Z",
-#     #             "isActive": True,
-#     #             "_id": "67e6fff0777548eec1631ebe"
-#     #         }
-#     #     ]
-#     # }
-#     # json_data = {
-#     #     "action": "start_task",
-#     #     "data": [
-#     #         {
-#     #             "order_number": "Doc1",
-#     #             "s_data": {
-#     #                 "x_county": "Pasco",
-#     #                 "x_property_address": "3501 Zoyla Dr, New Port Richey, FL 34653",
-#     #                 "x_account_number": "",
-#     #                 "x_house_number": "3501",
-#     #                 "x_street_name": "Zoyla Dr",
-#     #                 "x_city": "New Port Richey",
-#     #                 "x_zip_code": "34653"
-#     #             }
-                
-#     #         }
-#     #     ]
-#     # }
-#     data = {
-#         "content": f"@fileprep start processing for [json]{json.dumps(json_data)}[/json]",
-#         "sender": "Admin"
-#     }
-#     try:
-#         response = requests.post('http://localhost:3000/api/channels/general/sendMessage', json=data)
-#         response.raise_for_status()  # Raise an error for bad status codes
-#         return response.json()  # Return the response as JSON
-#     except requests.exceptions.RequestException as e:
-#         print(f"An error occurred: {e}")
-#         return None
-# call_rest_api()
-
-bot.join();
-
-bot.cleanup();
-
+bot.cleanup()

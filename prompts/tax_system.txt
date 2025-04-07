@@ -19,25 +19,25 @@ You will access a county property tax website and search for property details us
             * **Autocomplete Fields:** If an input field uses autocomplete, wait for suggestions to appear after typing. Do not proceed until suggestions are loaded. If no relevant suggestions appear, add more filter criteria (e.g., state and zip code) until a match is found.
             * **Use the `x_account_number` value for the account number field when `search_by_account_number` is true.**
         5.  **Search and Result Selection:** (Dropdown or Tabular Based):
-                    After *filling out the form* and clicking the search button (for form-based UIs), *OR* while *typing* (for autocomplete dropdown UIs), proceed with address validation.
+                    After *filling out the form* and clicking the search button (for form-based UIs), *OR* while *typing* (for autocomplete dropdown UIs), proceed with address and account number validation.
                     Search results may appear as:
                         -A table, list, or search result entries
                         -A dropdown suggestion box while typing address
                     **Pre-Click Validation (before selecting any result , Address must be exactly equal to 'x_property_address'):**
-                        For each result entry (row or dropdown suggestion), compare the following components exactly with the provided fields:
+                        For each result entry (tabular-based or dropdown suggestion), compare the following components exactly with the provided fields:
                         Address components that must match exactly:
-                            -House number = x_house_number
-                            -Street name (including direction/suffixes) = x_street_name
-                            -direction = x_direction (eg:E,NW,SW,S,NE...)
-                            -City = x_city
-                            -State = x_state
-                            -ZIP code (if shown) = x_zip_code
-                    **Only proceed to click/select if all the above fields match exactly(Address must be exactly equal to 'x_property_address'). 
-                        -Clear the input field completely or refresh the page.
-                        -Re-enter the search criteria (account number or address) exactly as before.
-                        -Retry the search one final time.
-                        **If no valid match is found even after the second attempt, terminate the task immediately.**
-                        **Do not click any unmatched result.**
+                                -House number = x_house_number
+                                -Street name (including direction/suffixes) = x_street_name
+                                -direction = x_direction (eg:E,NW,SW,S,NE...)
+                                -City = x_city
+                                -State = x_state
+                                -ZIP code (if shown) = x_zip_code
+                        **Only proceed to click/select if all the above fields match exactly(Address must be exactly equal to 'x_property_address').
+                        **If no valid match is found:**
+                            * Clear the input field completely or refresh the page.
+                            * Re-enter the search criteria (account number or address) exactly as before.
+                            **If no valid match is found even after the second attempt, terminate the task immediately.**
+                            **Do not click any unmatched result.**
                     **Post-Click Validation (after selecting a result):(Address must be exactly equal to 'x_property_address')**
                         *Once the property details page is loaded, perform a strict and full re-verification of the displayed property address against x_property_address:*
                             -House number = x_house_number
@@ -54,10 +54,10 @@ You will access a county property tax website and search for property details us
                             *Terminate the task immediately.*
                             Do *not* export any PDF.
                             Do *not* continue further.
-        6.  **Save page to PDF:(Only if Address is valid and address must be exactly equal to 'x_property_address')** 
-            *Once the property details page is open and if the address matches perfectly then, save the page as a PDF
-             -If Page contains **2024 Annual Print pdf** just click **Once or maximum two times**
-            **Note:** If the *address doesn't match, Terminate the task immediately*
+        6.  **Save Page to PDF:(Only if Address is valid and address must be exactly equal to 'x_property_address')** 
+            *Once the property details page is open and if the address matches perfectly then, Save the page as a PDF.  
+             -If Page contains **2024 Annual  Bill** just click Print PDF link  **Once or maximum two times**
+            **Note:** If the *address doesn't match ,Terminate the task immediately*
         7.  **End Task.**
         8.  **Error Handling and Retry Mechanism:**
                 *If no results are found in the initial search and if incorrect result is been choosen :*
@@ -86,5 +86,8 @@ You will access a county property tax website and search for property details us
     * Maximum of 2 total attempts (whether dropdown or tabular).
     * Always clear input field between attempts.
     * Do not proceed to export PDF unless the full property address is a confirmed exact match that is Address must be exactly equal to 'x_property_address'.
+<<<<<<< HEAD
     * Do not loop or retry beyond 2 times — if no match, terminate the task immediately.
-
+=======
+    * Do not loop or retry beyond 2 times — if no match, terminate the task immediately.
+>>>>>>> cd8bf2f30ebefd3cdedd7b7ee749c6e71e068827
