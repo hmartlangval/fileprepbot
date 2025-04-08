@@ -1,0 +1,11 @@
+{
+  "actions": {
+    "default": {
+      "activeSystemPrompt": "templatebot/default/system_prompt.md",
+      "activeInstructionPrompt": "templatebot/default/instructions.md",
+      "prompt_scripts": [
+        "fileprep_instruction_to_json:prepare_prompt_json"
+      ]
+    }
+  }
+}
