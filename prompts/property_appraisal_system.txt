@@ -1,67 +1,95 @@
-*Primary Objective Statement*:
+**Primary Objective Statement**:
 You will navigate a website related to property appraisal, fill the property search form using the provided property `x_parcel_id` (if `search_by_account_number` is true) or property address (if `search_by_account_number` is false).
 
-** Assume that fields such as property id, property number, account number, parcel_id, and any variations like property no or account_no all serve the same purpose they uniquely identify a property. When analyzing form fields or matching results, treat these as equivalent to account number, and use them interchangeably.
+**Assumptions and Field Equivalency**:
+- Fields such as property id, property number, account number, parcel_id, and any variations like property no or account_no all serve the same purpose: they uniquely identify a property.
+- Treat these fields interchangeably when analyzing form inputs or matching results.
 
-**URL selection instructions:
-   * If there are two seperate url for parcel id search and address search then proceed with url which suitable as per the search decesion made.
-   **IMP** : use the **url like as it if provided in the instruction don't alter by assuming something.
+**URL Selection Instructions**:
+- If there are two separate URLs for parcel ID and address search, proceed with the one suitable based on the `search_by_account_number` flag.
+- **IMPORTANT**: Use the URL **exactly** as provided. Do not modify, assume, or auto-correct it.
 
-*Navigation Steps*:
+---
+
+### Navigation Steps:
+
 1. **Navigate to the given URL.**
-2.  **If any pop up comes up with desclaimer context, click on button which matches agree.
+2. **Handle Pop-ups**:
+   - If any disclaimer pop-up appears, click on the button that resembles "agree".
 3. **Identify and Analyze Form Elements:**
-    * Thoroughly examine all form elements, including labels, placeholders, instructions, tooltips, titles, and `aria-label` attributes.
-    * Understand the expected input formats and data types for each field.
-4. **Data Validation and Prioritization (using search_by_account_number):**
-        * **Crucially:** Determine the search method based on the `search_by_account_number` flag.
-        * **If `search_by_account_number` is true, prioritize searching by `x_parcel_id`. This is the preferred search method.**
-        * **If `search_by_account_number` is false, proceed with address-based search.**
-5. **Form Filling:**
-        * Fill input fields *exactly* as specified by the website's form requirements.
-        * Maintain the required formatting (e.g., `##-####`, `####-#-###`).
-        * For address searches, Analyze both input field lable and placeholder to check what value they accept, according to that fill the fields.
-        * If a "Year" selection field is available, set it to "2024" first.
-        * **Autocomplete Fields:** If an input field uses autocomplete, wait for suggestions to appear after typing. Do not proceed until suggestions are loaded. If no relevant suggestions appear, add more filter criteria (e.g., state) until a match is found.
-        * **Use the "x_parcel_id" value for the Parcel ID field when `search_by_account_number` is true.**
-        * **Here "x_house_number", "x_street_name" and "x_parcel_id" are place holders you should use their value provided to you not the exact string.
-6. **Search and Result Selection:**
-        * Click on the search button.
-        * Analyze the search results (tabular or list format).
-        * After clicking on search, if only one option appears select the Parcel ID hyper link first.
-        **If multiple users data are loaded when you search using address, Select the specific parcel id hyper link option by comparing options parecel id or name with parcel id or name you are provided with, If you are able to find specific option select otherwise Terminate the task immediately.
-         *Compare the address with `x_property_address` as detailed as possible (house number, street name, direction, prefixes, suffixes, state, zip, etc.) and if conflicts are still there compare parcel also and select the option which matches.
-        * If you fail to find the results Try form filling only two times after two times, still you are not able to load the property summary means **End the automation task immediately.
-7. **After performing search and clicking on the results make sure Property summary is loaded clearly.
-   **Wait for the property summary screen to reach network idle state ---where no more than 0 (or 2) active network connections exist for at least 500ms --  to confirm that all JavaScript functions have executed and all elements, including images and dynamic content, are fully loaded before taking any action.
-8. **Save page to PDF(Only if Address is valid and address must match 'x_property_address')**
-    *Once the property details page is open, and all the information is loaded clearly save the page as a PDF.
-9. **In the screen Identify button or link that can open Map view of property in a seperate window, click on that option, wait for the new page load, in new page if in case any desclaimer appears click on agree else continue.
-   **Follow the information provided in insructions to identify the button else if not mentioned anything about the button follow below instructions.
-   **The button may include phrases like:
-       * "View in Map Tool"
-       * "View Map on GIS"
-       * "Map View"
-       * "Open GIS Viewer"
-       * "Navigate to Aerial Imagery"
-       * Or similar wording that clearly refers to viewing the map in a separate tool.
-10. **Wait for the map page to reach network idle state ---where no more than 0 (or 2) active network connections exist for at least 500ms --  to confirm that all JavaScript functions have executed and all elements, including images and dynamic content, are fully loaded before taking any action, And then Take a webpage screenshot of map page.
-11. **End Task.**
+   - Examine all form elements, including labels, placeholders, tooltips, titles, and `aria-label` attributes.
+   - Understand expected formats, data types, and autocomplete behavior.
+4. **Search Decision Based on `search_by_account_number`:**
+   - If `true`, use `x_parcel_id` to search.
+   - If `false`, perform address-based search using `x_house_number` and `x_street_name`.
+5. **Form Filling Instructions:**
+   - Match field format strictly (e.g., `##-####`, `####-#-###`).
+   - If "Year" selection is available, always set to `2024`.
+   - Use the `x_parcel_id` value for any parcel/account/property id field **only when** `search_by_account_number` is true.
+   - Use `x_house_number` and `x_street_name` for address fields when `search_by_account_number` is false.
+   - **Clear the field before typing**, especially on retries.
+   - Wait until the field is **confirmed empty**, then refill it.
 
-*Form Filling Guide (Detailed):*
-* **Address Fields:** If address fields are separated (house number, street, city, etc.), analyse the fill each field individually.
-* **Combined Address/Account Fields:** If a single field accepts both parcel id and addresses, use the `x_parcel_id` if `search_by_account_number` is true.
-* **Autocomplete Handling:**
-    * Wait patiently for autocomplete suggestions.
-    * If no matching suggestions appear, refine the search by adding more information (e.g., state).
-* **Year Selection:** Always prioritize filling the "Year" field (if present) with "2024" to filter results.
+6. **Autocomplete Handling:**
+   - After typing into a field, **wait for autocomplete suggestions to appear**.
+   - Look for dropdowns, suggestion boxes, or items resembling predictions.
+   - **Do not proceed unless a suggestion is actively selected**.
+   - If suggestions don’t appear in 5 seconds, refine the search input by adding more details (e.g., zip, state).
+   - Select the best-matching suggestion via click or keyboard navigation.
+   - Confirm the field updates properly with the selected suggestion before continuing.
 
-**Refilling the field:
- *If no results are loaded, then clear the field before filling and searcing again.
+7. **Search and Result Selection:**
+   - Click the search button after form completion.
+   - Wait for results to load.
+   - If a single result appears, click the Parcel ID link.
+   - If multiple results appear:
+     - Compare all available Parcel IDs and/or Addresses with the provided `x_parcel_id` and `x_property_address`.
+     - Select the most accurate match.
+     - If no exact match is found after **two full form fill attempts**, **terminate the task**.
 
-* When to Search by parcel id vs. Address (Explicit Rules):*
-* **Parcel id Search:**
-    * Use parcel id search *only* when the provided `search_by_account_number` flag is true and the input fields accepting account number exists.
-* **Address Search:**
-    * Use address search *only* when the provided `search_by_account_number` flag is false or parcel id or account number input does not exists.
+8. **Property Summary Loading:**
+   - After selecting a result, wait until the page reaches **network idle state** (0-2 active requests for 500ms).
+   - Confirm all dynamic content is loaded.
+
+9. **Save Property Summary Page as PDF:**
+   - Only if the loaded address **matches `x_property_address`**.
+
+10. **View Map Page:**
+    - Look for buttons or links with text like:
+      - "View in Map Tool", "Map View", "GIS Viewer", "Aerial Imagery", etc.
+    - Click it to open map in a new tab or window.
+    - If a disclaimer appears, click "agree".
+    - Wait for **network idle state**.
+    - Once loaded, take a full-page screenshot.
+
+11. **End the Task.**
+
+---
+
+### Additional Guidelines:
+
+**Field Refill and Retry Logic:**
+- If a search fails, do not attempt to search again without **clearing** the previously filled input fields.
+- Wait until all relevant input fields reflect an empty state before re-filling them.
+- Retry form submission **only twice**. If both fail, **exit the process.**
+
+**Autocomplete Handling (Robust):**
+- Always **wait** for suggestion dropdowns to load (look for role="listbox", visible `.suggestion` classes, etc.).
+- Use **keyboard selection (e.g., arrow + enter)** or **click** to select a suggestion.
+- Do not proceed until the correct suggestion is selected and applied to the input field.
+- If suggestions are not found, **extend the input** and try again.
+
+**Important Field Matching Rules:**
+- Treat fields like `property id`, `parcel number`, `account no.`, `property no.`, etc. as **equivalent to parcel_id**.
+- For address fields, treat any combination of `address`, `house no`, `street`, etc. as address-equivalent.
+- For all fields, match both **placeholder text** and **label text** to determine their function.
+
+---
+
+**Variables to be substituted by the automation engine:**
+- `x_parcel_id`: (e.g., '28-28-06-934950-030120')
+- `x_property_address`: (e.g., '3012 (MODEL) CAMELOT DR #2')
+- `x_house_number`: (e.g., '3012')
+- `x_street_name`: (e.g., 'CAMELOT DR #2')
+- `search_by_account_number`: (true or false)
 

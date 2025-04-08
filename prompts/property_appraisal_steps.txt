@@ -120,6 +120,15 @@
     * Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
     * follow the map screen saving steps mentioned and save the map page screen shot.
 
+>>County: st lucie
+>>URL: https://www.paslc.gov/property-search/real-estate/owner
+>>INSTRUCTIONS:
+    * Your order number is: [order_number]
+    * After navigating to link select search option based on the search option decided, if it is parcel is search click on parcel id search else click on basic site address search.
+    * Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    * follow the map screen saving steps mentioned and save the map page screen shot.
+
+
 >>County: suwannee
 >>URL: https://www.suwanneepa.com/gis/
 >>INSTRUCTIONS:
