@@ -1,4 +1,5 @@
 import json
+import os
 from dotenv import load_dotenv
 import AbstractBot
 from langchain_openai import ChatOpenAI
@@ -74,7 +75,7 @@ bot = TaxBot(options={
     "bot_name": "TaxBot",
     "autojoin_channel": "general",
     "model": "gpt-4o-mini",
-    "prompts_directory": "prompts",
+    "prompts_directory": os.getenv("PROMPTS_DIR_PATH", "prompts"),
 })
  
 bot.start()

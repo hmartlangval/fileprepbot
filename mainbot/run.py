@@ -234,7 +234,7 @@ bot = MainBot(options={
     "bot_name": "FilePrep",
     "autojoin_channel": "general",
     "model": "gpt-4o-mini",
-    "prompts_directory": "prompts",
+    "prompts_directory": os.getenv("PROMPTS_DIR_PATH", "prompts"),
 })
  
 bot.start()
