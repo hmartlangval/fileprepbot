@@ -104,6 +104,7 @@ class MainBot(LLMBotBase):
                                 if action.get('output_formatting', 'text') == 'json':
                                     clean_parsed = clean_json_string(result)
                                     userInput_json = json.loads(clean_parsed)
+                                    userInput_json['context'] = item
                                 else:
                                     userInput_json = result
                                 
