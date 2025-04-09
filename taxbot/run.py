@@ -3,6 +3,8 @@ import os
 from dotenv import load_dotenv
 import AbstractBot
 from langchain_openai import ChatOpenAI
+
+from classes.bot_helper import format_output
 load_dotenv()
 
 import ctypes
@@ -52,7 +54,7 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
                                                 })
                 [is_success, final_summary] = self.check_success_or_failure(result)
                 if is_success:
-                    result_text = await self.format_output(action, final_summary)
+                    result_text = await format_output(self.script_executor, action, final_summary)
                 else:
                     result_text = f"Action '{action['name']}' has failed. Message: {final_summary}"
             else:
@@ -62,7 +64,7 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
                 {instructions}
                 """
                 result = await self.call(combined_instructions)
-                result_text = await self.format_output(action, result)
+                result_text = await format_output(self.script_executor, action, result)
                 
             self.socket.emit('message', {
                 "channelId": message.get("channelId"),
