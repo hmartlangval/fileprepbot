@@ -6,9 +6,6 @@
       "requires_browser": true,
       "output_formatting": "text",
       "output_template_function": "",
-      "prompt_scripts1": [
-        "simple_script:simple_script"
-      ],
       "prompt_scripts": [
         "fileprep_instruction_to_json:prepare_prompt_json",
         "fileprep_instruction_to_json:get_instructions"

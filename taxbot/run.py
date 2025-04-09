@@ -25,6 +25,9 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
        
         ## only customization here
         json_data = super().extract_json_data(message)
+        order_number = json_data.get('order_number', None)
+        if not order_number:
+            raise Exception("Order Number is None")
        
         for action in await self.actions_in_config():
             [instructions, sensitive_data, extend_system_prompt] = await super().prepare_LLM_data(json_data, message, action)
@@ -44,7 +47,7 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
             if action.get('requires_browser', False):
                 result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data,
                                                 session_config={
-                                                    "annual_pdf_filename": "anything.pdf",
+                                                    "annual_pdf_filename": f"{order_number}-PA.pdf",
                                                     "original_json": json_data
                                                 })
                 [is_success, final_summary] = self.check_success_or_failure(result)
