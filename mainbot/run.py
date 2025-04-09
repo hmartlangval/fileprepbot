@@ -43,7 +43,7 @@ class MainBot(LLMBotBase):
         for action in await self.actions_in_config():
             self.socket.emit('message', {
                 "channelId": message.get("channelId"),
-                "content": f"Processing action {action.get('name', '')}... >>>"
+                "content": f"Executing action {action.get('name', '')}... >>>"
             })
             try:
                 [instructions, extend_system_prompt] = await self.v2_prompt(action)

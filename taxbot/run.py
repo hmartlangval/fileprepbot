@@ -56,7 +56,7 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
                 if is_success:
                     result_text = await format_output(self.script_executor, action, final_summary)
                 else:
-                    result_text = f"Action '{action['name']}' has failed. Message: {final_summary}"
+                    result_text = f"Action '{action['name']}' for order '{order_number}' has failed. Message: {final_summary} [json]{json.dumps(json_data)}[/json] [Retry]"
             else:
                 combined_instructions = f"""
                 {extend_system_prompt}
