@@ -1,0 +1,1 @@
+Navigate to google.co.in. Stay for 20 seconds. Exit.

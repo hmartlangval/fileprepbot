@@ -1,0 +1,13 @@
+{
+  "actions": {
+    "default": {
+      "activeSystemPrompt": "fileprep/default/system_prompt.md",
+      "activeInstructionPrompt": "fileprep/default/pdf_text_extraction.md",
+      "output_formatting": "json",
+      "output_template_function": "fileprep_mainbot:format_output",
+      "prompt_scripts_backup": [
+        "fileprep_mainbot:do_pdf_extraction"
+      ]
+    }
+  }
+}

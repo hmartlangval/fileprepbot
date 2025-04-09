@@ -1,0 +1,18 @@
+{
+  "actions": {
+    "default": {
+      "activeSystemPrompt": "templatebot/default/math_system.md",
+      "activeInstructionPrompt": "templatebot/default/temporary_instruction.md",
+      "requires_browser": true,
+      "output_formatting": "text",
+      "output_template_function": "simple_script:output_template_mainbot",
+      "prompt_scripts": [
+        "simple_script:simple_script"
+      ],
+      "prompt_scripts2": [
+        "fileprep_instruction_to_json:prepare_prompt_json",
+        "fileprep_instruction_to_json:get_instructions"
+      ]
+    }
+  }
+}
