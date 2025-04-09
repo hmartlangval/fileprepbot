@@ -5,6 +5,10 @@ class DynamicScriptExecutor:
     def __init__(self, __self, script_directory):
         self.__self = __self
         self.script_directory = script_directory
+        self.SessionData = {}
+        
+    def set_session_data(self, session_data):
+        self.SessionData = session_data
 
     async def execute(self, file_name, function_name):
         if not file_name.endswith('.py'):
@@ -24,5 +28,5 @@ class DynamicScriptExecutor:
         if func is None:
             raise AttributeError(f"Function {function_name} not found in module {module_name}")
 
-        result = await func(self.__self)
+        result = await func(self.__self, self)
         return result

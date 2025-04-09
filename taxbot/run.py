@@ -28,13 +28,6 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
         for action in await self.actions_in_config():
             [instructions, sensitive_data, extend_system_prompt] = await super().prepare_LLM_data(json_data, message, action)
             
-            # instructions_result = await self.analyze_instructions(instructions)
-
-            # self.socket.emit('message', {
-            #     "channelId": message.get("channelId"),
-            #     "content": instructions_result
-            # })
-        
             print(f"instructions:       {instructions}")
             print(f"sensitive_data:          {sensitive_data}")
             print(f"extend_system_prompt:  {extend_system_prompt}")
@@ -74,31 +67,14 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
 
         return "Action executor exited."
     
-    # async def analyse_summary(self, summary):
-
-    #     prompt = f""" You are provided with summary of task that has been completed.
-    #     Please analyse the summary :
-    #     {summary}       
-    #     **If pdf was downloaded or not, if any errors occurred or not.
-    #     **Also give the download path where the files were downloaded.
-    #     ** provide the result in short format using max 20 words.
-    #     ** If the summary is not provided then return "No summary provided"
-    #     """
-
-    #     llm = ChatOpenAI(model="gpt-4-turbo")
-    #     result = llm.invoke(prompt)
-    #     return result.content
-    
 bot = TaxBot(options={
     "window_handle": get_window_handle(),
     "bot_type": "task_bot",
-    "bot_id": "templatebot",
-    "bot_name": "TemplateBot",
+    "bot_id": "taxbot",
+    "bot_name": "TaxBot",
     "autojoin_channel": "general",
     "model": "gpt-4o-mini",
     "prompts_directory": "prompts",
-    # "prompts_path": "./prompts/taxbot/tax_steps.txt",
-    # "system_prompt_path": "./prompts/tax_system.txt"
 })
  
 bot.start()

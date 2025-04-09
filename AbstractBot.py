@@ -173,6 +173,15 @@ class FilePreparationParentBot(BrowserClientBaseBot):
     #     self.prompt_json = prompt_data
     #     print('prompt json file is loaded and is ready to use')
     
+    async def format_output(self, v2_config, result):
+        formatter = v2_config.get('output_template_function', None)
+        if formatter:
+            [file_name, function_name] = formatter.split(':')
+            self.script_executor.SessionData['result'] = result
+            return await self.script_executor.execute(file_name.strip(), function_name.strip())
+        
+        return f"Action {v2_config.get('name', 'unknown')} result: {result}"
+                    
     def extract_sensitive_data(self, json_data):
         if json_data:
             s_data = json_data.get('s_data', {})
@@ -210,7 +219,6 @@ class FilePreparationParentBot(BrowserClientBaseBot):
    
     async def prepare_LLM_data(self, json_data, message, v2_config: Optional[dict] = None):
         sensitive_data = self.extract_sensitive_data(json_data)
-        
         # you can do if all data is valid or not
         self.create_download_folder(json_data)
         
@@ -245,22 +253,43 @@ class FilePreparationParentBot(BrowserClientBaseBot):
                 extend_system_prompt = f"An error occurred while reading the file: {e}"
 
 
+        self.script_executor.set_session_data({
+            'message': message,
+            'json_data': json_data,
+            'sensitive_data': sensitive_data,
+            'instructions': instructions,
+            'extend_system_prompt': extend_system_prompt
+        })
+        
         # after loading prompt, we can execute the script
         if v2_config:
             scripts = v2_config.get('prompt_scripts', [])
-            for script in scripts:
-                [file_name, function_name] = script.split(':')
-                await self.script_executor.execute(file_name.strip(), function_name.strip())
+            if scripts:
+                for script in scripts:
+                    [file_name, function_name] = script.split(':')
+                    await self.script_executor.execute(file_name.strip(), function_name.strip())
 
         # # now continue processing the loaded prompts
         # await self.prepare_prompt_json()
             
-        if sensitive_data is not None:
-            instructions = self.get_instructions(json_data, sensitive_data)
-            print(instructions)
+        # if instructions and sensitive_data is not None:
+        #     instructions = self.get_instructions(json_data, sensitive_data)
+        #     print(instructions)
         
-        for variable in self.variables:
-            instructions = instructions.replace(f'[{variable}]', json_data.get(variable, ''))
+        instructions = self.script_executor.SessionData.get('instructions', '')
+        extend_system_prompt = self.script_executor.SessionData.get('extend_system_prompt', '')
+        sensitive_data = self.script_executor.SessionData.get('sensitive_data', None)
+        
+        if json_data is not None:
+            cleaned_message = message.get('content', '').replace(message.get('content', '').split('[json]')[1].split('[/json]')[0], '').replace('[json]', '').replace('[/json]', '')
+        else:
+            cleaned_message = message.get('content', '')
+        
+        if instructions is not None:
+            instructions = instructions.replace('[user_intent]', cleaned_message)
+            if json_data is not None:
+                for variable in self.variables:
+                    instructions = instructions.replace(f'[{variable}]', json_data.get(variable, ''))
             
         return [instructions, sensitive_data, extend_system_prompt]
 

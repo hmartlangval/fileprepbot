@@ -1,0 +1,15 @@
+{
+  "actions": {
+    "default": {
+      "activeSystemPrompt": "propertybot/default/system_prompt.md",
+      "activeInstructionPrompt": "propertybot/default/instructions.md",
+      "requires_browser": true,
+      "output_formatting": "text",
+      "output_template_function": "",
+      "prompt_scripts": [
+        "fileprep_instruction_to_json:prepare_prompt_json",
+        "fileprep_instruction_to_json:get_instructions"
+      ]
+    }
+  }
+}
