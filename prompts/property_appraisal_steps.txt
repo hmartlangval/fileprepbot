@@ -56,6 +56,7 @@
 >>County: hillsborough
 >>URL: https://gis.hcpafl.org/PropertySearch/#/nav/Basic%20Search
 >>INSTRUCTIONS:
+   Enter address in the input field which as lable 'Address'
    Your order number is: [order_number]
    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
    follow the map screen saving steps mentioned and save the map page screen shot.
@@ -81,6 +82,22 @@
 >>INSTRUCTIONS:
    Your order number is: [order_number]
    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   follow the map screen saving steps mentioned and save the map page screen shot.
+
+>>County: miami-dade
+>>URL: https://www.miamidade.gov/Apps/PA/PropertySearch/#/
+>>INSTRUCTIONS:
+     Your order number is: [order_number]
+     Enter complete address in this field, don't confuse with placehoders. eg: if place holder is 111 NW 1 St , then enter property address in this field only and don't go for other fields.
+     Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+     follow the map screen saving steps mentioned and save the map page screen shot.
+
+>>County: nassau
+>>URL: https://maps.ncpafl.com/NassauSearch/IS_SearchResults2015/ShowIS_NewSearchResults2015Table.aspx
+>>INSTRUCTIONS:
+     Your order number is: [order_number]
+     Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+     follow the map screen saving steps mentioned and save the map page screen shot.
 
 >>County: pasco
 >>URL: https://search.pascopa.com/
@@ -158,7 +175,7 @@
 >>County: wakulla
 >>URL: https://search.mywakullapa.com/
 >>INSTRUCTIONS:
+    **Note: select the option under Real property, if multiple results are loaded after searching.
     Your order number is: [order_number].
     Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf.(if multiple options are loaded then select primary account).
-
     Follow the map screen saving steps mentioned and save the map page screen shot.

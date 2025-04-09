@@ -41,7 +41,7 @@ You will navigate a website related to property appraisal, fill the property sea
 7. **Search and Result Selection:**
    - Click the search button after form completion.
    - Wait for results to load.
-   - If a single result appears, click the Parcel ID link.
+   - If a single result appears, select the option.
    - If multiple results appear:
      - Compare all available Parcel IDs and/or Addresses with the provided `x_parcel_id` and `x_property_address`.
      - Select the most accurate match.
@@ -60,7 +60,7 @@ You will navigate a website related to property appraisal, fill the property sea
     - Click it to open map in a new tab or window.
     - If a disclaimer appears, click "agree".
     - Wait for **network idle state**.
-    - Once loaded, take a full-page screenshot.
+    - Once loaded, Save page as screenshot.
 
 11. **End the Task.**
 
@@ -86,10 +86,12 @@ You will navigate a website related to property appraisal, fill the property sea
 
 ---
 
+**Important Instruction following rule:
+  *If any other instruction is provided for any step other than system instructions, override that instruction for the step in system instructions.
+
 **Variables to be substituted by the automation engine:**
 - `x_parcel_id`: (e.g., '28-28-06-934950-030120')
 - `x_property_address`: (e.g., '3012 (MODEL) CAMELOT DR #2')
 - `x_house_number`: (e.g., '3012')
 - `x_street_name`: (e.g., 'CAMELOT DR #2')
 - `search_by_account_number`: (true or false)
-
