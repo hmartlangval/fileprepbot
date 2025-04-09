@@ -230,8 +230,8 @@ class MainBot(LLMBotBase):
 bot = MainBot(options={
     "window_handle": get_window_handle(),
     "bot_type": "system",
-    "bot_id": "mainbot",
-    "bot_name": "MainBot",
+    "bot_id": "fileprep",
+    "bot_name": "FilePrep",
     "autojoin_channel": "general",
     "model": "gpt-4o-mini",
     "prompts_directory": "prompts",

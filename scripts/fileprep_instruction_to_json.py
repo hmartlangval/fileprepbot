@@ -68,20 +68,21 @@ countyMap = {
     "washington": "Washington"
 }
 
-async def preprocessing_tasks(self, session_data: dict):
+async def preprocessing_tasks(self, context):
     """ Purpose is to ensure that we parse the instruction prompt file in the way we want it. No mistake should happen in prompt"""
     print('initializing on the test browser client')
     
+    session_data = context.SessionData
     json_data = session_data.get('json_data', {})
     sensitive_data = self.extract_sensitive_data(json_data)
     self.create_download_folder(json_data)
     
 
-async def prepare_prompt_json(self, session_data: dict):
+async def prepare_prompt_json(self, context):
     """ Purpose is to ensure that we parse the instruction prompt file in the way we want it. No mistake should happen in prompt"""
     print('initializing on the test browser client')
     
-    # __self = self.__self
+    session_data = context.SessionData    
     prompt_text = session_data.get('instructions', '')
     
     prompt_data = {}
@@ -125,7 +126,8 @@ async def prepare_prompt_json(self, session_data: dict):
     self.prompt_json = prompt_data
     print('prompt json file is loaded and is ready to use')
 
-def get_instructions(self, session_data: dict):
+async def get_instructions(self, context):
+    session_data = context.SessionData
     sensitive_data = session_data.get('sensitive_data', {})
     county = sensitive_data.get('x_county').lower()
     if county:
@@ -152,5 +154,5 @@ def get_instructions(self, session_data: dict):
     {instructions}        
     """        
     
-    self.SessionData['instructions'] = instructions
+    session_data['instructions'] = instructions
     # return instructions

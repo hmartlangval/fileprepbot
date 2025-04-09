@@ -225,7 +225,7 @@ class FilePreparationParentBot(BrowserClientBaseBot):
         if v2_config:
             self.socket.emit('message', {
                 "channelId": message.get("channelId"),
-                "content": 'Processing data as instructed... >>>'
+                "content": f"Processing action {v2_config.get('name', '')}... >>>"
             })
             [instructions, extend_system_prompt] = await self.v2_prompt(v2_config)
             
