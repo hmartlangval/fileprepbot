@@ -35,10 +35,7 @@ class MainBot(LLMBotBase):
         
     async def generate_response(self, message):
        
-        self.socket.emit('message', {
-            "channelId": message.get("channelId"),
-            "content": 'Message is received, processing... >>>'
-        })
+        self.emit_start_message(message)
        
         ## only customization here
         [json_data, sensitive_data] = await extract_message_data(self, message)
@@ -86,7 +83,6 @@ class MainBot(LLMBotBase):
                     requested_action = json_data.get("action", None)
                     
                 if requested_action == "start_local_pdf":
-                    self.emit_start_message(message)
                     self.isBusy = True
                     try:
                         data = json_data.get("data", [])
