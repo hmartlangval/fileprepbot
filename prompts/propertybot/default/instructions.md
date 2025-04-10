@@ -34,10 +34,10 @@
 
 >>County: columbia
 >>URL: https://columbia.floridapa.com/gis/
->>INSTRUCTIONS:
+>>INSTRUCTIONS:.
    Your order number is: [order_number]
-   Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
-   follow the map screen saving steps mentioned and save the map page screen shot.
+   1. Follow the navigation instruction steps and save page as pdf  using filename [order_number]-PA.pdf.
+   2. follow the map screen saving steps mentioned and save the map page screen shot.
 
 >>County: desoto
 >>URL: https://www.desotopa.com/gis/
@@ -56,6 +56,7 @@
 >>County: hillsborough
 >>URL: https://gis.hcpafl.org/PropertySearch/#/nav/Basic%20Search
 >>INSTRUCTIONS:
+   Enter address in the input field which as lable 'Address'
    Your order number is: [order_number]
    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
    follow the map screen saving steps mentioned and save the map page screen shot.
@@ -81,6 +82,22 @@
 >>INSTRUCTIONS:
    Your order number is: [order_number]
    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   follow the map screen saving steps mentioned and save the map page screen shot.
+
+>>County: miami-dade
+>>URL: https://www.miamidade.gov/Apps/PA/PropertySearch/#/
+>>INSTRUCTIONS:
+     Your order number is: [order_number]
+     Enter complete address in this field, don't confuse with placehoders. eg: if place holder is 111 NW 1 St , then enter property address in this field only and don't go for other fields.
+     Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+     follow the map screen saving steps mentioned and save the map page screen shot.
+
+>>County: nassau
+>>URL: https://maps.ncpafl.com/NassauSearch/IS_SearchResults2015/ShowIS_NewSearchResults2015Table.aspx
+>>INSTRUCTIONS:
+     Your order number is: [order_number]
+     Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+     follow the map screen saving steps mentioned and save the map page screen shot.
 
 >>County: pasco
 >>URL: https://search.pascopa.com/
@@ -120,6 +137,15 @@
     * Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
     * follow the map screen saving steps mentioned and save the map page screen shot.
 
+>>County: st lucie
+>>URL: https://www.paslc.gov/property-search/real-estate/owner
+>>INSTRUCTIONS:
+    * Your order number is: [order_number]
+    * After navigating to link select search option based on the search option decided, if it is parcel is search click on parcel id search else click on basic site address search.
+    * Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+    * follow the map screen saving steps mentioned and save the map page screen shot.
+
+
 >>County: suwannee
 >>URL: https://www.suwanneepa.com/gis/
 >>INSTRUCTIONS:
@@ -130,8 +156,9 @@
 >>County: volusia
 >>URL: https://vcpa.vcgov.org/search/real-property
 >>INSTRUCTIONS:
-    Your order number is: [order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   Your order number is: [order_number]
+   1. Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf. When search click enter for search, and this may directly take you to summary page after clicking enter without displaying result for search.
+   2. follow the map screen saving steps mentioned and save the map page screen shot.
 
 >>County: suwannee
 >>URL: https://www.suwanneepa.com/gis/
@@ -149,7 +176,7 @@
 >>County: wakulla
 >>URL: https://search.mywakullapa.com/
 >>INSTRUCTIONS:
+    **Note: select the option under Real property, if multiple results are loaded after searching.
     Your order number is: [order_number].
     Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf.(if multiple options are loaded then select primary account).
-
     Follow the map screen saving steps mentioned and save the map page screen shot.

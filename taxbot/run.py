@@ -42,7 +42,7 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
             if action.get('requires_browser', False):
                 result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data,
                                                 session_config={
-                                                    "annual_pdf_filename": f"{order_number}-PA.pdf",
+                                                    "annual_pdf_filename": f"{order_number}-Tax.pdf",
                                                     "original_json": json_data
                                                 })
                 [is_success, final_summary] = self.check_success_or_failure(result)

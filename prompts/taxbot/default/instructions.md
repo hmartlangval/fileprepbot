@@ -39,7 +39,7 @@
 >>INSTRUCTIONS:
     Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
     
->>County: Charlotte
+>>County: charlotte
 >>URL:https://county-taxes.net/charlotte/property-tax
 >>INSTRUCTIONS:
     Proceed with the search and save the page as PDF [order_number]_history.pdf   for list of all Annual Bill .
@@ -47,14 +47,14 @@
 
 
 
->>County: Citrus
+>>County: citrus
 >>URL:https://county-taxes.net/citrus/property-tax
 >>INSTRUCTIONS:
     Proceed with the search and save the page as PDF [order_number]_history.pdf   for list of all Annual Bill .
     Next Step :Page contains **2024 Annual Bill** click on print pdf link after downloading the file save it using filename [order_number]_Tax.pdf
 
 
->>County:Clay
+>>County:clay
 >>URL:https://county-taxes.net/fl-clay/property-tax
 >>INSTRUCTIONS:
     Proceed with the search and save the page as PDF [order_number]_history.pdf   for list of all Annual Bill .
@@ -70,8 +70,9 @@
 >>County: columbia
 >>URL: https://columbia.floridatax.us/AccountSearch?s=pt
 >>INSTRUCTIONS:
-    
-    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
+    Proceed with the search 
+    Select/click the correct account number or address from the records found
+    Click on Print Bill/Receipt and save the pdf filename as [order_number]_Tax.pdf
 
 >>County: desoto
 >>URL: https://www.desotocountytaxcollector.com/Property/SearchSelect?ClearData=True
@@ -116,26 +117,22 @@
 >>County: gulf
 >>URL: https://www.gulfcountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
-    
-    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
+    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
 >>County: hamilton
 >>URL: https://www.hamiltoncountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
-    
-    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
+    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
 >>County: hardee
 >>URL: https://www.hardeecountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
-    
-    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
+    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
 >>County: hendry
 >>URL: https://property.hendry.tax/ptaxweb/editPropertySearch2.action;jsessionid=08DB76CCC936695833DF3513E8B3839A
->>INSTRUCTIONS:
-    
-    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
+>>INSTRUCTIONS: 
+    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
 >>County: hernando
 >>URL: https://county-taxes.net/fl-hernando/property-tax
@@ -146,8 +143,7 @@
 >>County: highlands
 >>URL: https://property.highlands.tax/ptaxweb/editPropertySearch2.action;jsessionid=BB170B16ED16F4BE643D362A18CD1861
 >>INSTRUCTIONS:
-    
-    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
+    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
 >>County: hillsborough
 >>URL: https://county-taxes.net/hillsborough/property-tax
@@ -158,8 +154,7 @@
 >>County: holmes
 >>URL: https://www.holmescountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
-    
-    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
+    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
 >>County: indian river
 >>URL: https://county-taxes.net/indianriver/property-tax
@@ -170,20 +165,19 @@
 >>County: jackson
 >>URL: https://www.jacksoncountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
-    
-    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
+    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
 >>County: jefferson
 >>URL: https://www.jeffersoncountytaxcollector.com/Property/SearchSelect?Accept=true&ClearData=True
 >>INSTRUCTIONS:
-    
-    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
+    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
 >>County: lafayette
 >>URL: https://lafayette.floridatax.us/AccountSearch?s=pt
 >>INSTRUCTIONS:
-    Proceed with the search and save the page as PDF [order_number]_history.pdf   for list of all Annual Bill .
-    Next Step :Page contains **2024 Annual Bill** click on print pdf link after downloading the file save it using filename [order_number]_Tax.pdf
+    Proceed with the search 
+    Select/click the correct account number or address from the records found
+    Click on Print Bill/Receipt and save the pdf filename as [order_number]_Tax.pdf
 
 >>County: lake
 >>URL: https://county-taxes.net/lake/property-tax
@@ -275,7 +269,7 @@
     Proceed with the search and save the page as PDF [order_number]_history.pdf for list of all Annual Bill .
     Next Step :Page contains **2024 Annual Bill** click on Print pdf link after downloading the file save it using filename [order_number]_Tax.pdf
 
->>County: pinellas
+>>County:Pinellas
 >>URL: https://county-taxes.net/fl-pinellas/property-tax
 >>>>INSTRUCTIONS:
     Proceed with the search and save the page as PDF [order_number]_history.pdf   for list of all Annual Bill .
@@ -296,15 +290,16 @@
 >>County: palm beach
 >>URL: https://pbctax.publicaccessnow.com/PropertyTax.aspx
 >>INSTRUCTIONS:
-    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
+    Proceed with the search and use Ctrl +p  and save the pdf filename as [order_number]_Tax.pdf
     **if 'x_account_account' is true then search in  Property Control Number**
 
 
 >>County: taylor
 >>URL: https://taylor.floridatax.us/AccountSearch?s=pt
 >>INSTRUCTIONS:
-    
-    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
+    Proceed with the search 
+    Select/click the correct account number or address from the records found
+    Click on Print Bill/Receipt and save the pdf filename as [order_number]_Tax.pdf
 
 >>County: union
 >>URL: https://www.unioncountytc.com/Property/SearchSelect?Accept=true&ClearData=True
@@ -316,7 +311,7 @@
 >>URL: https://county-taxes.net/vctaxcollector/property-tax
 >>INSTRUCTIONS:
     Proceed with the search and save the page as PDF [order_number]_history.pdf   for list of all Annual Bill .
-    Next Step :Page contains **2024 Annual Bill** click on print pdf link after downloading the file save the annual_pdf_filename='Tax_bot_test.pdf'
+    Next Step :Page contains **2024 Annual Bill** click on print pdf link after downloading the file save the filename as [order_number]_Tax.pdf
 
 >>County: gadsden
 >>URL: https://fl-gadsden.publicaccessnow.com/TaxCollector/PropertyTaxSearch.aspx
@@ -333,8 +328,10 @@
 >>County: polk
 >>URL:https://polk.payfltaxes.com/lookup/property-tax   
 >>INSTRUCTIONS:
-    
-    Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
+    Proceed with the search 
+    Select the correct address or account number from dropdown.
+    Click on the correct result in tabular form.
+    Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
 >>County: putnam
 >>URL:https://www.putnamtax.com/
@@ -349,9 +346,8 @@
     Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
 >>County: sarasota
->>URL: https://www.sarasotataxcollector.gov/
+>>URL: https://sarasotataxcollector.publicaccessnow.com/TaxCollector/PropertyTaxSearch.aspx
 >>INSTRUCTIONS:
-    
     Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
 >>County: seminole
@@ -360,13 +356,13 @@
     
     Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
->>County: st. Johns
+>>County: st. johns
 >>URL: https://www.stjohnstax.us/AccountSearch?s=pt
 >>INSTRUCTIONS:
     
     Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
->>County: st. Lucie
+>>County: st. lucie
 >>URL: https://county-taxes.net/stlucie/property-tax
 >>INSTRUCTIONS:
     

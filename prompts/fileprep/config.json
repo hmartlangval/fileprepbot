@@ -7,7 +7,8 @@
       "output_template_function": "fileprep_mainbot:format_output",
       "prompt_scripts_backup": [
         "fileprep_mainbot:do_pdf_extraction"
-      ]
+      ],
+      "requires_browser": false
     }
   }
 }

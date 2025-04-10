@@ -1,7 +1,7 @@
 {
   "actions": {
     "default": {
-      "activeSystemPrompt": "templatebot/default/math_system.md",
+      "activeSystemPrompt": "templatebot/default/system_prompt.md",
       "activeInstructionPrompt": "templatebot/default/temporary_instruction.md",
       "requires_browser": true,
       "output_formatting": "text",
