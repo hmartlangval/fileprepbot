@@ -57,44 +57,44 @@ class DemoBot(AbstractBot.BrowserClientBaseBot):
                 [file_name, function_name] = script.split(':')
                 await self.script_executor.execute(file_name.strip(), function_name.strip())
 
-                instructions = self.script_executor.SessionData.get('instructions', '')
-                extend_system_prompt = self.script_executor.SessionData.get('extend_system_prompt', '')
-                sensitive_data = self.script_executor.SessionData.get('sensitive_data', None)
-                
+            instructions = self.script_executor.SessionData.get('instructions', '')
+            extend_system_prompt = self.script_executor.SessionData.get('extend_system_prompt', '')
+            sensitive_data = self.script_executor.SessionData.get('sensitive_data', None)
+            
+            if json_data is not None:
+                cleaned_message = message.get('content', '').replace(message.get('content', '').split('[json]')[1].split('[/json]')[0], '').replace('[json]', '').replace('[/json]', '')
+            else:
+                cleaned_message = message.get('content', '')
+            
+            if instructions is not None:
+                instructions = instructions.replace('[user_intent]', cleaned_message)
                 if json_data is not None:
-                    cleaned_message = message.get('content', '').replace(message.get('content', '').split('[json]')[1].split('[/json]')[0], '').replace('[json]', '').replace('[/json]', '')
+                    for variable in self.variables:
+                        instructions = instructions.replace(f'[{variable}]', json_data.get(variable, ''))
+                        
+                
+            print(f"instructions:       {instructions}")
+            print(f"sensitive_data:          {sensitive_data}")
+            print(f"extend_system_prompt:  {extend_system_prompt}")
+            
+            if action.get('requires_browser', False):
+                result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data,
+                                                session_config={
+                                                    "original_json": json_data
+                                                })
+                [is_success, final_summary] = self.check_success_or_failure(result)
+                if is_success:
+                    result_text = await format_output(self.script_executor, action, final_summary)
                 else:
-                    cleaned_message = message.get('content', '')
+                    result_text = f"Action '{action['name']}' has failed. Message: {final_summary}"
+            else:
+                combined_instructions = f"""
+                {extend_system_prompt}
                 
-                if instructions is not None:
-                    instructions = instructions.replace('[user_intent]', cleaned_message)
-                    if json_data is not None:
-                        for variable in self.variables:
-                            instructions = instructions.replace(f'[{variable}]', json_data.get(variable, ''))
-                            
-                
-                print(f"instructions:       {instructions}")
-                print(f"sensitive_data:          {sensitive_data}")
-                print(f"extend_system_prompt:  {extend_system_prompt}")
-                
-                if action.get('requires_browser', False):
-                    result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data,
-                                                    session_config={
-                                                        "original_json": json_data
-                                                    })
-                    [is_success, final_summary] = self.check_success_or_failure(result)
-                    if is_success:
-                        result_text = await format_output(self.script_executor, action, final_summary)
-                    else:
-                        result_text = f"Action '{action['name']}' has failed. Message: {final_summary}"
-                else:
-                    combined_instructions = f"""
-                    {extend_system_prompt}
-                    
-                    {instructions}
-                    """
-                    result = await self.call(combined_instructions)
-                    result_text = await format_output(self.script_executor, action, result)
+                {instructions}
+                """
+                result = await self.call(combined_instructions)
+                result_text = await format_output(self.script_executor, action, result)
                 
             self.socket.emit('message', {
                 "channelId": message.get("channelId"),
