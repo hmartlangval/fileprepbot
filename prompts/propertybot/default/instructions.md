@@ -34,11 +34,10 @@
 
 >>County: columbia
 >>URL: https://columbia.floridapa.com/gis/
->>INSTRUCTIONS:
+>>INSTRUCTIONS:.
    Your order number is: [order_number]
-   Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
-   Don't click on print button in results page only, first select correct result and after navigating to page then save the page as pdf.
-   follow the map screen saving steps mentioned and save the map page screen shot.
+   1. Proceed with the search.
+   2. follow the map screen saving steps mentioned and save the map page screen shot.
 
 >>County: desoto
 >>URL: https://www.desotopa.com/gis/
@@ -157,8 +156,9 @@
 >>County: volusia
 >>URL: https://vcpa.vcgov.org/search/real-property
 >>INSTRUCTIONS:
-    Your order number is: [order_number]
-    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   Your order number is: [order_number]
+   1. Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf. When search click enter for search, and this may directly take you to summary page after clicking enter without displaying result for search.
+   2. follow the map screen saving steps mentioned and save the map page screen shot.
 
 >>County: suwannee
 >>URL: https://www.suwanneepa.com/gis/
