@@ -1,9 +1,9 @@
 {
   "actions": {
     "default": {
-      "activeSystemPrompt": "templatebot/default/system_prompt.md",
-      "activeInstructionPrompt": "templatebot/default/temporary_instruction.md",
-      "requires_browser": true,
+      "activeSystemPrompt": "demobot/default/system_prompt.md",
+      "activeInstructionPrompt": "demobot/default/instruction_one.md",
+      "requires_browser": false,
       "output_formatting": "text",
       "output_template_function": "simple_script:output_template_mainbot",
       "prompt_scripts": [

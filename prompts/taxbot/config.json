@@ -1,6 +1,7 @@
 {
   "actions": {
     "default": {
+      "disable_browser_config": true,
       "activeSystemPrompt": "taxbot/default/system_prompt.md",
       "activeInstructionPrompt": "taxbot/default/instructions.md",
       "requires_browser": true,

@@ -1,6 +1,7 @@
 {
   "actions": {
     "default": {
+      "disable_browser_config": true,
       "activeSystemPrompt": "propertybot/default/system_prompt.md",
       "activeInstructionPrompt": "propertybot/default/instructions.md",
       "requires_browser": true,

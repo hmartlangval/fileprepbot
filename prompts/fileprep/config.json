@@ -1,6 +1,7 @@
 {
   "actions": {
     "default": {
+      "disable_browser_config": true,
       "activeSystemPrompt": "fileprep/default/system_prompt.md",
       "activeInstructionPrompt": "fileprep/default/pdf_text_extraction.md",
       "output_formatting": "json",
