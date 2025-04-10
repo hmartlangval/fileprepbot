@@ -11,16 +11,6 @@ load_dotenv()
 
 class FilePreparationParentBot(BrowserClientBaseBot):
     def __init__(self, options=None, *args, **kwargs):
-        
-        if options is None:
-            options = {}
-        
-        downloads_path = options.get("downloads_path", None)
-        if not downloads_path:
-            downloads_path = os.getenv("DOWNLOADS_PATH", None)
-            if downloads_path:
-                options.setdefault("downloads_path", downloads_path)
-        
         super().__init__(options, *args, **kwargs)
         self.variables = [
             "order_number", # non sensitive data, ok to be sent to LLM
@@ -28,6 +18,34 @@ class FilePreparationParentBot(BrowserClientBaseBot):
         ]
         
         self.script_executor = DynamicScriptExecutor(self, os.path.join(os.getcwd(), 'scripts'))
+    
+    def validate_data(self, message):
+        
+        botstates = self.get_bot_state()
+        if any(task.status == "in_progress" for task in botstates.tasks):
+            raise Exception("Task currently in progress. Please wait for it to complete.")
+                
+        json_data = super().extract_json_data(message)
+        if json_data is None:
+            raise Exception("JSON data is None")
+        
+        order_number = json_data.get('order_number', None)
+        if not order_number:
+            raise Exception("Order Number is None")
+        
+        context = json_data.get('context', None)
+        if context is None:
+            raise Exception("Context is None")
+        
+        database_id = context.get("id")
+        
+        self.new_task_started(database_id, f"order_number: {order_number}")
+        self.socket.emit('message', {
+            "channelId": message.get("channelId"),
+            "content": 'Message is received, processing... >>>'
+        })
+        
+        return [json_data, order_number, context, database_id]
         
     def extract_sensitive_data(self, json_data):
         if json_data:
@@ -45,7 +63,7 @@ class FilePreparationParentBot(BrowserClientBaseBot):
         context = json_data.get('context', {})
         
         # verify if folder is already created, to check this we need to make API call to get the order details
-        dl_f = await ensure_downloads_folder(self.config.get('downloads_path', None), context.get('id', None), order_number)
+        dl_f = await ensure_downloads_folder(self, context.get('id', None), order_number)
         self.config['custom_downloads_path'] = dl_f
         
         self.socket.emit('message', {

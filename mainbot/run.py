@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from base_bot.llm_bot_base import LLMBotBase
 from langchain_openai import ChatOpenAI
 from classes.dynamic_script_executor import DynamicScriptExecutor
-from classes.bot_helper import extract_message_data, format_output
+from classes.bot_helper import ensure_downloads_folder, extract_message_data, format_output
 from classes.pdf_to_image import PdfToImage
 from classes.utils import clean_json_string
 
@@ -103,6 +103,16 @@ class MainBot(LLMBotBase):
                                     userInput_json['context'] = item
                                 else:
                                     userInput_json = result
+                                # here make sure directory is created
+                                order_number = userInput_json.get('order_number', None)
+                                if not order_number:
+                                    raise Exception("Order number is not set")
+                                
+                                database_id = item.get('id', None)
+                                if not database_id:
+                                    raise Exception("Database id is not set")
+                                
+                                await ensure_downloads_folder(self, database_id, order_number)
                                 
                                 result_text = await format_output(self.script_executor, action, userInput_json)
                                 # userInput_json = self.add_more_params_for_task_bots(userInput_json, json_data=json_data)

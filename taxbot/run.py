@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 import AbstractBot
 from langchain_openai import ChatOpenAI
+from classes.bot_helper import ensure_downloads_folder
 
 from classes.bot_helper import format_output
 load_dotenv()
@@ -19,17 +20,9 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
         super().__init__(options, *args, **kwargs)
    
     async def generate_response(self, message):
-       
-        self.socket.emit('message', {
-            "channelId": message.get("channelId"),
-            "content": 'Message is received, processing... >>>'
-        })
-       
-        ## only customization here
-        json_data = super().extract_json_data(message)
-        order_number = json_data.get('order_number', None)
-        if not order_number:
-            raise Exception("Order Number is None")
+        
+        # validates acceptance, busy state and retrieves data
+        [json_data, order_number, context, database_id] = self.validate_data(message)
        
         for action in await self.actions_in_config():
             [instructions, sensitive_data, extend_system_prompt] = await super().prepare_LLM_data(json_data, message, action)
@@ -71,6 +64,7 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
                 "content": result_text
             })
 
+        self.task_ended(database_id)
         return "Action executor exited."
     
 bot = TaxBot(options={
