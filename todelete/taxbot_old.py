@@ -41,7 +41,7 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
         print(f"sensitive_data:          {sensitive_data}")
         print(f"extend_system_prompt:  {extend_system_prompt}")
        
-        result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data)
+        result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data,annual_pdf_filename=json_data['order_number']+'_Tax.pdf')
         summary = await self.analyse_summary(result)
         
         summary = f"I am tax bot. summary of downloading task: {summary}"

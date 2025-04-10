@@ -3,79 +3,11 @@ from typing import Optional
 from base_bot.browser_client_base_bot import BrowserClientBaseBot
 from dotenv import load_dotenv
 import os
+
+from classes.bot_helper import ensure_downloads_folder
 from classes.dynamic_script_executor import DynamicScriptExecutor
 
 load_dotenv()
-
-countyMap = {
-    "alachua": "Alachua",
-    "baker": "Baker",
-    "bay": "Bay",
-    "bradford": "Bradford",
-    "brevard": "Brevard",
-    "broward": "Broward",
-    "calhoun": "Calhoun",
-    "charlotte": "Charlotte",
-    "citrus": "Citrus",
-    "clay": "Clay",
-    "collier": "Collier",
-    "columbia": "Columbia",
-    "desoto": "DeSoto",
-    "dixie": "Dixie",
-    "duval": "Duval",
-    "escambia": "Escambia",
-    "flagler": "Flagler",
-    "franklin": "Franklin",
-    "gadsden": "Gadsden",
-    "gilchrist": "Gilchrist",
-    "glades": "Glades",
-    "gulf": "Gulf",
-    "hamilton": "Hamilton",
-    "hardee": "Hardee",
-    "hendry": "Hendry",
-    "hernando": "Hernando",
-    "highlands": "Highlands",
-    "hillsborough": "Hillsborough",
-    "holmes": "Holmes",
-    "indian_river": "Indian River",
-    "jackson": "Jackson",
-    "jefferson": "Jefferson",
-    "lafayette": "Lafayette",
-    "lake": "Lake",
-    "lee": "Lee",
-    "leon": "Leon",
-    "levy": "Levy",
-    "liberty": "Liberty",
-    "madison": "Madison",
-    "manatee": "Manatee",
-    "marion": "Marion",
-    "martin": "Martin",
-    "miami-dade": "Miami-Dade",
-    "monroe": "Monroe",
-    "nassau": "Nassau",
-    "okaloosa": "Okaloosa",
-    "okeechobee": "Okeechobee",
-    "orange": "Orange",
-    "osceola": "Osceola",
-    "palm_beach": "Palm Beach",
-    "pasco": "Pasco",
-    "pinellas": "Pinellas",
-    "polk": "Polk",
-    "putnam": "Putnam",
-    "santa_rosa": "Santa Rosa",
-    "sarasota": "Sarasota",
-    "seminole": "Seminole",
-    "st_johns": "St Johns",
-    "st_lucie": "St Lucie",
-    "sumter": "Sumter",
-    "suwannee": "Suwannee",
-    "taylor": "Taylor",
-    "union": "Union",
-    "volusia": "Volusia",
-    "wakulla": "Wakulla",
-    "walton": "Walton",
-    "washington": "Washington"
-}
 
 class FilePreparationParentBot(BrowserClientBaseBot):
     def __init__(self, options=None, *args, **kwargs):
@@ -97,91 +29,6 @@ class FilePreparationParentBot(BrowserClientBaseBot):
         
         self.script_executor = DynamicScriptExecutor(self, os.path.join(os.getcwd(), 'scripts'))
         
-    def create_download_folder(self, json_data):
-        print("json_data:", json_data)
-        if json_data:
-            order_number = json_data.get("order_number")
-            if order_number:
-                # we are overwriting the default folder creating as we don't want to keep it as a base feature:
-                cfg_downloads_path = self.config["downloads_path"]
-        
-                downloads_path = cfg_downloads_path if os.path.isabs(cfg_downloads_path) else os.path.join(os.getcwd(), cfg_downloads_path)
-                
-                new_downloads_path = os.path.join(downloads_path, order_number)
-                if not os.path.exists(new_downloads_path):  
-                    os.makedirs(new_downloads_path, exist_ok=True)
-                    self.config["custom_downloads_path"] = new_downloads_path
-                    return new_downloads_path
-                else:
-                    from datetime import datetime
-                    
-                    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-                    new_downloads_path_with_timestamp = f"{new_downloads_path}_{timestamp}"
-                    
-                    os.makedirs(new_downloads_path_with_timestamp, exist_ok=True)
-                    print(f"Folder {new_downloads_path_with_timestamp} created")
-                    
-                    self.config["custom_downloads_path"] = new_downloads_path_with_timestamp
-                    return new_downloads_path_with_timestamp
-                
-                # base implementation: do not remove this code
-                # new_dl_path = self.create_custom_downloads_directory(order_number)
-                # print("downloads path:", new_dl_path)
-                
-    # async def prepare_prompt_json(self):
-    #     """ Purpose is to ensure that we parse the instruction prompt file in the way we want it. No mistake should happen in prompt"""
-    #     print('initializing on the test browser client')
-        
-    #     prompt_data = {}
-    #     current_county = None
-
-    #     in_instructions = False
-    #     instructions = []
-        
-    #     for line in self.prompt_text.split('\n'):
-    #         line = line.strip()
-
-    #         if line.startswith("#"):
-    #             continue                
-    #         if line.startswith(">>County:") and not in_instructions:
-    #             current_county = line.replace('>>County:', '').strip()
-    #             prompt_data[current_county] = {}
-    #             in_instructions = False
-    #         elif line.startswith(">>URL:"):
-    #             url = line.replace('>>URL:', '').strip()
-    #             prompt_data[current_county]['url'] = url
-    #         elif line.startswith(">>INSTRUCTIONS:"):
-    #             instructions = []
-    #             in_instructions = True
-    #         elif in_instructions:
-    #             if line.startswith(">>County:"):
-    #                 if current_county and instructions:
-    #                     prompt_data[current_county]['instructions'] = "\n".join(instructions)
-    #                 current_county = line.replace('>>County:', '').strip()
-    #                 prompt_data[current_county] = {}
-    #                 in_instructions = False
-    #             else:
-    #                 instructions.append(line.strip())
-    #         elif line == "":
-    #             continue
-    #         else:
-    #             instructions.append(line.strip())
-
-    #     if current_county and instructions:
-    #         prompt_data[current_county]['instructions'] = "\n".join(instructions)
-
-    #     self.prompt_json = prompt_data
-    #     print('prompt json file is loaded and is ready to use')
-    
-    async def format_output(self, v2_config, result):
-        formatter = v2_config.get('output_template_function', None)
-        if formatter:
-            [file_name, function_name] = formatter.split(':')
-            self.script_executor.SessionData['result'] = result
-            return await self.script_executor.execute(file_name.strip(), function_name.strip())
-        
-        return f"Action {v2_config.get('name', 'unknown')} result: {result}"
-                    
     def extract_sensitive_data(self, json_data):
         if json_data:
             s_data = json_data.get('s_data', {})
@@ -189,70 +36,24 @@ class FilePreparationParentBot(BrowserClientBaseBot):
             s_data = {}
         return s_data
     
-    def get_instructions(self, json_data, sensitive_data):
-        county = sensitive_data.get('x_county').lower()
-        if county:
-            county = county.lower()
-            county_code = next((key for key, value in countyMap.items() if value.lower() == county), None)
-            if county_code:
-                sensitive_data['x_county'] = county_code
-            else:
-                sensitive_data['x_county'] = county.lower()
-            prompt_data = self.prompt_json.get(county, {})
-            navigate_url = prompt_data.get('url', '')
-            instructions = prompt_data.get('instructions', '')
-        else:
-            instructions = ''
-            
-        if not instructions or not navigate_url:
-            return None
-            
-        instructions = f"""
-        search_by_account_number: {'true' if sensitive_data.get('x_account_number') else 'false'}
+    async def prepare_LLM_data(self, json_data, message, v2_config: dict = None):
+        if not v2_config:
+            raise Exception("Your need V2 configuration for this bot.")
         
-        Navigate to the following URL: {navigate_url}
-        
-        {instructions}        
-        """        
-        
-        return instructions
-   
-    async def prepare_LLM_data(self, json_data, message, v2_config: Optional[dict] = None):
         sensitive_data = self.extract_sensitive_data(json_data)
-        # you can do if all data is valid or not
-        self.create_download_folder(json_data)
+        order_number = json_data.get('order_number', None)
+        context = json_data.get('context', {})
         
-        if v2_config:
-            self.socket.emit('message', {
-                "channelId": message.get("channelId"),
-                "content": f"Processing action {v2_config.get('name', '')}... >>>"
-            })
-            [instructions, extend_system_prompt] = await self.v2_prompt(v2_config)
+        # verify if folder is already created, to check this we need to make API call to get the order details
+        dl_f = await ensure_downloads_folder(self.config.get('downloads_path', None), context.get('id', None), order_number)
+        self.config['custom_downloads_path'] = dl_f
+        
+        self.socket.emit('message', {
+            "channelId": message.get("channelId"),
+            "content": f"Processing action {v2_config.get('name', '')}... >>>"
+        })
+        [instructions, extend_system_prompt] = await self.v2_prompt(v2_config)
             
-                
-        # continue with v1 ways of loading prompts
-        if not v2_config and not self.is_prompt_loaded:
-            self.socket.emit('message', {
-                "channelId": message.get("channelId"),
-                "content": 'Message is received, processing... >>>'
-            })
-            await self.load_prompts()
-            
-            try:
-                spp = self.options.get('system_prompt_path', None)
-                if spp:
-                    with open(spp, 'r') as file:
-                        extend_system_prompt = file.read()
-                        for variable in self.variables:
-                            extend_system_prompt = extend_system_prompt.replace(f'[{variable}]', json_data.get(variable, ''))
-                else:
-                    extend_system_prompt = ""
-            except FileNotFoundError:
-                extend_system_prompt = "Error: The file 'prompts/property_appraisal_system.txt' was not found."
-            except Exception as e:
-                extend_system_prompt = f"An error occurred while reading the file: {e}"
-
-
         self.script_executor.set_session_data({
             'message': message,
             'json_data': json_data,
@@ -262,20 +63,10 @@ class FilePreparationParentBot(BrowserClientBaseBot):
         })
         
         # after loading prompt, we can execute the script
-        if v2_config:
-            scripts = v2_config.get('prompt_scripts', [])
-            if scripts:
-                for script in scripts:
-                    [file_name, function_name] = script.split(':')
-                    await self.script_executor.execute(file_name.strip(), function_name.strip())
+        for script in v2_config.get('prompt_scripts', []):
+            [file_name, function_name] = script.split(':')
+            await self.script_executor.execute(file_name.strip(), function_name.strip())
 
-        # # now continue processing the loaded prompts
-        # await self.prepare_prompt_json()
-            
-        # if instructions and sensitive_data is not None:
-        #     instructions = self.get_instructions(json_data, sensitive_data)
-        #     print(instructions)
-        
         instructions = self.script_executor.SessionData.get('instructions', '')
         extend_system_prompt = self.script_executor.SessionData.get('extend_system_prompt', '')
         sensitive_data = self.script_executor.SessionData.get('sensitive_data', None)

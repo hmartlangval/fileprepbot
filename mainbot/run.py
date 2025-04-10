@@ -35,10 +35,7 @@ class MainBot(LLMBotBase):
         
     async def generate_response(self, message):
        
-        self.socket.emit('message', {
-            "channelId": message.get("channelId"),
-            "content": 'Message is received, processing... >>>'
-        })
+        self.emit_start_message(message)
        
         ## only customization here
         [json_data, sensitive_data] = await extract_message_data(self, message)
@@ -46,7 +43,7 @@ class MainBot(LLMBotBase):
         for action in await self.actions_in_config():
             self.socket.emit('message', {
                 "channelId": message.get("channelId"),
-                "content": f"Processing action {action.get('name', '')}... >>>"
+                "content": f"Executing action {action.get('name', '')}... >>>"
             })
             try:
                 [instructions, extend_system_prompt] = await self.v2_prompt(action)
@@ -86,7 +83,6 @@ class MainBot(LLMBotBase):
                     requested_action = json_data.get("action", None)
                     
                 if requested_action == "start_local_pdf":
-                    self.emit_start_message(message)
                     self.isBusy = True
                     try:
                         data = json_data.get("data", [])
@@ -104,6 +100,7 @@ class MainBot(LLMBotBase):
                                 if action.get('output_formatting', 'text') == 'json':
                                     clean_parsed = clean_json_string(result)
                                     userInput_json = json.loads(clean_parsed)
+                                    userInput_json['context'] = item
                                 else:
                                     userInput_json = result
                                 
@@ -135,95 +132,6 @@ class MainBot(LLMBotBase):
                 })
                 continue
         # CUSTOMIZATION ENDS HERE
-        
-        
-        
-
-        # for action in await self.actions_in_config():
-        #     self.socket.emit('message', {
-        #         "channelId": message.get("channelId"),
-        #         "content": 'Processing data as instructed... >>>'
-        #     })
-        #     try:
-        #         [instructions, extend_system_prompt] = await self.v2_prompt(action)
-        #     except Exception as e:
-        #         self.socket.emit('message', {
-        #             "channelId": message.get("channelId"),
-        #             "content": f"Action '{action['name']}' Error reading instructions. Check instruction file."
-        #         })
-        #         continue
-            
-        #     self.script_executor.set_session_data({
-        #         'message': message,
-        #         'json_data': json_data,
-        #         'sensitive_data': sensitive_data if sensitive_data else None,
-        #         'instructions': instructions,
-        #         'extend_system_prompt': extend_system_prompt
-        #     })
-            
-        #     # after loading prompt, we can execute the script
-        #     scripts = action.get('prompt_scripts', [])
-        #     if scripts:
-        #         for script in scripts:
-        #             [file_name, function_name] = script.split(':')
-        #             await self.script_executor.execute(file_name.strip(), function_name.strip())
-                    
-        #     # after executing the script, we can get the data
-        #     instructions = self.script_executor.SessionData.get('instructions', '')
-        #     extend_system_prompt = self.script_executor.SessionData.get('extend_system_prompt', '')
-        #     sensitive_data = self.script_executor.SessionData.get('sensitive_data', None)
-            
-        #     # we clean the original message the [json] and [/json] tags
-        #     if json_data is not None:
-        #         cleaned_message = message.get('content', '').replace(message.get('content', '').split('[json]')[1].split('[/json]')[0], '').replace('[json]', '').replace('[/json]', '')
-        #     else:
-        #         cleaned_message = message.get('content', '')
-
-        #     # we replace the [user_intent] with the cleaned message
-        #     if instructions is not None:
-        #         instructions = instructions.replace('[user_intent]', cleaned_message)
-        #         if json_data is not None:
-        #             for variable in self.variables:
-        #                 instructions = instructions.replace(f'[{variable}]', json_data.get(variable, ''))
-
-        #     # [instructions, sensitive_data, extend_system_prompt] = await super().prepare_LLM_data(json_data, message, action)
-            
-        #     print(f"instructions:       {instructions}")
-        #     print(f"sensitive_data:          {sensitive_data}")
-        #     print(f"extend_system_prompt:  {extend_system_prompt}")
-            
-        #     if not instructions:
-        #         self.socket.emit('message', {
-        #             "channelId": message.get("channelId"),
-        #             "content": f"Action '{action['name']}' has No instructions provided."
-        #         })
-        #         continue
-        
-        #     # output_formatting = action.get('output_formatting', 'text')
-        #     if action.get('requires_browser', False):
-        #         result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data,
-        #                                         session_config={
-        #                                             "annual_pdf_filename": "anything.pdf",
-        #                                             "original_json": json_data
-        #                                         })
-        #         [is_success, final_summary] = self.check_success_or_failure(result)
-        #         if is_success:
-        #             result_text = await format_output(self.script_executor, action, final_summary)
-        #         else:
-        #             result_text = f"Action '{action['name']}' has failed. Message: {final_summary}"
-        #     else:
-        #         combined_instructions = f"""
-        #         {extend_system_prompt}
-                
-        #         {instructions}
-        #         """
-        #         result = await self.call(combined_instructions)
-        #         result_text = await format_output(self.script_executor, action, result)
-                
-        #     self.socket.emit('message', {
-        #         "channelId": message.get("channelId"),
-        #         "content": result_text
-        #     })
 
         return "Action executor exited."
     

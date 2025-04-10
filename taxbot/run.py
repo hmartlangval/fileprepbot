@@ -3,6 +3,8 @@ import os
 from dotenv import load_dotenv
 import AbstractBot
 from langchain_openai import ChatOpenAI
+
+from classes.bot_helper import format_output
 load_dotenv()
 
 import ctypes
@@ -25,6 +27,9 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
        
         ## only customization here
         json_data = super().extract_json_data(message)
+        order_number = json_data.get('order_number', None)
+        if not order_number:
+            raise Exception("Order Number is None")
        
         for action in await self.actions_in_config():
             [instructions, sensitive_data, extend_system_prompt] = await super().prepare_LLM_data(json_data, message, action)
@@ -44,14 +49,14 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
             if action.get('requires_browser', False):
                 result  = await self.call_agent(instructions, extend_system_message=extend_system_prompt, sensitive_data=sensitive_data,
                                                 session_config={
-                                                    "annual_pdf_filename": "anything.pdf",
+                                                    "annual_pdf_filename": f"{order_number}-PA.pdf",
                                                     "original_json": json_data
                                                 })
                 [is_success, final_summary] = self.check_success_or_failure(result)
                 if is_success:
-                    result_text = await self.format_output(action, final_summary)
+                    result_text = await format_output(self.script_executor, action, final_summary)
                 else:
-                    result_text = f"Action '{action['name']}' has failed. Message: {final_summary}"
+                    result_text = f"Action '{action['name']}' for order '{order_number}' has failed. Message: {final_summary} [json]{json.dumps(json_data)}[/json] [Retry]"
             else:
                 combined_instructions = f"""
                 {extend_system_prompt}
@@ -59,7 +64,7 @@ class TaxBot(AbstractBot.FilePreparationParentBot):
                 {instructions}
                 """
                 result = await self.call(combined_instructions)
-                result_text = await self.format_output(action, result)
+                result_text = await format_output(self.script_executor, action, result)
                 
             self.socket.emit('message', {
                 "channelId": message.get("channelId"),
