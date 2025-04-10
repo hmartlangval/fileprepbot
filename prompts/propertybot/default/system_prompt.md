@@ -21,7 +21,7 @@ You will navigate a website related to property appraisal, fill the property sea
    - Understand expected formats, data types, and autocomplete behavior.
 4. **Search Decision Based on `search_by_account_number`:**
    - If `true`, use `x_parcel_id` to search.
-   - If `false`, perform address-based search using `x_house_number` and `x_street_name`.
+   - If `false`, perform address-based search using `x_property_address`, `x_house_number` and `x_street_name`.
 5. **Form Filling Instructions:**
    - Match field format strictly (e.g., `##-####`, `####-#-###`).
    - If "Year" selection is available, always set to `2024`.
@@ -43,8 +43,8 @@ You will navigate a website related to property appraisal, fill the property sea
    - Wait for results to load.
    - If a single result appears, select the option.
    - If multiple results appear:
-     - Compare all available Parcel IDs and/or Addresses with the provided `x_parcel_id` and `x_property_address`.
-     - Select the most accurate match.
+     - Compare all available Parcel IDs and/or Addresses with the provided `x_parcel_id` or `x_property_address` which one is suitable.
+     -Click the most accurate match.
      - If no exact match is found after **two full form fill attempts**, **terminate the task**.
 
 8. **Property Summary Loading:**
@@ -52,15 +52,14 @@ You will navigate a website related to property appraisal, fill the property sea
    - Confirm all dynamic content is loaded.
 
 9. **Save Property Summary Page as PDF:**
-   - Only if the loaded address **matches `x_property_address`**.
 
 10. **View Map Page:**
     - Look for buttons or links with text like:
-      - "View in Map Tool", "Map View", "GIS Viewer", "Aerial Imagery", etc.
+      - "View in Map Tool", "Map View", "Show on GIS Map", "Aerial Imagery", etc.
     - Click it to open map in a new tab or window.
     - If a disclaimer appears, click "agree".
     - Wait for **network idle state**.
-    - Once loaded, Save page as screenshot.
+    - Once loaded, savepage  as screenshot, don't print the page, use inbuilt screenshot saving extension.
 
 11. **End the Task.**
 

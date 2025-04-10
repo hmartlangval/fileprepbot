@@ -37,6 +37,7 @@
 >>INSTRUCTIONS:
    Your order number is: [order_number]
    Proceed with the search and extract the page as pdf using filename [order_number]-PA.pdf
+   Don't click on print button in results page only, first select correct result and after navigating to page then save the page as pdf.
    follow the map screen saving steps mentioned and save the map page screen shot.
 
 >>County: desoto
