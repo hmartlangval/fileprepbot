@@ -57,6 +57,7 @@ You will access a county property tax website and search for property details us
         6.  **Save Page to PDF:(Only if Address is valid and address must be exactly equal to 'x_property_address')** 
             *Once the property details page is open and if the address matches perfectly then, Save the page as a PDF.  
              -If Page contains **2024 Annual  Bill** just click Print PDF link  **Once or maximum two times**
+
             **Note:** If the *address doesn't match ,Terminate the task immediately*
         7.  **End Task.**
         8.  **Error Handling and Retry Mechanism:**
@@ -86,8 +87,4 @@ You will access a county property tax website and search for property details us
     * Maximum of 2 total attempts (whether dropdown or tabular).
     * Always clear input field between attempts.
     * Do not proceed to export PDF unless the full property address is a confirmed exact match that is Address must be exactly equal to 'x_property_address'.
-<<<<<<< HEAD
     * Do not loop or retry beyond 2 times — if no match, terminate the task immediately.
-=======
-    * Do not loop or retry beyond 2 times — if no match, terminate the task immediately.
->>>>>>> cd8bf2f30ebefd3cdedd7b7ee749c6e71e068827

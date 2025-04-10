@@ -36,7 +36,7 @@
 >>URL: https://columbia.floridapa.com/gis/
 >>INSTRUCTIONS:.
    Your order number is: [order_number]
-   1. Proceed with the search.
+   1. Follow the navigation instruction steps and save page as pdf  using filename [order_number]-PA.pdf.
    2. follow the map screen saving steps mentioned and save the map page screen shot.
 
 >>County: desoto
