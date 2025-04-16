@@ -6,6 +6,7 @@ import os
 
 from classes.bot_helper import ensure_downloads_folder
 from classes.dynamic_script_executor import DynamicScriptExecutor
+from classes.api_service import ApiService
 
 load_dotenv()
 
@@ -16,7 +17,7 @@ class FilePreparationParentBot(BrowserClientBaseBot):
             "order_number", # non sensitive data, ok to be sent to LLM
             "x_county", # count is also OK to be sent to LLM
         ]
-        
+        self.api_service = ApiService(self.config)
         self.script_executor = DynamicScriptExecutor(self, os.path.join(os.getcwd(), 'scripts'))
     
     def validate_data(self, message):

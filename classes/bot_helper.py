@@ -43,7 +43,7 @@ async def update_downloads_folder(id, folderPath: str):
     # record = data.get('record', {})
     # return record
 
-async def ensure_downloads_folder(self, database_id, order_number):
+async def ensure_downloads_folder(self, database_id, order_number, update_database=True):
     print("trying to ensure downloads folder")
     if database_id is None or order_number is None:
         raise Exception("Database ID or Order Number is None")
@@ -65,5 +65,6 @@ async def ensure_downloads_folder(self, database_id, order_number):
         if new_dl_folder is None:
             raise Exception("New Downloads Folder is None")
         
-        await update_downloads_folder(database_id, new_dl_folder)
+        if update_database:
+            await update_downloads_folder(database_id, new_dl_folder)
         return new_dl_folder

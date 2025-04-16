@@ -1,7 +1,9 @@
+import asyncio
 import json
 from dotenv import load_dotenv
 from base_bot.llm_bot_base import LLMBotBase
-from langchain_openai import ChatOpenAI
+# from langchain_openai import ChatOpenAI
+from classes.api_service import ApiService
 from classes.dynamic_script_executor import DynamicScriptExecutor
 from classes.bot_helper import ensure_downloads_folder, extract_message_data, format_output
 from classes.pdf_to_image import PdfToImage
@@ -22,6 +24,7 @@ class MainBot(LLMBotBase):
     def __init__(self, options, *args, **kwargs):
         super().__init__(options, *args, **kwargs)
         self.script_executor = DynamicScriptExecutor(self, os.path.join(os.getcwd(), 'scripts'))
+        self.api_service = ApiService(self.config)
    
     def emit_start_message(self, message):
         self.socket.emit('message', {
@@ -108,14 +111,27 @@ class MainBot(LLMBotBase):
                                 if not order_number:
                                     raise Exception("Order number is not set")
                                 
-                                database_id = item.get('id', None)
-                                if not database_id:
-                                    raise Exception("Database id is not set")
+                                aido_order_id = item.get('id', None)
+                                if not aido_order_id:
+                                    raise Exception("AIDO Order id is not set")
                                 
-                                await ensure_downloads_folder(self, database_id, order_number)
+                                # we passed false here because we are going to make one DB call for update anyway after this.
+                                file_download_folder = await ensure_downloads_folder(self, aido_order_id, order_number, update_database=False)
+                                
+                                # now that everything is prepared, we update the database
+                                await self.api_service.update_aido_extracted_json(
+                                    aido_order_id=aido_order_id, 
+                                    extracted_json=userInput_json, 
+                                    downloads_path=file_download_folder
+                                )
+                                
+                                queues = os.getenv('FILEPREP_QUEUES', '').split(',')
+                                for queue in queues:
+                                    if queue and queue.strip():
+                                        await self.api_service.create_new_task(aido_order_id, queue.strip())
+                                        await asyncio.sleep(0.1)  # Sleep for 100ms
                                 
                                 result_text = await format_output(self.script_executor, action, userInput_json)
-                                # userInput_json = self.add_more_params_for_task_bots(userInput_json, json_data=json_data)
                               
                                 self.socket.emit('message', {
                                     "channelId": message.get("channelId", "general"),
