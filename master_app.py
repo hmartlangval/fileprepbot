@@ -325,6 +325,20 @@ def restart_bot(bot_id):
     
     return {"success": True, "botId": bot_id, "message": f"Bot {bot_id} restarted successfully"}
 
+def clean_stop_bot(bot_instance, bot_id):
+    try:
+        bot_instance.on_cancel_received()
+        import time
+        time.sleep(1)
+        # cfg = bot_configs[bot_id]
+            # if cfg.get("botInstanceType", "base") == "browser":
+            #     bot_instance.on_cancel_received()
+            # bot_instance.stop()
+    except Exception as e:
+        print(f"Error stopping bot instance {bot_id}: {str(e)}")
+        
+    bot_instance.stop()
+
 # Add new endpoint to stop a bot without removing its configuration
 @app.route('/api/bots/<bot_id>/stop', method='POST')
 def stop_bot_instance(bot_id):
@@ -336,7 +350,8 @@ def stop_bot_instance(bot_id):
     if bot_id in bot_instances:
         try:
             bot_instance = bot_instances[bot_id]
-            bot_instance.stop()
+            clean_stop_bot(bot_instance, bot_id)
+            
             del bot_instances[bot_id]
             
             # Update status to inactive in the configuration
@@ -391,7 +406,7 @@ def stop_all_bot_instances():
     # Stop all actual bot instances
     for bot_id, bot_instance in list(bot_instances.items()):
         try:
-            bot_instance.stop()
+            clean_stop_bot(bot_instance, bot_id)
             del bot_instances[bot_id]
             bots_stopped.append(bot_id)
             
@@ -456,7 +471,7 @@ def handle_console_commands():
                 # Stop all bots before exiting
                 for bot_id, bot_instance in list(bot_instances.items()):
                     try:
-                        bot_instance.stop()
+                        clean_stop_bot(bot_instance, bot_id)
                         print(f"Stopped bot instance: {bot_id}")
                     except:
                         pass
@@ -551,7 +566,7 @@ def handle_console_commands():
                 if bot_id in bot_instances:
                     try:
                         bot_instance = bot_instances[bot_id]
-                        bot_instance.stop()
+                        clean_stop_bot(bot_instance, bot_id)
                         del bot_instances[bot_id]
                         print(f"Stopped bot instance: {bot_id}")
                     except Exception as e:
@@ -571,7 +586,7 @@ def handle_console_commands():
                 # Stop all actual bot instances
                 for bot_id, bot_instance in list(bot_instances.items()):
                     try:
-                        bot_instance.stop()
+                        clean_stop_bot(bot_instance, bot_id)
                         print(f"Stopped bot instance: {bot_id}")
                     except Exception as e:
                         print(f"Error stopping bot instance {bot_id}: {str(e)}")
@@ -618,7 +633,7 @@ def handle_console_commands():
             # Stop all bots before exiting
             for bot_id, bot_instance in list(bot_instances.items()):
                 try:
-                    bot_instance.stop()
+                    clean_stop_bot(bot_instance, bot_id)
                 except:
                     pass
             os._exit(0)
@@ -703,7 +718,7 @@ def main():
         print("Stopping all bots...")
         for bot_id, bot_instance in list(bot_instances.items()):
             try:
-                bot_instance.stop()
+                clean_stop_bot(bot_instance, bot_id)
                 print(f"Stopped bot instance: {bot_id}")
             except:
                 pass
