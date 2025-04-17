@@ -16,7 +16,7 @@ def get_window_handle():
     handle = user32.GetForegroundWindow()
     return handle
 
-class AbstractTaskBot(AbstractBot.FilePreparationParentBot):
+class AbstractBrowserBot(AbstractBot.FilePreparationParentBot):
     def __init__(self, options, *args, **kwargs):
         super().__init__(options, *args, **kwargs)
         self.on('new_message', self.handle_new_message)
@@ -26,7 +26,7 @@ class AbstractTaskBot(AbstractBot.FilePreparationParentBot):
         # self.on('error', self.handle_error)
    
     def handle_new_message(self, message):
-        print(f"ABSTRACT TASK BOT handle_new_message: {message}")
+        print(f"ABSTRACT BROWSER BOT handle_new_message: {message}")
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         loop.run_until_complete(self.handle_new_message_async(message))
@@ -39,9 +39,9 @@ class AbstractTaskBot(AbstractBot.FilePreparationParentBot):
         for action in await self.actions_in_config():
             [instructions, sensitive_data, extend_system_prompt] = await super().prepare_LLM_data(json_data, message, action)
             
-            print(f"instructions:       {instructions}")
-            print(f"sensitive_data:          {sensitive_data}")
-            print(f"extend_system_prompt:  {extend_system_prompt}")
+            # print(f"instructions:       {instructions}")
+            # print(f"sensitive_data:          {sensitive_data}")
+            # print(f"extend_system_prompt:  {extend_system_prompt}")
             
             if not instructions:
                 self.socket.emit('message', {
@@ -70,11 +70,11 @@ class AbstractTaskBot(AbstractBot.FilePreparationParentBot):
                 """
                 result = await self.call(combined_instructions)
                 result_text = await format_output(self.script_executor, action, result)
-                
-            self.socket.emit('message', {
-                "channelId": message.get("channelId"),
-                "content": result_text
-            })
+            
+            try:
+                self.send_message(result_text)
+            except Exception as e:
+                pass
 
         self.task_ended(database_id)
         return "Action executor exited."

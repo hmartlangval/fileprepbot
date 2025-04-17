@@ -1,5 +1,7 @@
-import sys
-sys.path.insert(0, r"D:\cursor\base_bot\aido-base-bot")
+
+# NELVIN: DO NOT DELETE THIS, use this for local base_bot development
+# import sys
+# sys.path.insert(0, r"D:\cursor\base_bot\aido-base-bot")
 
 
 import os
@@ -10,7 +12,9 @@ import uuid
 from bottle import Bottle, request, response, static_file, run
 from dotenv import load_dotenv
 from base_bot import BaseBot
-from abstract_task_bot import AbstractTaskBot
+from masterapp.abstract_browser_bot import AbstractBrowserBot
+from masterapp.abstract_llm_bot import AbstractLLMBot
+import time
 # Load environment variables
 load_dotenv()
 
@@ -25,12 +29,19 @@ bot_instances_types = {
         "configurable": False,
         "instance": BaseBot
     },
+    "llm": {
+        "id": "llm",
+        "name": "LLM Bot",
+        "description": "A basic LLM bot with for AI tasks",
+        "configurable": False,
+        "instance": AbstractLLMBot
+    },
     "browser": {
         "id": "browser",
         "name": "Browser Bot",
         "description": "A browser bot with browsing capabilities",
         "configurable": True,
-        "instance": AbstractTaskBot
+        "instance": AbstractBrowserBot
     },
 }
 
@@ -199,7 +210,7 @@ def stop_bot(bot_id):
     if bot_id in bot_instances:
         try:
             bot_instance = bot_instances[bot_id]
-            bot_instance.stop()
+            clean_stop_bot(bot_instance, bot_id)
             del bot_instances[bot_id]
             print(f"Stopped bot instance: {bot_id}")
         except Exception as e:
@@ -226,7 +237,7 @@ def stop_all_bots():
     # Stop all actual bot instances
     for bot_id, bot_instance in list(bot_instances.items()):
         try:
-            bot_instance.stop()
+            clean_stop_bot(bot_instance, bot_id)
             print(f"Stopped bot instance: {bot_id}")
         except Exception as e:
             print(f"Error stopping bot instance {bot_id}: {str(e)}")
@@ -308,7 +319,7 @@ def restart_bot(bot_id):
     if bot_id in bot_instances:
         try:
             bot_instance = bot_instances[bot_id]
-            bot_instance.stop()
+            clean_stop_bot(bot_instance, bot_id)
             del bot_instances[bot_id]
             print(f"Stopped bot instance: {bot_id} for restart")
         except Exception as e:
@@ -326,45 +337,125 @@ def restart_bot(bot_id):
     return {"success": True, "botId": bot_id, "message": f"Bot {bot_id} restarted successfully"}
 
 def clean_stop_bot(bot_instance, bot_id):
+    print(f"DEBUG: clean_stop_bot called for bot_id={bot_id} at {time.time()}")
+    
+    # Define a function to run emit in a separate thread
+    def emit_with_timeout():
+        try:
+            print(f"DEBUG: Thread about to emit control_command cancel for bot_id={bot_id}")
+            bot_instance.emit('control_command', {"command": "cancel"})
+            print(f"DEBUG: Thread successfully emitted control_command cancel for bot_id={bot_id}")
+        except Exception as e:
+            print(f"DEBUG: Thread error in emitting control_command for bot_id={bot_id}: {str(e)}")
+    
+    # Create a thread for the emit operation
+    emit_thread = threading.Thread(target=emit_with_timeout)
+    emit_thread.daemon = True
+    
     try:
-        bot_instance.on_cancel_received()
-        import time
-        time.sleep(1)
-        # cfg = bot_configs[bot_id]
-            # if cfg.get("botInstanceType", "base") == "browser":
-            #     bot_instance.on_cancel_received()
-            # bot_instance.stop()
-    except Exception as e:
-        print(f"Error stopping bot instance {bot_id}: {str(e)}")
+        print(f"DEBUG: Starting emit thread for control_command cancel for bot_id={bot_id}")
+        start_time = time.time()
         
-    bot_instance.stop()
+        # Start the thread and wait with timeout
+        emit_thread.start()
+        emit_thread.join(timeout=1.0)  # Wait up to 2 seconds for emit to complete
+        
+        if emit_thread.is_alive():
+            print(f"DEBUG: Emit thread timed out after 2 seconds for bot_id={bot_id}, continuing anyway")
+        else:
+            print(f"DEBUG: Emit thread completed in {time.time() - start_time:.2f}s for bot_id={bot_id}")
+        
+        # Wait a moment to allow the cancel operation to propagate
+        print(f"DEBUG: Starting sleep(0.5) after cancel command for bot_id={bot_id}")
+        time.sleep(0.5)
+        print(f"DEBUG: Completed sleep(0.5) after cancel command for bot_id={bot_id}")
+    except Exception as e:
+        print(f"DEBUG: Error in control_command section for bot_id={bot_id}: {str(e)}")
+        import traceback
+        print(f"DEBUG: Traceback from control_command: {traceback.format_exc()}")
+    
+    # Define a function to run stop in a separate thread
+    def stop_with_timeout():
+        try:
+            print(f"DEBUG: Thread about to call bot_instance.stop() for bot_id={bot_id}")
+            bot_instance.stop()
+            print(f"DEBUG: Thread successfully completed bot_instance.stop() for bot_id={bot_id}")
+        except Exception as e:
+            print(f"DEBUG: Thread error in bot_instance.stop() for bot_id={bot_id}: {str(e)}")
+    
+    # Create a thread for the stop operation
+    stop_thread = threading.Thread(target=stop_with_timeout)
+    stop_thread.daemon = True
+    
+    try:
+        print(f"DEBUG: Starting stop thread for bot_id={bot_id}")
+        start_time = time.time()
+        
+        # Start the thread and wait with timeout
+        stop_thread.start()
+        stop_thread.join(timeout=2.0)  # Wait up to 2 seconds for stop to complete
+        
+        if stop_thread.is_alive():
+            print(f"DEBUG: Stop thread timed out after 2 seconds for bot_id={bot_id}, continuing anyway")
+        else:
+            print(f"DEBUG: Stop thread completed in {time.time() - start_time:.2f}s for bot_id={bot_id}")
+    except Exception as e:
+        print(f"DEBUG: Error in bot_instance.stop() section for bot_id={bot_id}: {str(e)}")
+        import traceback
+        print(f"DEBUG: Traceback from bot.stop(): {traceback.format_exc()}")
+    
+    print(f"DEBUG: clean_stop_bot completed for bot_id={bot_id} at {time.time()}")
 
 # Add new endpoint to stop a bot without removing its configuration
 @app.route('/api/bots/<bot_id>/stop', method='POST')
 def stop_bot_instance(bot_id):
+    print(f"DEBUG: stop_bot_instance function called for bot_id={bot_id} at {time.time()}")
+    
     if bot_id not in bot_configs:
+        print(f"DEBUG: Bot with ID {bot_id} not found in bot_configs, returning 404")
         response.status = 404
         return {"error": f"Bot with ID {bot_id} not found"}
     
+    print(f"DEBUG: Bot {bot_id} found in bot_configs")
+    print(f"DEBUG: Current bot_instances keys: {list(bot_instances.keys())}")
+    
     # Stop the bot instance if it exists
     if bot_id in bot_instances:
+        print(f"DEBUG: Bot instance {bot_id} exists in bot_instances dictionary")
         try:
+            print(f"DEBUG: About to get bot_instance for {bot_id}")
             bot_instance = bot_instances[bot_id]
-            clean_stop_bot(bot_instance, bot_id)
+            print(f"DEBUG: Successfully got bot_instance for {bot_id}")
             
+            print(f"DEBUG: About to call clean_stop_bot for {bot_id}")
+            start_time = time.time()
+            clean_stop_bot(bot_instance, bot_id)
+            end_time = time.time()
+            print(f"DEBUG: clean_stop_bot completed for {bot_id} in {end_time - start_time:.2f} seconds")
+            
+            print(f"DEBUG: About to delete bot {bot_id} from bot_instances dictionary")
             del bot_instances[bot_id]
+            print(f"DEBUG: Successfully deleted bot {bot_id} from bot_instances dictionary")
             
             # Update status to inactive in the configuration
+            print(f"DEBUG: About to update status to inactive for bot {bot_id}")
             bot_configs[bot_id]["status"] = "inactive"
+            print(f"DEBUG: Successfully updated status to inactive for bot {bot_id}")
             
-            print(f"Stopped bot instance: {bot_id}")
+            print(f"DEBUG: Stopped bot instance: {bot_id}")
+            print(f"DEBUG: stop_bot_instance function returning success for bot_id={bot_id} at {time.time()}")
             return {"success": True, "botId": bot_id, "message": f"Bot {bot_id} stopped successfully"}
         except Exception as e:
-            print(f"Error stopping bot instance {bot_id}: {str(e)}")
+            print(f"DEBUG: Error in stop_bot_instance for {bot_id}: {str(e)}")
+            import traceback
+            print(f"DEBUG: Traceback: {traceback.format_exc()}")
             response.status = 500
+            print(f"DEBUG: stop_bot_instance function returning error for bot_id={bot_id} at {time.time()}")
             return {"error": f"Error stopping bot {bot_id}: {str(e)}"}
     else:
         # Bot instance already stopped
+        print(f"DEBUG: Bot instance {bot_id} does not exist in bot_instances, likely already stopped")
+        print(f"DEBUG: stop_bot_instance function returning 'already stopped' for bot_id={bot_id} at {time.time()}")
         return {"success": True, "botId": bot_id, "message": f"Bot {bot_id} already stopped"}
 
 # Add new endpoint to start a bot
@@ -662,6 +753,18 @@ def option_json_to_dict(options_json):
 def create_system_bot():
     system_bots = [
         {
+            "botId": "fileprep",
+            "botName": "Fileprep",
+            "channel": "general",
+            "botInstanceType": "llm",
+            "botType": "system",            
+            "options": {
+                "model": "gpt-4o-mini",
+                "prompts_directory": os.getenv("PROMPTS_DIR_PATH", "prompts"),
+            },
+            "creator": "system"  # Mark as system bot so it can't be deleted
+        },
+        {
             "botId": "taxbot",
             "botName": "TaxBot",
             "channel": "general",
@@ -725,3 +828,5 @@ def main():
 
 if __name__ == '__main__':
     main() 
+else:
+    main()
