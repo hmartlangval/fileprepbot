@@ -15,7 +15,7 @@ from abstract_task_bot import AbstractTaskBot
 load_dotenv()
 
 # Bot data structures
-active_bots = {}
+bot_configs = {}  # To store all bot configurations regardless of status
 bot_instances = {}  # To store actual bot instances
 bot_instances_types = {
     "base": {
@@ -64,7 +64,11 @@ def serve_static(filepath):
 # API Routes
 @app.route('/api/bots', method='GET')
 def get_all_bots():
-    return {"bots": list(active_bots.values())}
+    # Update status of each bot based on whether it has a running instance
+    for bot_id, config in bot_configs.items():
+        config["status"] = "active" if bot_id in bot_instances else "inactive"
+    
+    return {"bots": list(bot_configs.values())}
 
 @app.route('/api/bot-instance-types', method='GET')
 def get_bot_instances():
@@ -103,7 +107,7 @@ def create_bot():
         # options['prompts_directory'] = os.getenv("PROMPTS_DIR_PATH", "prompts")
         
         
-        if bot_id in active_bots:
+        if bot_id in bot_configs:
             response.status = 409
             return {"error": f"Bot with ID {bot_id} already exists"}
         
@@ -121,6 +125,7 @@ def create_bot():
             "status": "active",
             "autojoin_channel": data.get('channel', 'general'),
             "options": data.get('options', {}),
+            "creator": "user",  # Set creator to user for API-created bots
             "createdAt": time.time()
         }
         config_json["options"]["model"] = 'gpt-4o-mini'
@@ -178,9 +183,17 @@ def create_bot():
 
 @app.route('/api/bots/<bot_id>', method='DELETE')
 def stop_bot(bot_id):
-    if bot_id not in active_bots:
+    if bot_id not in bot_configs:
         response.status = 404
         return {"error": f"Bot with ID {bot_id} not found"}
+    
+    # Check if the bot is a system bot
+    if bot_configs[bot_id].get('creator') == 'system':
+        response.status = 403
+        return {"error": f"Bot {bot_id} is a system bot and cannot be deleted", "systemBot": True}
+    
+    # Check if we should remove the configuration or just stop the instance
+    remove_config = request.query.get('remove_config', 'true').lower() == 'true'
     
     # Stop the actual bot instance if it exists
     if bot_id in bot_instances:
@@ -192,18 +205,23 @@ def stop_bot(bot_id):
         except Exception as e:
             print(f"Error stopping bot instance {bot_id}: {str(e)}")
     
-    # Remove from active bots list
-    bot = active_bots.pop(bot_id)
-    print(f"Stopped bot: {bot['botName']} ({bot_id})")
-    
-    return {"success": True, "botId": bot_id}
+    if remove_config:
+        # Remove from bot configurations
+        bot = bot_configs.pop(bot_id)
+        print(f"Stopped and removed bot: {bot['botName']} ({bot_id})")
+        return {"success": True, "botId": bot_id, "message": f"Bot {bot_id} stopped and removed"}
+    else:
+        # Just mark as inactive
+        bot_configs[bot_id]["status"] = "inactive"
+        print(f"Stopped bot: {bot_configs[bot_id]['botName']} ({bot_id})")
+        return {"success": True, "botId": bot_id, "message": f"Bot {bot_id} stopped but configuration preserved"}
 
 @app.route('/api/bots', method='DELETE')
 def stop_all_bots():
-    bot_count = len(active_bots)
+    bot_count = len(bot_configs)
     
     if bot_count == 0:
-        return {"success": True, "message": "No active bots to stop"}
+        return {"success": True, "message": "No bots to stop"}
     
     # Stop all actual bot instances
     for bot_id, bot_instance in list(bot_instances.items()):
@@ -217,18 +235,18 @@ def stop_all_bots():
     bot_instances.clear()
     
     # Get the list of stopped bots before clearing
-    bots_stopped = list(active_bots.keys())
+    bots_stopped = list(bot_configs.keys())
     
-    # Clear the active bots list
-    active_bots.clear()
+    # Clear the bot configurations
+    bot_configs.clear()
     
-    print(f"Stopped all bots ({bot_count})")
+    print(f"Stopped and removed all bots ({bot_count})")
     
     return {"success": True, "botsStoppedCount": bot_count, "botsIds": bots_stopped}
 
 @app.route('/api/bots/<bot_id>/command', method='POST')
 def send_command(bot_id):
-    if bot_id not in active_bots:
+    if bot_id not in bot_configs:
         response.status = 404
         return {"error": f"Bot with ID {bot_id} not found"}
     
@@ -266,21 +284,25 @@ def send_command(bot_id):
 # Add new endpoint to get a single bot by ID
 @app.route('/api/bots/<bot_id>', method='GET')
 def get_bot_by_id(bot_id):
-    if bot_id not in active_bots:
+    if bot_id not in bot_configs:
         response.status = 404
         return {"error": f"Bot with ID {bot_id} not found"}
     
-    return {"success": True, "bot": active_bots[bot_id]}
+    # Update status based on whether it has a running instance
+    bot_config = bot_configs[bot_id]
+    bot_config["status"] = "active" if bot_id in bot_instances else "inactive"
+    
+    return {"success": True, "bot": bot_config}
 
 # Add new endpoint to restart a bot
 @app.route('/api/bots/<bot_id>/restart', method='POST')
 def restart_bot(bot_id):
-    if bot_id not in active_bots:
+    if bot_id not in bot_configs:
         response.status = 404
         return {"error": f"Bot with ID {bot_id} not found"}
     
     # Save the current bot configuration
-    bot_config = active_bots[bot_id]
+    bot_config = bot_configs[bot_id]
     
     # Stop the bot instance if it exists
     if bot_id in bot_instances:
@@ -292,9 +314,6 @@ def restart_bot(bot_id):
         except Exception as e:
             print(f"Error stopping bot instance {bot_id}: {str(e)}")
     
-    # Remove from active bots list temporarily
-    active_bots.pop(bot_id)
-    
     # Create a new instance using the same configuration
     bot_instance = create_actual_bot(bot_config["botInstanceType"], bot_config)
     
@@ -305,6 +324,87 @@ def restart_bot(bot_id):
     print(f"Restarted bot: {bot_config['botName']} ({bot_id})")
     
     return {"success": True, "botId": bot_id, "message": f"Bot {bot_id} restarted successfully"}
+
+# Add new endpoint to stop a bot without removing its configuration
+@app.route('/api/bots/<bot_id>/stop', method='POST')
+def stop_bot_instance(bot_id):
+    if bot_id not in bot_configs:
+        response.status = 404
+        return {"error": f"Bot with ID {bot_id} not found"}
+    
+    # Stop the bot instance if it exists
+    if bot_id in bot_instances:
+        try:
+            bot_instance = bot_instances[bot_id]
+            bot_instance.stop()
+            del bot_instances[bot_id]
+            
+            # Update status to inactive in the configuration
+            bot_configs[bot_id]["status"] = "inactive"
+            
+            print(f"Stopped bot instance: {bot_id}")
+            return {"success": True, "botId": bot_id, "message": f"Bot {bot_id} stopped successfully"}
+        except Exception as e:
+            print(f"Error stopping bot instance {bot_id}: {str(e)}")
+            response.status = 500
+            return {"error": f"Error stopping bot {bot_id}: {str(e)}"}
+    else:
+        # Bot instance already stopped
+        return {"success": True, "botId": bot_id, "message": f"Bot {bot_id} already stopped"}
+
+# Add new endpoint to start a bot
+@app.route('/api/bots/<bot_id>/start', method='POST')
+def start_bot(bot_id):
+    if bot_id not in bot_configs:
+        response.status = 404
+        return {"error": f"Bot with ID {bot_id} not found"}
+    
+    # If the bot instance already exists, return success
+    if bot_id in bot_instances:
+        return {"success": True, "botId": bot_id, "message": f"Bot {bot_id} already running"}
+    
+    # Get the bot configuration
+    bot_config = bot_configs[bot_id]
+    
+    # Create a new instance
+    bot_instance = create_actual_bot(bot_config["botInstanceType"], bot_config)
+    
+    if not bot_instance:
+        response.status = 500
+        return {"error": f"Failed to start bot of type {bot_config['botInstanceType']}"}
+    
+    print(f"Started bot: {bot_config['botName']} ({bot_id})")
+    
+    return {"success": True, "botId": bot_id, "message": f"Bot {bot_id} started successfully"}
+
+# Add endpoint to stop all bots without removing configurations
+@app.route('/api/bots/stop-all', method='POST')
+def stop_all_bot_instances():
+    bot_count = len(bot_instances)
+    
+    if bot_count == 0:
+        return {"success": True, "message": "No active bot instances to stop", "botsStoppedCount": 0}
+    
+    # Keep track of stopped bots
+    bots_stopped = []
+    
+    # Stop all actual bot instances
+    for bot_id, bot_instance in list(bot_instances.items()):
+        try:
+            bot_instance.stop()
+            del bot_instances[bot_id]
+            bots_stopped.append(bot_id)
+            
+            # Update status to inactive in the configuration
+            bot_configs[bot_id]["status"] = "inactive"
+            
+            print(f"Stopped bot instance: {bot_id}")
+        except Exception as e:
+            print(f"Error stopping bot instance {bot_id}: {str(e)}")
+    
+    print(f"Stopped all bot instances ({len(bots_stopped)}), configurations preserved")
+    
+    return {"success": True, "botsStoppedCount": len(bots_stopped), "botsIds": bots_stopped}
 
 # Function to create the actual bot instance based on type
 def create_actual_bot(bot_instance_type, config_json):
@@ -319,25 +419,15 @@ def create_actual_bot(bot_instance_type, config_json):
         if bot_instance:
             # Store the bot instance
             bot_instances[bot_id] = bot_instance
-            active_bots[bot_id] = config_json
+            bot_configs[bot_id] = config_json
             
-            # Add to active bots list
-            # active_bots[bot_id] = {
-            #     "botId": bot_id,
-            #     "botName": config_json["botName"],
-            #     "channel": config_json["channel"], 
-            #     "botInstanceType": config_json["botInstanceType"],
-            #     "botType": config_json["botType"],
-            #     "options": config_json["options"],
-            #     "status": "active",
-            #     "createdAt": time.time()
-            # }
-            
+            # Set status to active explicitly
+            bot_configs[bot_id]["status"] = "active"
             
             # Start the bot
             bot_instance.start()
             
-            print(f"Created demo bot: {config_json['botName']} ({bot_id})")
+            print(f"Created bot: {config_json['botName']} ({bot_id})")
         # For now, just create a BaseBot instance
         # In a more complete implementation, you would create different types of bots here
         # bot_instance = BaseBot(options)
@@ -373,12 +463,14 @@ def handle_console_commands():
                 os._exit(0)
                 
             elif cmd == 'list':
-                if not active_bots:
-                    print("No active bots")
+                if not bot_configs:
+                    print("No bots")
                 else:
-                    print(f"\nActive Bots ({len(active_bots)}):")
-                    for bot_id, bot in active_bots.items():
-                        print(f"- {bot['botName']} ({bot_id}) [Type: {bot['botType']}] [Channel: {bot['channel']}]")
+                    active_count = sum(1 for bot_id in bot_configs if bot_id in bot_instances)
+                    print(f"\nAll Bots ({len(bot_configs)}, {active_count} active):")
+                    for bot_id, bot in bot_configs.items():
+                        status = "Active" if bot_id in bot_instances else "Inactive"
+                        print(f"- {bot['botName']} ({bot_id}) [Type: {bot['botType']}] [Status: {status}] [Channel: {bot['channel']}]")
                 
             elif cmd == 'create':
                 if len(cmd_parts) < 2:
@@ -390,7 +482,7 @@ def handle_console_commands():
                 channel = cmd_parts[3] if len(cmd_parts) > 3 else "general"
                 bot_instance_type = cmd_parts[4] if len(cmd_parts) > 4 else "base"
                 
-                if bot_id in active_bots:
+                if bot_id in bot_configs:
                     print(f"Bot with ID {bot_id} already exists")
                     continue
                 
@@ -451,7 +543,7 @@ def handle_console_commands():
                 
                 bot_id = cmd_parts[1]
                 
-                if bot_id not in active_bots:
+                if bot_id not in bot_configs:
                     print(f"Bot with ID {bot_id} not found")
                     continue
                 
@@ -465,15 +557,15 @@ def handle_console_commands():
                     except Exception as e:
                         print(f"Error stopping bot instance {bot_id}: {str(e)}")
                 
-                # Remove from active bots list
-                bot = active_bots.pop(bot_id)
-                print(f"Stopped bot: {bot['botName']} ({bot_id})")
+                # Remove from bot configurations
+                bot = bot_configs.pop(bot_id)
+                print(f"Stopped and removed bot: {bot['botName']} ({bot_id})")
                 
             elif cmd == 'stopall':
-                bot_count = len(active_bots)
+                bot_count = len(bot_configs)
                 
                 if bot_count == 0:
-                    print("No active bots to stop")
+                    print("No bots to stop")
                     continue
                 
                 # Stop all actual bot instances
@@ -484,11 +576,11 @@ def handle_console_commands():
                     except Exception as e:
                         print(f"Error stopping bot instance {bot_id}: {str(e)}")
                 
-                # Clear bot instances and active bots
+                # Clear bot instances and bot configurations
                 bot_instances.clear()
-                active_bots.clear()
+                bot_configs.clear()
                 
-                print(f"Stopped all bots ({bot_count})")
+                print(f"Stopped and removed all bots ({bot_count})")
                 
             elif cmd == 'send':
                 if len(cmd_parts) < 3:
@@ -498,7 +590,7 @@ def handle_console_commands():
                 bot_id = cmd_parts[1]
                 command = ' '.join(cmd_parts[2:])
                 
-                if bot_id not in active_bots:
+                if bot_id not in bot_configs:
                     print(f"Bot with ID {bot_id} not found")
                     continue
                 
@@ -552,8 +644,8 @@ def option_json_to_dict(options_json):
     
     return options_dict
     
-def create_demo_bot():
-    demo_bots = [
+def create_system_bot():
+    system_bots = [
         {
             "botId": "taxbot",
             "botName": "TaxBot",
@@ -563,29 +655,31 @@ def create_demo_bot():
             "options": {
                 "model": "gpt-4o-mini",
                 "prompts_directory": os.getenv("PROMPTS_DIR_PATH", "prompts"),
-            }
+            },
+            "creator": "system"  # Mark as system bot so it can't be deleted
         },
-        # {
-        #     "botId": "d2",
-        #     "botName": "Demo Bot 2",
-        #     "channel": "general",
-        #     "botType": "base",
-        #     "options": {},
-        #     "instance": BaseBot
-        # }
+        {
+            "botId": "propertybot",
+            "botName": "Property Bot",
+            "channel": "general",
+            "botInstanceType": "browser",
+            "botType": "task_bot",            
+            "options": {
+                "model": "gpt-4o-mini",
+                "prompts_directory": os.getenv("PROMPTS_DIR_PATH", "prompts"),
+            },
+            "creator": "system"  # Mark as system bot so it can't be deleted
+        }
     ]
     
     # Create and start demo bots
-    for demo_bot in demo_bots:
-        create_actual_bot(demo_bot["botInstanceType"], demo_bot)
-        
-        
-       
-    
+    for system_bot in system_bots:
+        create_actual_bot(system_bot["botInstanceType"], system_bot)
+
 # Main function
 def main():
     # Create demo bots
-    # create_demo_bot()
+    create_system_bot()
     
     # Start the console commands thread
     console_thread = threading.Thread(target=handle_console_commands)
