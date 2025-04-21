@@ -24,7 +24,15 @@ def run_bot(bot_name):
 
 def main():
     setup_path()
-    bot_name = sys.argv[1]
+    
+    # Use a default bot name if none is provided as an argument
+    if len(sys.argv) > 1:
+        bot_name = sys.argv[1]
+    else:
+        # Default to 'masterapp' if no argument is provided
+        bot_name = 'masterapp'
+        print(f"No bot name provided, defaulting to '{bot_name}'")
+    
     run_bot(bot_name)
 
 if __name__ == '__main__':
