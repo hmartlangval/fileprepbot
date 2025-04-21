@@ -434,8 +434,14 @@ def stop_bot_instance(bot_id):
             print(f"DEBUG: clean_stop_bot completed for {bot_id} in {end_time - start_time:.2f} seconds")
             
             print(f"DEBUG: About to delete bot {bot_id} from bot_instances dictionary")
+            # First set the reference to None to break any remaining references
+            bot_instances[bot_id] = None
+            # Delete from dictionary
             del bot_instances[bot_id]
-            print(f"DEBUG: Successfully deleted bot {bot_id} from bot_instances dictionary")
+            # Force garbage collection to clean up the instance
+            import gc
+            gc.collect()
+            print(f"DEBUG: Successfully deleted bot {bot_id} from bot_instances dictionary and cleaned up references")
             
             # Update status to inactive in the configuration
             print(f"DEBUG: About to update status to inactive for bot {bot_id}")
