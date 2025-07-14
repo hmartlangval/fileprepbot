@@ -269,7 +269,7 @@
     Proceed with the search and save the page as PDF [order_number]_history.pdf for list of all Annual Bill .
     Next Step :Page contains **2024 Annual Bill** click on Print pdf link after downloading the file save it using filename [order_number]_Tax.pdf
 
->>County:Pinellas
+>>County: pinellas
 >>URL: https://county-taxes.net/fl-pinellas/property-tax
 >>>>INSTRUCTIONS:
     Proceed with the search and save the page as PDF [order_number]_history.pdf   for list of all Annual Bill .
@@ -287,7 +287,7 @@
 >>INSTRUCTIONS:
  Proceed with the search and Click on Print Bill and save the pdf filename as [order_number]_Tax.pdf
 
->>County: palm beach
+>>County: palm_beach
 >>URL: https://pbctax.publicaccessnow.com/PropertyTax.aspx
 >>INSTRUCTIONS:
     Proceed with the search and use Ctrl +p  and save the pdf filename as [order_number]_Tax.pdf

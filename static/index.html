@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot Management Console</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .bot-card {
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            border-radius: 10px 10px 0 0 !important;
+            font-weight: bold;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .connection-status {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        .connected {
+            background-color: #28a745;
+        }
+        .disconnected {
+            background-color: #dc3545;
+        }
+        .navbar {
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Bot Management Console</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/api-docs.html">API Documentation</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <h1 class="text-center mb-4">Bot Management Console</h1>
+        
+        <!-- Create Bot Section -->
+        <div class="section">
+            <h2>Create New Bot</h2>
+            <form id="createBotForm">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label for="botId" class="form-label">Bot ID (optional)</label>
+                        <input type="text" class="form-control" id="botId" placeholder="Auto-generated if empty">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="botName" class="form-label">Bot Name</label>
+                        <input type="text" class="form-control" id="botName" placeholder="Bot Name">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="channel" class="form-label">Channel</label>
+                        <input type="text" class="form-control" id="channel" value="general">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="botInstanceType" class="form-label">Bot Type</label>
+                        <select class="form-select" id="botInstanceType">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row" id="customOptions">
+                    <div class="col-md-6 mb-3 custom-option d-none" id="personaOption">
+                        <label for="persona" class="form-label">Persona</label>
+                        <select class="form-select" id="persona">
+                            <option value="friendly">Friendly</option>
+                            <option value="professional">Professional</option>
+                            <option value="quirky">Quirky</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Create Bot</button>
+            </form>
+        </div>
+        
+        <!-- Bot List Section -->
+        <div class="section">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2>All Bots</h2>
+                <button id="refreshBots" class="btn btn-secondary">Refresh</button>
+            </div>
+            <div id="botList" class="row">
+                <!-- Bots will be listed here dynamically -->
+                <div class="col-12 text-center" id="noBots">
+                    <p>No bots found</p>
+                </div>
+            </div>
+            <button id="stopAllBots" class="btn btn-danger mt-3">Stop All Running Bots</button>
+        </div>
+    </div>
+
+    <!-- Bot Control Modal -->
+    <div class="modal fade" id="botControlModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Send Command to Bot</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="sendCommandForm">
+                        <input type="hidden" id="commandBotId">
+                        <div class="mb-3">
+                            <label for="command" class="form-label">Command</label>
+                            <input type="text" class="form-control" id="command" placeholder="Enter command (e.g., /join channel)">
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary">Send Command</button>
+                            <button type="button" class="btn btn-warning" id="restartBotBtn">Restart Bot</button>
+                            <button type="button" class="btn btn-danger" id="stopBotBtn">Stop Bot</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // API Endpoints
+        const API_BASE = '/api';
+        const BOTS_ENDPOINT = `${API_BASE}/bots`;
+        const BOT_INSTANCE_TYPES_ENDPOINT = `${API_BASE}/bot-instance-types`;
+        
+        // DOM Elements
+        const botInstanceTypeSelect = document.getElementById('botInstanceType');
+        const createBotForm = document.getElementById('createBotForm');
+        const botList = document.getElementById('botList');
+        const noBotsElement = document.getElementById('noBots');
+        const refreshBotsBtn = document.getElementById('refreshBots');
+        const stopAllBotsBtn = document.getElementById('stopAllBots');
+        const sendCommandForm = document.getElementById('sendCommandForm');
+        const commandBotIdInput = document.getElementById('commandBotId');
+        const stopBotBtn = document.getElementById('stopBotBtn');
+        const restartBotBtn = document.getElementById('restartBotBtn');
+        const botControlModal = new bootstrap.Modal(document.getElementById('botControlModal'));
+        
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchBotTypes();
+            fetchBots();
+            
+            botInstanceTypeSelect.addEventListener('change', handleBotInstanceTypeChange);
+            createBotForm.addEventListener('submit', handleCreateBot);
+            refreshBotsBtn.addEventListener('click', fetchBots);
+            stopAllBotsBtn.addEventListener('click', handleStopAllBots);
+            sendCommandForm.addEventListener('submit', handleSendCommand);
+            stopBotBtn.addEventListener('click', handleStopBot);
+            restartBotBtn.addEventListener('click', handleRestartBot);
+        });
+        
+        // Functions
+        async function fetchBotTypes() {
+            try {
+                const response = await fetch(BOT_INSTANCE_TYPES_ENDPOINT);
+                const data = await response.json();
+                
+                botInstanceTypeSelect.innerHTML = '';
+                if (data.botInstanceTypes && data.botInstanceTypes.length > 0) {
+                    data.botInstanceTypes.forEach(type => {
+                        const option = document.createElement('option');
+                        option.value = type.id;
+                        option.textContent = type.name;
+                        botInstanceTypeSelect.appendChild(option);
+                    });
+                } else {
+                    // Fallback options if API doesn't return types
+                    const defaultTypes = [
+                        {id: 'base', name: 'Base Bot'},
+                        {id: 'custom', name: 'Custom Bot'},
+                        {id: 'test', name: 'Test Bot'}
+                    ];
+                    defaultTypes.forEach(type => {
+                        const option = document.createElement('option');
+                        option.value = type.id;
+                        option.textContent = type.name;
+                        botInstanceTypeSelect.appendChild(option);
+                    });
+                }
+                
+                // Trigger change to show/hide custom options
+                handleBotInstanceTypeChange();
+            } catch (error) {
+                console.error('Error fetching bot types:', error);
+                // Add fallback options in case of error
+                const defaultTypes = [
+                    {id: 'base', name: 'Base Bot'},
+                    {id: 'custom', name: 'Custom Bot'},
+                    {id: 'test', name: 'Test Bot'}
+                ];
+                defaultTypes.forEach(type => {
+                    const option = document.createElement('option');
+                    option.value = type.id;
+                    option.textContent = type.name;
+                    botInstanceTypeSelect.appendChild(option);
+                });
+                handleBotInstanceTypeChange();
+            }
+        }
+        
+        function handleBotInstanceTypeChange() {
+            const botInstanceType = botInstanceTypeSelect.value;
+            const personaOption = document.getElementById('personaOption');
+            
+            // Show/hide persona option based on bot type
+            if (botInstanceType === 'custom') {
+                personaOption.classList.remove('d-none');
+            } else {
+                personaOption.classList.add('d-none');
+            }
+        }
+        
+        async function fetchBots() {
+            try {
+                const response = await fetch(BOTS_ENDPOINT);
+                const data = await response.json();
+                
+                botList.innerHTML = '';
+                
+                if (!data.bots || data.bots.length === 0) {
+                    noBotsElement.style.display = 'block';
+                } else {
+                    noBotsElement.style.display = 'none';
+                    
+                    data.bots.forEach(bot => {
+                        const botCard = createBotCard(bot);
+                        botList.appendChild(botCard);
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching bots:', error);
+                noBotsElement.style.display = 'block';
+            }
+        }
+        
+        function createBotCard(bot) {
+            const col = document.createElement('div');
+            col.className = 'col-md-4';
+            
+            // Default to disconnected if status is not specified
+            const connectionStatus = bot.status === 'active' ? 'connected' : 'disconnected';
+            const statusText = bot.status === 'active' ? 'Active' : 'Inactive';
+            
+            col.innerHTML = `
+                <div class="card bot-card">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <span>
+                            ${bot.botName || 'Unnamed Bot'}
+                            ${bot.creator === 'system' ? 
+                                `<span class="badge bg-warning text-dark ms-2" title="System bot - cannot be deleted">System</span>` : 
+                                ''}
+                        </span>
+                        <div class="d-flex align-items-center">
+                            <span class="me-3"><div class="connection-status ${connectionStatus}"></div>${statusText}</span>
+                            ${bot.creator !== 'system' ? `
+                            <button class="btn btn-sm btn-danger delete-bot" data-bot-id="${bot.botId}" title="Delete Bot">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                </svg>
+                            </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>ID:</strong> ${bot.botId}</p>
+                        <p><strong>Type:</strong> ${bot.botInstanceType}</p>
+                        <p><strong>Channel:</strong> ${bot.channel || 'None'}</p>
+                        <div class="btn-group w-100 mt-2">
+                            <button class="btn btn-primary send-command" data-bot-id="${bot.botId}" data-bot-name="${bot.botName || 'Unnamed Bot'}">Control</button>
+                            <button class="btn ${bot.status === 'active' ? 'btn-danger stop-bot' : 'btn-success start-bot'}" data-bot-id="${bot.botId}">
+                                ${bot.status === 'active' ? 'Stop' : 'Start'}
+                            </button>
+                            <button class="btn btn-warning restart-bot" data-bot-id="${bot.botId}">Restart</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add event listener for command button
+            setTimeout(() => {
+                const commandBtn = col.querySelector('.send-command');
+                commandBtn.addEventListener('click', () => showCommandModal(bot.botId, bot.botName || 'Unnamed Bot'));
+                
+                // Add stop button event listener
+                const stopBtn = col.querySelector('.stop-bot');
+                if (stopBtn) {
+                    stopBtn.addEventListener('click', () => handleStopBotInline(bot.botId));
+                }
+                
+                // Add start button event listener
+                const startBtn = col.querySelector('.start-bot');
+                if (startBtn) {
+                    startBtn.addEventListener('click', () => handleStartBot(bot.botId));
+                }
+                
+                // Add restart button event listener
+                const restartBtn = col.querySelector('.restart-bot');
+                if (restartBtn) {
+                    restartBtn.addEventListener('click', () => handleRestartBotInline(bot.botId));
+                }
+                
+                // Add delete button event listener
+                const deleteBtn = col.querySelector('.delete-bot');
+                if (deleteBtn) {
+                    deleteBtn.addEventListener('click', (e) => {
+                        e.stopPropagation(); // Prevent event bubbling
+                        handleDeleteBot(bot.botId, bot.botName);
+                    });
+                }
+            }, 0);
+            
+            return col;
+        }
+        
+        function showCommandModal(botId, botName) {
+            // Set the bot ID for the command form
+            commandBotIdInput.value = botId;
+            
+            // Update modal title with bot name
+            document.querySelector('.modal-title').textContent = `Send Command to ${botName}`;
+            
+            // Show the modal
+            botControlModal.show();
+        }
+        
+        async function handleCreateBot(event) {
+            event.preventDefault();
+            
+            const botId = document.getElementById('botId').value.trim();
+            const botName = document.getElementById('botName').value.trim();
+            const channel = document.getElementById('channel').value.trim();
+            const botInstanceType = document.getElementById('botInstanceType').value;
+            
+            // Validate required fields
+            if (!botName) {
+                alert('Bot name is required');
+                return;
+            }
+            
+            // Prepare request body
+            const body = {
+                botId: botId || undefined, // Only include if provided
+                botName,
+                channel: channel || 'general',
+                botInstanceType: botInstanceType || 'base',
+                botType: 'task_bot',
+                options: {}
+            };
+            
+            // Add persona for custom bots
+            if (botInstanceType === 'custom') {
+                const persona = document.getElementById('persona').value;
+                body.options.persona = persona;
+            }
+            
+            try {
+                const response = await fetch(BOTS_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Clear form
+                    document.getElementById('botId').value = '';
+                    document.getElementById('botName').value = '';
+                    document.getElementById('channel').value = 'general';
+                    
+                    // Refresh bot list
+                    fetchBots();
+                    alert('Bot created successfully!');
+                } else {
+                    alert(`Error: ${data.error || 'Failed to create bot'}`);
+                }
+            } catch (error) {
+                console.error('Error creating bot:', error);
+                alert('Failed to create bot. Check console for details.');
+            }
+        }
+        
+        async function handleSendCommand(event) {
+            event.preventDefault();
+            
+            const botId = commandBotIdInput.value;
+            const command = document.getElementById('command').value.trim();
+            
+            if (!command) {
+                alert('Command is required');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${BOTS_ENDPOINT}/${botId}/command`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ command })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Clear command input
+                    document.getElementById('command').value = '';
+                    
+                    // Close modal
+                    botControlModal.hide();
+                    
+                    alert(`Command sent successfully to bot ${botId}`);
+                } else {
+                    alert(`Error: ${data.error || 'Failed to send command'}`);
+                }
+            } catch (error) {
+                console.error('Error sending command:', error);
+                alert('Failed to send command. Check console for details.');
+            }
+        }
+        
+        async function handleStopBot() {
+            const botId = commandBotIdInput.value;
+            
+            try {
+                const response = await fetch(`${BOTS_ENDPOINT}/${botId}/stop`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Close modal
+                    botControlModal.hide();
+                    
+                    // Refresh bot list
+                    fetchBots();
+                    
+                    alert(`Bot ${botId} stopped successfully`);
+                } else {
+                    alert(`Error: ${data.error || 'Failed to stop bot'}`);
+                }
+            } catch (error) {
+                console.error('Error stopping bot:', error);
+                alert('Failed to stop bot. Check console for details.');
+            }
+        }
+        
+        async function handleRestartBot() {
+            const botId = commandBotIdInput.value;
+            
+            // Confirm restart
+            if (confirm(`Are you sure you want to restart bot ${botId}?`)) {
+                try {
+                    // Call the dedicated restart endpoint
+                    const response = await fetch(`${BOTS_ENDPOINT}/${botId}/restart`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        // Close modal
+                        botControlModal.hide();
+                        
+                        // Refresh bot list
+                        fetchBots();
+                        
+                        alert(`Bot ${botId} restarted successfully!`);
+                    } else {
+                        alert(`Error restarting bot: ${data.error || 'Unknown error'}`);
+                    }
+                } catch (error) {
+                    console.error('Error restarting bot:', error);
+                    alert('Failed to restart bot. Check console for details.');
+                }
+            }
+        }
+        
+        async function handleStopAllBots() {
+            if (confirm('Are you sure you want to stop all bots?')) {
+                try {
+                    const response = await fetch(`${BOTS_ENDPOINT}/stop-all`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        // Refresh bot list
+                        fetchBots();
+                        
+                        alert(`All bots stopped successfully. Count: ${data.botsStoppedCount || 0}`);
+                    } else {
+                        alert(`Error: ${data.error || 'Failed to stop all bots'}`);
+                    }
+                } catch (error) {
+                    console.error('Error stopping all bots:', error);
+                    alert('Failed to stop all bots. Check console for details.');
+                }
+            }
+        }
+        
+        // Handler for inline stop button
+        async function handleStopBotInline(botId) {
+            if (confirm(`Are you sure you want to stop bot ${botId}?`)) {
+                try {
+                    // Only stop the instance, not remove the configuration
+                    const response = await fetch(`${BOTS_ENDPOINT}/${botId}/stop`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        // Refresh bot list
+                        fetchBots();
+                        
+                        alert(`Bot ${botId} stopped successfully`);
+                    } else {
+                        alert(`Error: ${data.error || 'Failed to stop bot'}`);
+                    }
+                } catch (error) {
+                    console.error('Error stopping bot:', error);
+                    alert('Failed to stop bot. Check console for details.');
+                }
+            }
+        }
+        
+        // Handler for start button
+        async function handleStartBot(botId) {
+            try {
+                const response = await fetch(`${BOTS_ENDPOINT}/${botId}/start`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Refresh bot list
+                    fetchBots();
+                    
+                    alert(`Bot ${botId} started successfully`);
+                } else {
+                    alert(`Error: ${data.error || 'Failed to start bot'}`);
+                }
+            } catch (error) {
+                console.error('Error starting bot:', error);
+                alert('Failed to start bot. Check console for details.');
+            }
+        }
+        
+        // Handler for inline restart button
+        async function handleRestartBotInline(botId) {
+            if (confirm(`Are you sure you want to restart bot ${botId}?`)) {
+                try {
+                    // Call the dedicated restart endpoint
+                    const response = await fetch(`${BOTS_ENDPOINT}/${botId}/restart`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        // Refresh bot list
+                        fetchBots();
+                        
+                        alert(`Bot ${botId} restarted successfully!`);
+                    } else {
+                        alert(`Error restarting bot: ${data.error || 'Unknown error'}`);
+                    }
+                } catch (error) {
+                    console.error('Error restarting bot:', error);
+                    alert('Failed to restart bot. Check console for details.');
+                }
+            }
+        }
+        
+        // Handler for delete bot button
+        async function handleDeleteBot(botId, botName) {
+            if (confirm(`Are you sure you want to delete bot "${botName}" (${botId})?\nThis will permanently remove the bot and its configuration.`)) {
+                try {
+                    // Call the delete endpoint with remove_config=true to completely remove the bot
+                    const response = await fetch(`${BOTS_ENDPOINT}/${botId}?remove_config=true`, {
+                        method: 'DELETE'
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        // Refresh bot list
+                        fetchBots();
+                        
+                        alert(`Bot "${botName}" deleted successfully!`);
+                    } else {
+                        if (data.systemBot) {
+                            alert(`Cannot delete system bot "${botName}". System bots are protected and cannot be removed.`);
+                        } else {
+                            alert(`Error deleting bot: ${data.error || 'Unknown error'}`);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error deleting bot:', error);
+                    alert('Failed to delete bot. Check console for details.');
+                }
+            }
+        }
+    </script>
+</body>
+</html> 

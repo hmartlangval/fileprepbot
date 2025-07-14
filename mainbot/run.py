@@ -44,10 +44,12 @@ class MainBot(LLMBotBase):
         [json_data, sensitive_data] = await extract_message_data(self, message)
         
         for action in await self.actions_in_config():
+            
             self.socket.emit('message', {
                 "channelId": message.get("channelId"),
                 "content": f"Executing action {action.get('name', '')}... >>>"
             })
+            
             try:
                 [instructions, extend_system_prompt] = await self.v2_prompt(action)
             except Exception as e:
