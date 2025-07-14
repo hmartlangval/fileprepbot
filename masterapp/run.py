@@ -9,6 +9,7 @@ import json
 import threading
 import time
 import uuid
+import argparse
 from bottle import Bottle, request, response, static_file, run
 from dotenv import load_dotenv
 from base_bot import BaseBot
@@ -756,7 +757,7 @@ def option_json_to_dict(options_json):
     
     return options_dict
     
-def create_system_bot():
+def create_system_bot(noautostart=False):
     system_bots = [
         {
             "botId": "fileprep",
@@ -796,14 +797,26 @@ def create_system_bot():
         }
     ]
     
-    # Create and start demo bots
+    # Create and store system bot configurations
     for system_bot in system_bots:
-        create_actual_bot(system_bot["botInstanceType"], system_bot)
+        bot_configs[system_bot["botId"]] = system_bot
+        
+        # Only create actual bot instances if noautostart is False
+        if not noautostart:
+            create_actual_bot(system_bot["botInstanceType"], system_bot)
+        else:
+            print(f"System bot {system_bot['botId']} configuration created (autostart disabled)")
 
 # Main function
 def main():
-    # Create demo bots
-    create_system_bot()
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Bot Management Server')
+    parser.add_argument('--noautostart', action='store_true', help='Create system bots without starting them')
+    parser.add_argument('--port', type=int, help='Port to run the server on (overrides PORT env variable)')
+    args = parser.parse_args()
+    
+    # Create system bots with the noautostart flag
+    create_system_bot(noautostart=args.noautostart)
     
     # Start the console commands thread
     console_thread = threading.Thread(target=handle_console_commands)
@@ -812,7 +825,8 @@ def main():
     
     # Start the Bottle server
     host = os.environ.get('HOST', 'localhost')
-    port = int(os.environ.get('PORT', 5000))
+    # Use command line port if provided, otherwise use env var, finally fall back to default
+    port = args.port if args.port is not None else int(os.environ.get('PORT', 5000))
     
     print(f"Starting server on http://{host}:{port}")
     print("Press Ctrl+C to exit")
